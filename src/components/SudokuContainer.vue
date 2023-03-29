@@ -1,85 +1,17 @@
 <template>
   <div class="containerApp">
-    <h1>Sudoku</h1>
-    <div class="containerApp__game__buttons">
-      <div class="containerApp__game__buttons--title">
-        buttons game
-        <p>Gra o id [ indexGame]: {{ indexGame }}</p>
-      </div>
-      <div class="containerApp__game__buttons--box">
-        <!--         <button class="buttons--game" @click="drawGame">Wylosuj numer gry</button>
-        <button class="buttons--game" @click="drawGame">Zacznij rozgrywkę od nowa</button>
-        <button class="buttons--game" @click="drawGame">Nowa gra</button>
-        <button class="buttons--game" @click="drawGame">Sprawdź planszę</button>
-        <button class="buttons--game" @click="drawGame">Włącz podpowiedź</button> -->
-      </div>
-      <div class="containerApp__game__buttons--box">
-        <button class="buttons--game" @click="confirmBoardGame">Zatwierdź planszę</button>
-        <button class="buttons--game" @click="nextMove">Wykonaj kolejny ruch</button>
-        <button class="buttons--game" @click="checkGame">Sprawdź planszę - mały kwadracik</button>
-        <button class="buttons--game" @click="finishGame">Rozwiąż planszę</button>
-        <button class="buttons--game" @click="fillBoard">Wypełnij mini macierze</button>
-      </div>
-    </div>
-    <div class="containerApp__game" v-for="game in gamesArr" :key="game.id">
-      Numer tablicy: {{ game.id }}
-      <div class="containerApp__game__helpButtons">
-        <p> Guziki do pomocy:</p>
-        <button class="buttons--help" @click="findEmptyFieldsInMatrix"> Podaj macierze z ilością pustych miejsc</button>
-        <button class="buttons--help" @click="findCorsToFillDigit"> Znajdź współrzędne na wpisanie brakującej
-          cyfry</button>
-        <button class="buttons--help" @click="findMissingDigit"> Sprawdź jakiej cyfry brakuje</button>
-        <button class="buttons--help" @click="fillMissingDigit"> Wpisz brakującą cyfrę</button>
-      </div>
+    <!--     <h1>Sudoku</h1> -->
+    <ButtonsGame :fillBoard="fillBoard" />
+    <div class="containerApp__game">
+      <ButtonsSingleGame :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
+        :findMissingDigit="findMissingDigit" :fillMissingDigit="fillMissingDigit" :fillBoard="fillBoard"
+        :secondStepFindOneMissingDigit="secondStepFindOneMissingDigit"
+        :secondStepFindOneMissingID="secondStepFindOneMissingID" :secondStepFindCoor="secondStepFindCoor"
+        :thirdStepFindOneMissingID="thirdStepFindOneMissingID" :thirdStepFindMissingDigits="thirdStepFindMissingDigits"
+        :thirdStepFindCorsToFillDigit="thirdStepFindCorsToFillDigit"
+        :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" />
       <div class="containerApp__game__board">
-        <div class="containerApp__game__board__field" id="square1">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="4">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="5">
-          <input type="text" class="inputField" value="3">
-        </div>
-        <div class="containerApp__game__board__field" id="square2">
-          <input type="text" class="inputField" value="3">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="0">
-        </div>
-        <div class="containerApp__game__board__field" id="square3">
-          <input type="text" class="inputField" value="3">
-          <input type="text" class="inputField" value="1">
-          <input type="text" class="inputField" value="4">
-          <input type="text" class="inputField" value="5">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="0">
-        </div>
-        <div class="containerApp__game__board__field" id="square4">
-          <input type="text" class="inputField" value="6">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="5">
-          <input type="text" class="inputField" value="4">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="1">
-        </div>
-        <div class="containerApp__game__board__field" id="square5">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="6">
-          <input type="text" class="inputField" value="5">
-          <input type="text" class="inputField" value="4">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="0">
-        </div>
-        <div class="containerApp__game__board__field" id="square6">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="4">
-          <input type="text" class="inputField" value="3">
-          <input type="text" class="inputField" value="5">
-          <input type="text" class="inputField" value="0">
-          <input type="text" class="inputField" value="2">
-        </div>
+        <BoardFields />
       </div>
     </div>
   </div>
@@ -87,36 +19,52 @@
 
 <script>
 
-import { computed } from "@vue/reactivity";
+/* import { computed } from "@vue/reactivity";
 import { ref } from "vue";
-import { games } from "../data/Games"
+import { games } from "../data/Games" */
+import ButtonsGame from "../components/buttons/ButtonsGame.vue"
+import ButtonsSingleGame from "./buttons/ButtonsSingleGame.vue";
+import BoardFields from "./BoardFields.vue";
 
 export default {
   name: 'SudokuContainer',
+  components: {
+    ButtonsGame,
+    ButtonsSingleGame,
+    BoardFields,
+  },
 
   setup() {
 
-    const gamesArr = ref([...games]);
-    let indexGame = ref(99);
-
-    let arrayOfInputElements = document.getElementsByClassName('inputField');
-    let arrayOfValue = [];
-    let arrayOfZero = [6];
+    //counters
     let i = 0;
     let j = 0;
-    let miniSquares = [];
+    // arrays for the help
     let rows = [];
     let columns = [];
-    let square = [];
+    let yCorrdinate = 0;
+    let xCorrdinate = 0;
+    let xCor = 0;
+    let yCor = 0;
+    let missingDigit = 99;
+    let countOfZero = 0;
+    let endCondition = true;
+    let miniMatrixs = [];
+    let testArr = [1, 2, 3, 4, 5, 6]
+    let copyArr = [];
+    let idForSwitch = 99;
 
+    // for the second help
+    let missingID = 99;
+
+    // for the third help
+
+    let ySecondCor = 9;
+    let secondMissingDigit = 99;
 
     function drawGame() {
-      indexGame.value = Math.floor(Math.random() * 10 + 1);
-      console.log(indexGame);
+      console.log("drawGame");
     }
-
-    const testValue = computed(() =>
-      gamesArr.value.filter((gamesArr.value > 0)))
 
     function sprawdz() {
       let t1 = document.querySelector("#s91");
@@ -162,25 +110,6 @@ export default {
 
     function checkGame() {
       console.log("checkGame");
-
-      for (let i = 0; i < arrayOfInputElements.length; i++) {
-        arrayOfValue[i] = arrayOfInputElements[i].value;
-      }
-      arrayOfValue.sort();
-      console.log(arrayOfValue);
-
-
-      if (arrayOfValue.includes('0')) {
-        console.log("Macierz nie wypełniona")
-      } else if (arrayOfValue[0] == '1') {
-        console.log("Pierwszy element to 1")
-      } else {
-        console.log("KONIEC")
-      }
-      console.log(arrayOfValue);
-
-
-
     }
 
     function finishGame() {
@@ -189,28 +118,31 @@ export default {
 
     }
 
-    function fillBoard() {
-      console.log("fillBoard");
 
-      // zapisanie do tablicy małych macierzy square[i]
+    // functions for the main buttons
+
+
+    function fillBoard() {
+      console.log("fillBoard")
+
+      let tempArray = [];
+
+
       for (i = 1; i < 7; i++) {
-        miniSquares[i - 1] = document.getElementById('square' + i).getElementsByClassName('inputField');
+        tempArray[i - 1] = document.getElementById('square' + i).getElementsByClassName('inputField');
       }
 
-      // wypełnienie tablicy rows oraz jej wypełnienie
-      for (i = 0; i < 6; i++) {
-        square[i] = [];
+      // tworzenie 2 wyamirowej tablicy
+      for (i = 0; i < 18; i++) {
+        miniMatrixs[i] = [];
       }
 
       for (i = 0; i < 6; i++) {
         for (j = 0; j < 6; j++) {
-          square[i][j] = miniSquares[i][j].value;
+          miniMatrixs[i][j] = tempArray[i][j].value;
         }
       }
 
-      /*       for (i = 0; i < miniSquares.length; i++) {
-              console.log("MiniSquares " + square[i]);
-            } */
 
       // wypełnienie tablicy rows oraz jej wypełnienie
       for (i = 0; i < 6; i++) {
@@ -219,27 +151,32 @@ export default {
 
       for (i = 0; i < 5; i += 2) {
         for (j = 0; j < 3; j++) {
-          rows[i][j] = miniSquares[i][j].value;
+          rows[i][j] = tempArray[i][j].value;
         }
       }
       for (i = 1; i < 6; i += 2) {
         for (j = 3; j < 6; j++) {
-          rows[i][j - 3] = miniSquares[i - 1][j].value;
+          rows[i][j - 3] = tempArray[i - 1][j].value;
         }
       }
       for (i = 0; i < 5; i += 2) {
         for (j = 3; j < 6; j++) {
-          rows[i][j] = miniSquares[i + 1][j - 3].value;
+          rows[i][j] = tempArray[i + 1][j - 3].value;
         }
       }
       for (i = 1; i < 6; i += 2) {
         for (j = 3; j < 6; j++) {
-          rows[i][j] = miniSquares[i][j].value;
+          rows[i][j] = tempArray[i][j].value;
         }
       }
-      /*       for (i = 0; i < rows.length; i++) {
-              console.log("Rows " + rows[i]);
-            } */
+
+
+      for (i = 0; i < 6; i++) {
+        for (j = 0; j < 6; j++) {
+          miniMatrixs[i + 6][j] = rows[i][j];
+        }
+      }
+
 
       // tworzenie tablicy columns oraz jej wypełnienie
       for (i = 0; i < 6; i++) {
@@ -247,115 +184,1914 @@ export default {
       }
       for (i = 0; i < 3; i++) {
         for (j = 0; j < 5; j += 2) {
-          columns[i][j] = miniSquares[j][i].value;
+          columns[i][j] = tempArray[j][i].value;
         }
       }
       for (i = 3; i < 6; i++) {
         for (j = 1; j < 6; j += 2) {
-          columns[i][j] = miniSquares[j][i].value;
+          columns[i][j] = tempArray[j][i].value;
         }
       }
       for (i = 0; i < 3; i++) {
         for (j = 1; j < 6; j += 2) {
-          columns[i][j] = miniSquares[j - 1][i + 3].value;
+          columns[i][j] = tempArray[j - 1][i + 3].value;
         }
       }
       for (i = 3; i < 6; i++) {
         for (j = 0; j < 5; j += 2) {
-          columns[i][j] = miniSquares[j + 1][i - 3].value;
+          columns[i][j] = tempArray[j + 1][i - 3].value;
         }
       }
-      /*       for (i = 0; i < columns.length; i++) {
-              console.log("Columns " + columns[i]);
-            } */
+
+      for (i = 0; i < 6; i++) {
+        for (j = 0; j < 6; j++) {
+          miniMatrixs[i + 12][j] = columns[i][j];
+        }
+      }
+
+      /*       console.log("KOMPLETNA MINIMATRIX")
+            for (i = 0; i < 18; i++) {
+              console.log(miniMatrixs[i])
+            }
+       */
+
+
 
     }
+
+    function fillMissingDigit() {
+      console.log("fillMissingDigit")
+      document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].value = missingDigit;
+      document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed")
+    }
+
+    // functions for the first step
 
     function findEmptyFieldsInMatrix() {
       console.log("findEmptyFieldsInMatrix");
 
-      let countOfZero = 0;
-
       // znajdywanie 0 w małych macierzach i dopisywanie ich do tablicy.
-      for (i = 0; i < square.length; i++) {
-        for (j = 0; j < 6; j++) {
-          if (square[i][j] == 0) {
-            countOfZero++;
+
+      while (endCondition) {
+        for (i = 0; miniMatrixs.length; i++) {
+          for (j = 0; j < 6; j++) {
+            if (miniMatrixs[i][j] == 0) {
+              countOfZero++;
+            }
+          }
+          if (countOfZero == 1) {
+            xCorrdinate = i;
+            endCondition = false;
+            break;
+          } else if (i == 17 && countOfZero != 1) {
+            endCondition = false;
+            alert(" Nie ma macierzy z 1 wolnym miejscem!")
+            break;
+          } else {
+            countOfZero = 0;
           }
         }
-        arrayOfZero[i] = countOfZero;
-        countOfZero = 0;
+
       }
-      console.log("Jest jedno zero w macierzy square, indeks: " + arrayOfZero.indexOf(1))
 
-
-      for (i = 0; i < rows.length; i++) {
-        for (j = 0; j < 6; j++) {
-          if (rows[i][j] == 0) {
-            countOfZero++;
-          }
-        }
-        arrayOfZero[i] = countOfZero;
-        countOfZero = 0;
-      }
-      console.log("Jest jedno zero w macierzy rows, indeks: " + arrayOfZero.indexOf(1))
-
-
-      for (i = 0; i < columns.length; i++) {
-        for (j = 0; j < 6; j++) {
-          if (columns[i][j] == 0) {
-            countOfZero++;
-          }
-        }
-        arrayOfZero[i] = countOfZero;
-        countOfZero = 0;
-      }
-      console.log("Jest jedno zero w macierzy columns, indeks: " + arrayOfZero.indexOf(1))
+      console.log("Współrzędna X: " + xCorrdinate)
+      endCondition = true;
+      countOfZero = 0;
 
     }
 
     function findCorsToFillDigit() {
 
-            // sprawdzenie jakiej cyfry brakuje w macierzy
-      let corX = arrayOfZero.indexOf(1);
-      console.log(corX);
+      // sprawdzenie jakiej cyfry brakuje w macierzy
+      console.log("findCorsToFillDigit");
 
-      console.log(rows[corX]);
+      console.log(miniMatrixs[xCorrdinate]);
 
-      let corY = rows[corX].indexOf('0');
-      console.log(corY);
+      yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
+      console.log(yCorrdinate);
 
-      console.log("współrzędne punktu: " + corX + " i " + corY);
-
-            console.log("tablica z pustym miejscem" + rows[corX]);
+      console.log("współrzędne punktu: " + xCorrdinate + " i " + yCorrdinate);
 
 
-      /*       for (i = 0; i < rows[corX].length; i++) {
-              rows[corX][i]++;
-            }
-            console.log("Nowa tablica" + rows[corX]); */
+      // ustalamy poprawną współrzędną X do wpisania w square o ID
 
-      let testArr = [0, 1, 2, 3, 4, 5]
-
-      let copyArr = rows.slice();
-      console.log("Skopiowana tablica" + copyArr[corX]);
-      copyArr[corX].sort();
-      console.log("Skopiowana posortowana tablica" + copyArr[corX]);
-
-      for (i = 0; i < 6; i++) {
-        if (copyArr[corX][i] != testArr[i]) {
-          console.log("spełniony   " + testArr[i])
-          rows[corX][corY] = testArr[i];
-          break;
+      if (xCorrdinate < 6) {
+        xCor = xCorrdinate + 1;
+        yCor = yCorrdinate;
+      } else if (xCorrdinate == 6 || xCorrdinate == 7) {
+        if (yCorrdinate < 4) {
+          xCor = 1;
+        } else {
+          xCor = 2;
+        }
+      } else if (xCorrdinate == 8 || xCorrdinate == 9) {
+        if (yCorrdinate < 4) {
+          xCor = 3;
+        } else {
+          xCor = 4;
+        }
+      } else if (xCorrdinate == 10 || xCorrdinate == 11) {
+        if (yCorrdinate < 4) {
+          xCor = 5;
+        } else {
+          xCor = 6;
+        }
+      } else if (xCorrdinate == 12 || xCorrdinate == 13 || xCorrdinate == 14) {
+        if (yCorrdinate < 2) {
+          xCor = 1;
+        } else if (yCorrdinate > 2 && yCorrdinate < 5) {
+          xCor = 3;
+        } else {
+          xCor = 5;
+        }
+      } else if (xCorrdinate == 15 || xCorrdinate == 16 || xCorrdinate == 17) {
+        if (yCorrdinate < 2) {
+          xCor = 2;
+        } else if (yCorrdinate >= 2 && yCorrdinate < 4) {
+          xCor = 4;
+        } else {
+          xCor = 6;
         }
       }
 
-      console.log(rows[corX]);
+      // ustalamy poprawną współrzędną Y do wpisania w square o ID
+
+      if (xCorrdinate == 12 || xCorrdinate == 15) {
+        switch (yCorrdinate) {
+          case 0:
+            yCor = yCorrdinate;
+            break;
+          case 1:
+            yCor = yCorrdinate + 3;
+            break;
+          case 2:
+            yCor = yCorrdinate - 2;
+            break;
+          case 3:
+            yCor = yCorrdinate + 1;
+            break;
+          case 4:
+            yCor = yCorrdinate - 4;
+            break;
+          case 5:
+            yCor = yCorrdinate - 1;
+            break;
+        }
+      } else if (xCorrdinate == 13 || xCorrdinate == 16) {
+        switch (yCorrdinate) {
+          case 0:
+            yCor = yCorrdinate + 1;
+            break;
+          case 1:
+            yCor = yCorrdinate + 4;
+            break;
+          case 2:
+            yCor = yCorrdinate - 1;
+            break;
+          case 3:
+            //            yCor = yCorrdinate + 2;
+            yCor = yCorrdinate + 1;
+            break;
+          case 4:
+            yCor = yCorrdinate - 3;
+            break;
+          case 5:
+            yCor = yCorrdinate;
+            break;
+        }
+      } else if (xCorrdinate == 14 || xCorrdinate == 17) {
+        switch (yCorrdinate) {
+          case 0:
+            yCor = yCorrdinate + 2;
+            break;
+          case 1:
+            yCor = yCorrdinate + 5;
+            break;
+          case 2:
+            yCor = yCorrdinate;
+            break;
+          case 3:
+            yCor = yCorrdinate + 3;
+            break;
+          case 4:
+            yCor = yCorrdinate - 2;
+            break;
+          case 5:
+            yCor = yCorrdinate + 1;
+            break;
+        }
+      } else if (xCorrdinate == 6 || xCorrdinate == 8 || xCorrdinate == 10) {
+        if (yCorrdinate < 3) {
+          yCor = yCorrdinate;
+        } else {
+          yCor = yCorrdinate - 3;
+        }
+      } else if (xCorrdinate == 7 || xCorrdinate == 9 || xCorrdinate == 11) {
+        if (yCorrdinate < 3) {
+          yCor = yCorrdinate + 3;
+        } else {
+          yCor = yCorrdinate;
+        }
+      }
+      console.log(" Nowe współrzędne punktu: " + xCor + " i " + yCor);
+
+    }
+
+    function findMissingDigit() {
+      console.log("FindMissingDigit");
+
+      for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+        copyArr[i] = miniMatrixs[xCorrdinate][i];
+      }
+
+      copyArr.sort();
+      console.log("macierz szukana: " + copyArr)
+      console.log("macierz wzorcowa: " + testArr)
+
+      for (i = 0; i < 6; i++) {
+        if (copyArr[i + 1] != testArr[i]) {
+          console.log("Brakuje cyfry: " + testArr[i]);
+          miniMatrixs[xCorrdinate][yCorrdinate] = testArr[i];
+          missingDigit = testArr[i];
+          break;
+        }
+      }
+      console.log(miniMatrixs[xCorrdinate]);
+    }
+
+    // function for the buttons on the left, help buttons second 
+
+    function secondStepFindOneMissingDigit() {
+      console.log("secondStepFindOneMissingDigit");
+
+      let arrayOfDigits = [0, 0, 0, 0, 0, 0]
+
+      let numberCondition = false;
+
+      for (i = 0; i < 6; i++) {
+        for (j = 0; j < 6; j++) {
+          switch (miniMatrixs[i][j]) {
+            case '0':
+              break;
+            case '1':
+              arrayOfDigits[0] += 1;
+              break;
+            case '2':
+              arrayOfDigits[1] += 1;
+              break;
+            case '3':
+              arrayOfDigits[2] += 1;
+              break;
+            case '4':
+              arrayOfDigits[3] += 1;
+              break;
+            case '5':
+              arrayOfDigits[4] += 1;
+              break;
+            case '6':
+              arrayOfDigits[5] += 1;
+              break;
+            default:
+              console.log("DEFAULT")
+          }
+        }
+      }
+      console.log(" Tablica numerków " + arrayOfDigits)
+
+      for (i = 0; i < arrayOfDigits.length; i++) {
+        if (arrayOfDigits[i] == 5) {
+          missingDigit = i + 1;
+          console.log(" Element Tablica numerków " + arrayOfDigits[i])
+          numberCondition = false;
+          break;
+        }
+        numberCondition = true;
+      }
+
+
+      if (numberCondition) {
+        alert("Nie ma cyfry występujące n-1 razy")
+      } else {
+        console.log(" Szukany numerek: " + missingDigit)
+      }
+
+
+
+    }
+
+    function secondStepFindOneMissingID() {
+      console.log("secondStepFindOneMissingID")
+
+
+      console.log("missing DIGIT: " + missingDigit)
+
+
+      for (i = 0; i < 17; i++) {
+        if (miniMatrixs[i].some(item => item == missingDigit) == false) {
+          missingID = i + 1;
+          break;
+        }
+      }
+      console.log("missing ID: " + missingID)
+
+    }
+
+    function secondStepFindCoor() {
+      console.log("secondStepFindCoor")
+      console.log("MISSING ID: " + missingID)
+
+      xCor = missingID;
+
+
+      // ZMIENIĆ NA SWITHC DLA KAŻDEGO MISSING ID BO MUSIMY DODAĆ KOLEJNY WARUNEK ABY SPRAWDZAŁ W PIONIE ORAZ POZIOMIE
+
+      /*       for (i = 0; i < 6; i++) {
+              if (missingID == 1 || missingID == 3 || missingID == 5) {
+                if (miniMatrixs[missingID][i] == 0) {
+                  switch (i) {
+                    case 0:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[12].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                          yCor = 0;
+                          break;
+                        }
+                      }
+                      break;
+                    case 1:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[13].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                          yCor = 1;
+                          break;
+                        }
+                      }
+                      break;
+                    case 2:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[14].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                          yCor = 2;
+                          break;
+                        }
+                      }
+                      break;
+                    case 3:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[12].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                          yCor = 3;
+                          break;
+                        }
+                      }
+                      break;
+                    case 4:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[13].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                          yCor = 4;
+                          break;
+                        }
+                      }
+                      break;
+                    case 5:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[14].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                          yCor = 5;
+                          break;
+                        }
+                      }
+                      break;
+                  }
+                }
+              } else if (missingID == 2 || missingID == 4 || missingID == 6) {
+                console.log("Druga czesc drabinki")
+                if (miniMatrixs[missingID-1][i] == 0) {
+                  switch (i) {
+                    case 0:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[15].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                          yCor = 0;
+                          break;
+                        }
+                      }
+                      break;
+                    case 1:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[16].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                          yCor = 1;
+                          break;
+                        }
+                      }
+                      break;
+                    case 2:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[17].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                          yCor = 2;
+                          break;
+                        }
+                      }
+                      break;
+                    case 3:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[15].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                          yCor = 3;
+                          break;
+                        }
+                      }
+                      break;
+                    case 4:
+                      for (j = 0; j < 6; j++) {
+                        if ((miniMatrixs[16].some(item => item == missingDigit)) || (miniMatrixs[7].some(item => item == missingDigit))) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                          yCor = 4;
+                          break;
+                        }
+                      }
+                      break;
+                    case 5:
+                      for (j = 0; j < 6; j++) {
+                        if (miniMatrixs[17].some(item => item == missingDigit)) {
+                          break;
+                        } else {
+                          console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                          yCor = 5;
+                          break;
+                        }
+                      }
+                      break;
+                  }
+                }
+              } else {
+                console.log("ERROR - WRONG ID")
+              }
+            } */
+      idForSwitch = missingID;
+      missingID = missingID - 1;
+
+
+      for (i = 0; i < 6; i++) {
+        switch (idForSwitch) {
+          case 1:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 2:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 3:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 4:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 5:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 6:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          default: {
+            console.log("Błąd w pętli  z ID")
+            break;
+          }
+        }
+      }
+
+      console.log("Szukane współrzędne: " + xCor + " - " + yCor)
+
+    }
+
+    // function for the third step
+
+    function thirdStepFindOneMissingID() {
+      console.log("thirdStepFindOneMissingID")
+
+      while (endCondition) {
+        for (i = 0; miniMatrixs.length; i++) {
+          for (j = 0; j < 6; j++) {
+            if (miniMatrixs[i][j] == 0) {
+              countOfZero++;
+            }
+          }
+          if (countOfZero == 2) {
+            xCorrdinate = i;
+            endCondition = false;
+            break;
+          } else if (i == 17 && countOfZero != 1) {
+            endCondition = false;
+            alert(" Nie ma macierzy z 2 wolnym miejscem!")
+            break;
+          } else {
+            countOfZero = 0;
+          }
+        }
+
+      }
+
+      console.log("Współrzędna X: " + xCorrdinate)
+      endCondition = true;
+      countOfZero = 0;
+
+    }
+
+    function thirdStepFindMissingDigits() {
+      console.log("thirdStepFindMissingDigits")
+
+      missingDigit = 99;
+      secondMissingDigit = 99;
+
+      for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+        copyArr[i] = miniMatrixs[xCorrdinate][i];
+      }
+
+      copyArr.sort();
+      console.log("macierz szukana: " + copyArr)
+      console.log("macierz wzorcowa: " + testArr)
+
+      for (i = 0; i < 6; i++) {
+        if (copyArr[i + 1] != testArr[i] && missingDigit == 99) {
+          console.log("Brakuje cyfry: " + testArr[i]);
+          missingDigit = testArr[i];
+        } else if (copyArr[i + 1] != testArr[i] && secondMissingDigit == 99) {
+          console.log("Brakuje cyfry: " + testArr[i]);
+          secondMissingDigit = testArr[i];
+        }
+      }
+      console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
+    }
+
+    function thirdStepFindCorsToFillDigit() {
+
+      // sprawdzenie jakiej cyfry brakuje w macierzy
+      console.log("thirdStepFindCorsToFillDigit");
+
+      console.log("Macierz z dwoma pustymi polami" + miniMatrixs[xCorrdinate]);
+
+      let copyArr = [];
+
+      yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
+      console.log(yCorrdinate);
+      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
+
+      // We copied our matrix to temporary matrix (copyArr) and when I found index for "0", I fill to it expample number(9).
+      // Next, I repeat function to found second cor for '0'
+      for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+        copyArr[i] = miniMatrixs[xCorrdinate][i];
+      }
+      copyArr[yCorrdinate] = 9;
+      ySecondCor = copyArr.indexOf('0');
+      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+    }
+
+    function thirdStepFillDigitsInRightPlace() {
+      console.log("thirdStepFillDigitsInRightPlace")
+
+      console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
+      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
+      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+
+      missingID = xCorrdinate;
+      idForSwitch = xCorrdinate + 1;
+
+      console.log("MissingID: " + missingID);
+      console.log("idForSwitch: " + idForSwitch);
+      let tempCounter = 0;
+
+
+      for (i = 0; i < 6; i++) {
+        switch (idForSwitch) {
+          case 1:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 2:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE tutaj" + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 3:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 4:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 5:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 6:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          default: {
+            console.log("Błąd w pętli  z ID")
+            break;
+          }
+        }
+      }
+
+      if (tempCounter == 2) {
+        console.log("tempCounter = 2. Musimy wykonać dla drugiej cyfry ")
+        tempCounter = 0;
+        missingDigit = secondMissingDigit;
+      } else {
+        console.log("Musimy wpisać : " + missingDigit)
+        xCor = xCorrdinate+1;
+        yCor = yCorrdinate;
+        console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
+      }
+
+      for (i = 0; i < 6; i++) {
+        switch (idForSwitch) {
+          case 1:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 2:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE tutaj" + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 3:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 4:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 5:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 6:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      yCor = 0;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      yCor = 1;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      yCor = 2;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      yCor = 3;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          default: {
+            console.log("Błąd w pętli  z ID")
+            break;
+          }
+        }
+      }
+
+      if (tempCounter == 2) {
+        console.log("tempCounter = 2. Musimy wykonać dla drugiej cyfry ")
+        tempCounter = 0;
+      } else {
+        console.log("Musimy wpisać : " + missingDigit)
+        xCor = xCorrdinate+1;
+        yCor = yCorrdinate;
+        console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
+      }
+
     }
 
 
-
-    return { gamesArr, drawGame, indexGame, testValue, sprawdz, confirmBoardGame, nextMove, checkGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit }
+    return { drawGame, sprawdz, confirmBoardGame, nextMove, checkGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit, secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace }
   }
 }
 </script>
@@ -365,8 +2101,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-
-
 
 .containerApp {
   align-items: center;
@@ -386,58 +2120,15 @@ export default {
     width: 90vw;
   }
 
-
-  .containerApp__game__buttons {
-    display: flex;
-    border: solid 3px yellowgreen;
-    flex-direction: column;
-    height: 200px;
-    margin: 20px;
-    width: 90vw;
-
-    &--title {
-      color: yellowgreen;
-      text-align: center;
-    }
-
-    &--box {
-      align-items: center;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-
-      .buttons--game {
-        background-color: aqua;
-        border: solid 2px white;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 600;
-        height: auto;
-        margin: 10px 0px;
-        padding: 12px;
-        width: auto;
-      }
-    }
-
-    .inputField {
-      background-color: red;
-      font-size: 24px;
-      height: 40px;
-      width: 40px;
-    }
-
-  }
-
   .containerApp__game {
 
     align-items: center;
-    border: solid 3px aqua;
+    border: solid 3px whitesmoke;
+    border-radius: 8px;
     color: aqua;
     display: flex;
     flex-direction: row;
     height: 600px;
-    /*     justify-content: center; */
     justify-content: space-around;
     margin: 20px auto;
     width: 90vw;
@@ -445,59 +2136,16 @@ export default {
 
     .containerApp__game__board {
       align-content: space-around;
-      border: solid 3px yellowgreen;
+      border: solid 3px whitesmoke;
+      border-radius: 8px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
       height: 500px;
       margin: 20px;
       width: 500px;
-
-      &__field {
-        align-content: space-around;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        font-size: 1rem;
-        height: 30%;
-        text-align: center;
-        width: 48%;
-
-        &__single {
-          border: solid 1px white;
-          font-size: 2rem;
-          height: 30%;
-          text-align: center;
-          width: 30%;
-        }
-      }
-
-      .inputField {
-        background-color: yellowgreen;
-        font-size: 24px;
-        height: 40px;
-        width: 25%;
-        text-align: center;
-      }
-
-      .inputConfirmed {
-        color: white;
-      }
-    }
-
-    .containerApp__game__helpButtons {
-      border: solid 1px red;
-      height: 500px;
-      width: 300px;
-
-      .buttons--help {
-        margin: 20px;
-      }
     }
 
   }
-
-
-
 }
 </style>
