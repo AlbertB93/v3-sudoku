@@ -1,7 +1,7 @@
 <template>
   <div class="containerApp">
     <!--     <h1>Sudoku</h1> -->
-    <ButtonsGame :fillBoard="fillBoard" />
+    <!--     <ButtonsGame :fillBoard="fillBoard" /> -->
     <div class="containerApp__game">
       <ButtonsSingleGame :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
         :findMissingDigit="findMissingDigit" :fillMissingDigit="fillMissingDigit" :fillBoard="fillBoard"
@@ -9,10 +9,14 @@
         :secondStepFindOneMissingID="secondStepFindOneMissingID" :secondStepFindCoor="secondStepFindCoor"
         :thirdStepFindOneMissingID="thirdStepFindOneMissingID" :thirdStepFindMissingDigits="thirdStepFindMissingDigits"
         :thirdStepFindCorsToFillDigit="thirdStepFindCorsToFillDigit"
-        :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" />
+        :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :finishGame="finishGame" :firstStep="firstStep"
+        :secondStep="secondStep" :thirdStep="thirdStep" />
       <div class="containerApp__game__board">
         <BoardFields />
       </div>
+      <!--       <div class="containerApp__game__screen">
+       <ScreenForSteps />
+      </div> -->
     </div>
   </div>
 </template>
@@ -22,16 +26,18 @@
 /* import { computed } from "@vue/reactivity";
 import { ref } from "vue";
 import { games } from "../data/Games" */
-import ButtonsGame from "../components/buttons/ButtonsGame.vue"
+/* import ButtonsGame from "../components/buttons/ButtonsGame.vue" */
 import ButtonsSingleGame from "./buttons/ButtonsSingleGame.vue";
 import BoardFields from "./BoardFields.vue";
+/* import ScreenForSteps from "./ScreenForSteps.vue"; */
 
 export default {
   name: 'SudokuContainer',
   components: {
-    ButtonsGame,
+    /*     ButtonsGame, */
     ButtonsSingleGame,
     BoardFields,
+    /*     ScreenForSteps, */
   },
 
   setup() {
@@ -39,6 +45,7 @@ export default {
     //counters
     let i = 0;
     let j = 0;
+    let counterRowForStep = 0;
     // arrays for the help
     let rows = [];
     let columns = [];
@@ -61,6 +68,12 @@ export default {
 
     let ySecondCor = 9;
     let secondMissingDigit = 99;
+
+    //conditions
+
+    let conFirstStep = true;
+    let conSecondStep = true;
+    let conFinishGame = false;
 
     function drawGame() {
       console.log("drawGame");
@@ -116,8 +129,67 @@ export default {
       console.log("finishGame");
 
 
+      /*        for (i = 0; i < 17; i++) {
+              console.log("Macierze: " + miniMatrixs[i]);
+            }
+            for (i = 0; i < 17; i++) {
+              if (!miniMatrixs[i].some(item => item == 9)) {
+                console.log("Macierz zawiera zero, kontynuować")
+              } else {
+                console.log("Macierz nie zawiera zera. Koniec gry.")
+              }
+      
+            } */
+
+
+
+      /*     console.log("Test: " + !isZero());
+     */
+      /* conFinishGame = true; */
+
+
+      while (!conFinishGame) {
+        while (conFirstStep) {
+          firstStep();
+          if (!isZero) {
+            alert("Sudoku ROZWIĄZANE")
+            break;
+          }
+        }
+        while (conSecondStep) {
+          secondStep();
+                    if (!isZero) {
+            alert("Sudoku ROZWIĄZANE")
+            break;
+          }
+
+        }
+        /*         console.log("conFirstStep: " + conFirstStep);
+                console.log("conSecondStep: " + conSecondStep); */
+        if (conFirstStep == false && conSecondStep == false) {
+          thirdStep();
+              if (!isZero) {
+            alert("Sudoku ROZWIĄZANE")
+            break;
+          }
+          conFirstStep = true;
+          conSecondStep = true;
+        }
+      }
     }
 
+    function isZero() {
+      for (i = 0; i < 6; i++) {
+        for (j = 0; j < 6; j++) {
+          if (miniMatrixs[i][j] == 0) {
+            conFinishGame = true;
+            return 1;
+          } else {
+            return -1;
+          }
+        }
+      }
+    }
 
     // functions for the main buttons
 
@@ -222,7 +294,9 @@ export default {
     function fillMissingDigit() {
       console.log("fillMissingDigit")
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].value = missingDigit;
-      document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed")
+      document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
+      /*       document.getElementById('rowOfStep'+counterRowForStep).innerHTML = "Krok " + (counterRowForStep+1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate +"] [" + yCorrdinate + "]";
+            counterRowForStep++; */
     }
 
     // functions for the first step
@@ -232,6 +306,7 @@ export default {
 
       // znajdywanie 0 w małych macierzach i dopisywanie ich do tablicy.
 
+      endCondition = true;
       while (endCondition) {
         for (i = 0; miniMatrixs.length; i++) {
           for (j = 0; j < 6; j++) {
@@ -246,7 +321,8 @@ export default {
           } else if (i == 17 && countOfZero != 1) {
             endCondition = false;
             alert(" Nie ma macierzy z 1 wolnym miejscem!")
-            break;
+            return -1;
+            /* break; */
           } else {
             countOfZero = 0;
           }
@@ -257,6 +333,8 @@ export default {
       console.log("Współrzędna X: " + xCorrdinate)
       endCondition = true;
       countOfZero = 0;
+
+
 
     }
 
@@ -418,6 +496,49 @@ export default {
       }
       console.log(miniMatrixs[xCorrdinate]);
     }
+    function firstStep() {
+
+      fillBoard();
+      if (findEmptyFieldsInMatrix() != -1) {
+        console.log("KROK NR 1")
+        findCorsToFillDigit();
+        findMissingDigit();
+        fillMissingDigit();
+      } else {
+        alert(" Wykonaj krok nr 2")
+        console.log(" Nie wykonano kroku nr 1")
+        conFirstStep = false;
+      }
+    }
+
+    function secondStep() {
+
+      fillBoard();
+
+      if (secondStepFindOneMissingDigit() != -1) {
+        console.log("KROK NR 2")
+        secondStepFindOneMissingID();
+        secondStepFindCoor();
+        fillMissingDigit();
+        conFirstStep = true;
+      } else {
+        fillBoard();
+        alert(" Wykonaj krok nr 3")
+        conSecondStep = false;
+        conFirstStep = false;
+        console.log(" Nie wykonano kroku nr 2")
+      }
+    }
+
+    function thirdStep() {
+      console.log("KROK NR 3")
+      fillBoard();
+      thirdStepFindOneMissingID();
+      thirdStepFindMissingDigits();
+      thirdStepFindCorsToFillDigit();
+      thirdStepFillDigitsInRightPlace();
+      fillMissingDigit();
+    }
 
     // function for the buttons on the left, help buttons second 
 
@@ -471,6 +592,7 @@ export default {
 
       if (numberCondition) {
         alert("Nie ma cyfry występujące n-1 razy")
+        return -1;
       } else {
         console.log(" Szukany numerek: " + missingDigit)
       }
@@ -1101,8 +1223,10 @@ export default {
     function thirdStepFindOneMissingID() {
       console.log("thirdStepFindOneMissingID")
 
+
+      endCondition = true;
       while (endCondition) {
-        for (i = 0; miniMatrixs.length; i++) {
+        for (i = 0; i < miniMatrixs.length; i++) {
           for (j = 0; j < 6; j++) {
             if (miniMatrixs[i][j] == 0) {
               countOfZero++;
@@ -1123,7 +1247,7 @@ export default {
 
       }
 
-      console.log("Współrzędna X: " + xCorrdinate)
+      console.log("Współrzędna macierzy z dwoma zerami: " + xCorrdinate)
       endCondition = true;
       countOfZero = 0;
 
@@ -1135,23 +1259,36 @@ export default {
       missingDigit = 99;
       secondMissingDigit = 99;
 
-      for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-        copyArr[i] = miniMatrixs[xCorrdinate][i];
-      }
+      console.log("macierz szukana: " + miniMatrixs[xCorrdinate])
+      /*       for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+              copyArr[i] = miniMatrixs[xCorrdinate][i];
+            }
+      
+            copyArr.sort();
+            console.log("macierz szukana posortowna: " + copyArr)
+            console.log("macierz wzorcowa: " + testArr)
+      
+            for (i = 0; i < 6; i++) {
+              if (copyArr[i + 1] != testArr[i] && missingDigit == 99) {
+                console.log("Brakuje cyfry: " + testArr[i]);
+                missingDigit = testArr[i];
+              } else if (copyArr[i + 1] != testArr[i] && secondMissingDigit == 99) {
+                console.log("Brakuje cyfry: " + testArr[i]);
+                secondMissingDigit = testArr[i];
+              }
+            } */
 
-      copyArr.sort();
-      console.log("macierz szukana: " + copyArr)
-      console.log("macierz wzorcowa: " + testArr)
-
-      for (i = 0; i < 6; i++) {
-        if (copyArr[i + 1] != testArr[i] && missingDigit == 99) {
-          console.log("Brakuje cyfry: " + testArr[i]);
-          missingDigit = testArr[i];
-        } else if (copyArr[i + 1] != testArr[i] && secondMissingDigit == 99) {
-          console.log("Brakuje cyfry: " + testArr[i]);
-          secondMissingDigit = testArr[i];
+      for (i = 1; i < 7; i++) {
+        if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
+          if (missingDigit == 99) {
+            missingDigit = i;
+          } else {
+            secondMissingDigit = i;
+          }
         }
       }
+
+
       console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
     }
 
@@ -1636,7 +1773,7 @@ export default {
         missingDigit = secondMissingDigit;
       } else {
         console.log("Musimy wpisać : " + missingDigit)
-        xCor = xCorrdinate+1;
+        xCor = xCorrdinate + 1;
         yCor = yCorrdinate;
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
@@ -2083,7 +2220,7 @@ export default {
         tempCounter = 0;
       } else {
         console.log("Musimy wpisać : " + missingDigit)
-        xCor = xCorrdinate+1;
+        xCor = xCorrdinate + 1;
         yCor = yCorrdinate;
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
@@ -2091,7 +2228,8 @@ export default {
     }
 
 
-    return { drawGame, sprawdz, confirmBoardGame, nextMove, checkGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit, secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace }
+
+    return { drawGame, sprawdz, confirmBoardGame, nextMove, checkGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit, secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace, counterRowForStep, firstStep, secondStep, thirdStep, isZero }
   }
 }
 </script>
@@ -2128,11 +2266,10 @@ export default {
     color: aqua;
     display: flex;
     flex-direction: row;
-    height: 600px;
+    height: 800px;
     justify-content: space-around;
     margin: 20px auto;
     width: 90vw;
-
 
     .containerApp__game__board {
       align-content: space-around;
@@ -2141,9 +2278,9 @@ export default {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
-      height: 500px;
+      height: 400px;
       margin: 20px;
-      width: 500px;
+      width: 400px;
     }
 
   }

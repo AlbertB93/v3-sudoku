@@ -3,6 +3,7 @@
         <div class="buttons--main--box">
             <button class="single--button" @click="fillBoard"> Wypełnij wewnętrzne macierze</button>
             <button class="single--button" @click="fillMissingDigit"> Wpisz brakującą cyfrę</button>
+            <button class="single--button" @click="finishGame"> ROZWIĄŻ SUDOKU</button>
         </div>
         <div class="buttons--help--box">
             <button class="single--button" @click="findEmptyFieldsInMatrix"> Podaj macierze z ilością pustych
@@ -23,6 +24,11 @@
             <button class="single--button" @click="thirdStepFillDigitsInRightPlace"> 3. Wpisz cyfrę w jedno z dwóch
                 miejsc</button>
         </div>
+        <div class="buttons--help--box">
+            <button class="single--button" @click="firstStep"> PIERWSZY KROK</button>
+            <button class="single--button" @click="secondStep"> DRUGI KROK</button>
+            <button class="single--button" @click="thirdStep"> TRZECI KROK</button>
+        </div>
     </div>
 </template>
 
@@ -32,7 +38,7 @@
 
 export default {
     name: 'ButtonsSingleGame',
-    props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindOneMissingID', 'thirdStepFindMissingDigits', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace'],
+    props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindOneMissingID', 'thirdStepFindMissingDigits', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep'],
 
 }
 
@@ -46,8 +52,9 @@ export default {
 
     display: flex;
     flex-direction: column;
-    height: 500px;
-    width: 800px;
+    justify-content: space-around;
+    height: 700px;
+    width: 400px;
 
     .buttons--main--box,
     .buttons--help--box {
