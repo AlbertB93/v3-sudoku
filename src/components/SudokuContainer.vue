@@ -14,8 +14,8 @@
       <div class="containerApp__game__board">
         <BoardFields />
       </div>
-      <!--       <div class="containerApp__game__screen">
-       <ScreenForSteps />
+<!--       <div class="containerApp__game__screen">
+        <ScreenForSteps />
       </div> -->
     </div>
   </div>
@@ -37,7 +37,7 @@ export default {
     /*     ButtonsGame, */
     ButtonsSingleGame,
     BoardFields,
-    /*     ScreenForSteps, */
+   /*  ScreenForSteps, */
   },
 
   setup() {
@@ -125,57 +125,49 @@ export default {
       console.log("checkGame");
     }
 
+    // function, which sholud finish game for one click
     function finishGame() {
       console.log("finishGame");
 
+        // dopóki warunek końca gry "conFinishGame" jeśli fałszywy to wykonujemy kroki
+        // Step 1. Sprawdzamy czy isZero zwraca -1, jeśli tak to koniec gry, nie ma pola o wartości zero na planszy.
+        // Step 2.
+        // Step 3. Jeśli warunek dla firstStep jest fałszywy ( nie ma minimacierzy z jednym wolnym polem) oraz warunek dla secondStep jest fałszywy ( nie ma cyfry występującej na planszy n-1 raza)
+        // Wtedy wykonujemy Step3. Step 3  - szuka minimacierzy, w której są dwa puste pola, znajduje jakich cyfr brakuje, znajduje dla nich współrzędne oraz wybiera odpowiednią cyfrę do wpisania.
+        // Po wykonaniu kroku Step 3, ustawiamy znowu warunki "true" dla Step1 i Step 2 aby mogły się wykonać ( są prostsze do zrealizowania ).
 
-      /*        for (i = 0; i < 17; i++) {
-              console.log("Macierze: " + miniMatrixs[i]);
-            }
-            for (i = 0; i < 17; i++) {
-              if (!miniMatrixs[i].some(item => item == 9)) {
-                console.log("Macierz zawiera zero, kontynuować")
-              } else {
-                console.log("Macierz nie zawiera zera. Koniec gry.")
+            while (!conFinishGame) {
+              while (conFirstStep) {
+                firstStep();
+                if (!isZero) {
+                  alert("Sudoku ROZWIĄZANE")
+                  break;
+                }
               }
+              while (conSecondStep) {
+                secondStep();
+                if (!isZero) {
+                  alert("Sudoku ROZWIĄZANE")
+                  break;
+                }
       
-            } */
+              }
+              if (conFirstStep == false && conSecondStep == false) {
+                thirdStep();
+                if (!isZero) {
+                  alert("Sudoku ROZWIĄZANE")
+                  break;
+                }
+                conFirstStep = true;
+                conSecondStep = true;
+              }
+            } 
 
 
 
-      /*     console.log("Test: " + !isZero());
-     */
-      /* conFinishGame = true; */
 
 
-      while (!conFinishGame) {
-        while (conFirstStep) {
-          firstStep();
-          if (!isZero) {
-            alert("Sudoku ROZWIĄZANE")
-            break;
-          }
-        }
-        while (conSecondStep) {
-          secondStep();
-                    if (!isZero) {
-            alert("Sudoku ROZWIĄZANE")
-            break;
-          }
 
-        }
-        /*         console.log("conFirstStep: " + conFirstStep);
-                console.log("conSecondStep: " + conSecondStep); */
-        if (conFirstStep == false && conSecondStep == false) {
-          thirdStep();
-              if (!isZero) {
-            alert("Sudoku ROZWIĄZANE")
-            break;
-          }
-          conFirstStep = true;
-          conSecondStep = true;
-        }
-      }
     }
 
     function isZero() {
@@ -293,10 +285,20 @@ export default {
 
     function fillMissingDigit() {
       console.log("fillMissingDigit")
+
+
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].value = missingDigit;
+
+      /*       setTimeout(() => {
+              document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
+            }, 5000) */
+
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
-      /*       document.getElementById('rowOfStep'+counterRowForStep).innerHTML = "Krok " + (counterRowForStep+1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate +"] [" + yCorrdinate + "]";
-            counterRowForStep++; */
+
+      document.getElementById('rowOfStep' + counterRowForStep).innerHTML = "Krok " + (counterRowForStep + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
+      counterRowForStep++;
+
+
     }
 
     // functions for the first step
@@ -499,6 +501,8 @@ export default {
     function firstStep() {
 
       fillBoard();
+
+
       if (findEmptyFieldsInMatrix() != -1) {
         console.log("KROK NR 1")
         findCorsToFillDigit();

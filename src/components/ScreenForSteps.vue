@@ -29,6 +29,30 @@
         <div class="rowOfStep" id="rowOfStep8">
 
         </div>
+        <div class="rowOfStep" id="rowOfStep9">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep10">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep11">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep12">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep13">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep14">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep15">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep16">
+
+        </div>
     </div>
 </template>
 
