@@ -14,7 +14,7 @@
       <div class="containerApp__game__board">
         <BoardFields />
       </div>
-<!--       <div class="containerApp__game__screen">
+      <!--       <div class="containerApp__game__screen">
         <ScreenForSteps />
       </div> -->
     </div>
@@ -37,7 +37,7 @@ export default {
     /*     ButtonsGame, */
     ButtonsSingleGame,
     BoardFields,
-   /*  ScreenForSteps, */
+    /*  ScreenForSteps, */
   },
 
   setup() {
@@ -129,39 +129,39 @@ export default {
     function finishGame() {
       console.log("finishGame");
 
-        // dopóki warunek końca gry "conFinishGame" jeśli fałszywy to wykonujemy kroki
-        // Step 1. Sprawdzamy czy isZero zwraca -1, jeśli tak to koniec gry, nie ma pola o wartości zero na planszy.
-        // Step 2.
-        // Step 3. Jeśli warunek dla firstStep jest fałszywy ( nie ma minimacierzy z jednym wolnym polem) oraz warunek dla secondStep jest fałszywy ( nie ma cyfry występującej na planszy n-1 raza)
-        // Wtedy wykonujemy Step3. Step 3  - szuka minimacierzy, w której są dwa puste pola, znajduje jakich cyfr brakuje, znajduje dla nich współrzędne oraz wybiera odpowiednią cyfrę do wpisania.
-        // Po wykonaniu kroku Step 3, ustawiamy znowu warunki "true" dla Step1 i Step 2 aby mogły się wykonać ( są prostsze do zrealizowania ).
+      // dopóki warunek końca gry "conFinishGame" jeśli fałszywy to wykonujemy kroki
+      // Step 1. Sprawdzamy czy isZero zwraca -1, jeśli tak to koniec gry, nie ma pola o wartości zero na planszy.
+      // Step 2.
+      // Step 3. Jeśli warunek dla firstStep jest fałszywy ( nie ma minimacierzy z jednym wolnym polem) oraz warunek dla secondStep jest fałszywy ( nie ma cyfry występującej na planszy n-1 raza)
+      // Wtedy wykonujemy Step3. Step 3  - szuka minimacierzy, w której są dwa puste pola, znajduje jakich cyfr brakuje, znajduje dla nich współrzędne oraz wybiera odpowiednią cyfrę do wpisania.
+      // Po wykonaniu kroku Step 3, ustawiamy znowu warunki "true" dla Step1 i Step 2 aby mogły się wykonać ( są prostsze do zrealizowania ).
 
-            while (!conFinishGame) {
-              while (conFirstStep) {
-                firstStep();
-                if (!isZero) {
-                  alert("Sudoku ROZWIĄZANE")
-                  break;
-                }
-              }
-              while (conSecondStep) {
-                secondStep();
-                if (!isZero) {
-                  alert("Sudoku ROZWIĄZANE")
-                  break;
-                }
-      
-              }
-              if (conFirstStep == false && conSecondStep == false) {
-                thirdStep();
-                if (!isZero) {
-                  alert("Sudoku ROZWIĄZANE")
-                  break;
-                }
-                conFirstStep = true;
-                conSecondStep = true;
-              }
-            } 
+      while (!conFinishGame) {
+        while (conFirstStep) {
+          firstStep();
+          if (!isZero) {
+            alert("Sudoku ROZWIĄZANE")
+            break;
+          }
+        }
+        while (conSecondStep) {
+          secondStep();
+          if (!isZero) {
+            alert("Sudoku ROZWIĄZANE")
+            break;
+          }
+
+        }
+        if (conFirstStep == false && conSecondStep == false) {
+          thirdStep();
+          if (!isZero) {
+            alert("Sudoku ROZWIĄZANE")
+            break;
+          }
+          conFirstStep = true;
+          conSecondStep = true;
+        }
+      }
 
 
 
@@ -170,7 +170,12 @@ export default {
 
     }
 
+    // function, which check is there any "O" in fields
     function isZero() {
+
+      // przeszukujemy każde pole, jeśli znajdziemy 0 to ustawiamy warunek końca Sudoku na true.
+      // Warunkiem kończącym sudoku jest conFinishGame ustawiony na false lub -1.
+
       for (i = 0; i < 6; i++) {
         for (j = 0; j < 6; j++) {
           if (miniMatrixs[i][j] == 0) {
@@ -186,6 +191,7 @@ export default {
     // functions for the main buttons
 
 
+    // function, which fill interial minimatrix
     function fillBoard() {
       console.log("fillBoard")
 
@@ -283,6 +289,7 @@ export default {
 
     }
 
+    // function, which fill right number for right place in BoardGame
     function fillMissingDigit() {
       console.log("fillMissingDigit")
 
@@ -295,14 +302,15 @@ export default {
 
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
 
-      document.getElementById('rowOfStep' + counterRowForStep).innerHTML = "Krok " + (counterRowForStep + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
-      counterRowForStep++;
+      /*       document.getElementById('rowOfStep' + counterRowForStep).innerHTML = "Krok " + (counterRowForStep + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
+            counterRowForStep++; */
 
 
     }
 
-    // functions for the first step
+    // FUNCTIONS FOR THE FIRST STEP
 
+    // function, which find miniMatrix, which has one empty field and return ID.
     function findEmptyFieldsInMatrix() {
       console.log("findEmptyFieldsInMatrix");
 
@@ -340,6 +348,7 @@ export default {
 
     }
 
+    // function, which find corrdinates in miniMatrix for the empty field
     function findCorsToFillDigit() {
 
       // sprawdzenie jakiej cyfry brakuje w macierzy
@@ -477,6 +486,7 @@ export default {
 
     }
 
+    // function, which find one missing number in miniMatrix, which has one empty field.
     function findMissingDigit() {
       console.log("FindMissingDigit");
 
@@ -498,54 +508,15 @@ export default {
       }
       console.log(miniMatrixs[xCorrdinate]);
     }
-    function firstStep() {
-
-      fillBoard();
 
 
-      if (findEmptyFieldsInMatrix() != -1) {
-        console.log("KROK NR 1")
-        findCorsToFillDigit();
-        findMissingDigit();
-        fillMissingDigit();
-      } else {
-        alert(" Wykonaj krok nr 2")
-        console.log(" Nie wykonano kroku nr 1")
-        conFirstStep = false;
-      }
-    }
 
-    function secondStep() {
-
-      fillBoard();
-
-      if (secondStepFindOneMissingDigit() != -1) {
-        console.log("KROK NR 2")
-        secondStepFindOneMissingID();
-        secondStepFindCoor();
-        fillMissingDigit();
-        conFirstStep = true;
-      } else {
-        fillBoard();
-        alert(" Wykonaj krok nr 3")
-        conSecondStep = false;
-        conFirstStep = false;
-        console.log(" Nie wykonano kroku nr 2")
-      }
-    }
-
-    function thirdStep() {
-      console.log("KROK NR 3")
-      fillBoard();
-      thirdStepFindOneMissingID();
-      thirdStepFindMissingDigits();
-      thirdStepFindCorsToFillDigit();
-      thirdStepFillDigitsInRightPlace();
-      fillMissingDigit();
-    }
+    // FUNCTIONS FOR THE SECOND STEP
 
     // function for the buttons on the left, help buttons second 
 
+
+    // function, which find one number , which occurs in Sudoku n-1 times
     function secondStepFindOneMissingDigit() {
       console.log("secondStepFindOneMissingDigit");
 
@@ -605,6 +576,7 @@ export default {
 
     }
 
+    // function, which find miniMatrix ID for one number , which occurs in Sudoku n-1 times. This function return matrix ID, which wanted number isn't occur. 
     function secondStepFindOneMissingID() {
       console.log("secondStepFindOneMissingID")
 
@@ -622,6 +594,7 @@ export default {
 
     }
 
+    // function, which find corrdinates in miniMatrix for the empty field and wanted number.
     function secondStepFindCoor() {
       console.log("secondStepFindCoor")
       console.log("MISSING ID: " + missingID)
@@ -1222,7 +1195,7 @@ export default {
 
     }
 
-    // function for the third step
+    // FUNCTIONS FOR THE THIRD STEP
 
     function thirdStepFindOneMissingID() {
       console.log("thirdStepFindOneMissingID")
@@ -2230,6 +2203,54 @@ export default {
       }
 
     }
+
+
+    function firstStep() {
+
+      fillBoard();
+
+
+      if (findEmptyFieldsInMatrix() != -1) {
+        console.log("KROK NR 1")
+        findCorsToFillDigit();
+        findMissingDigit();
+        fillMissingDigit();
+      } else {
+        alert(" Wykonaj krok nr 2")
+        console.log(" Nie wykonano kroku nr 1")
+        conFirstStep = false;
+      }
+    }
+
+    function secondStep() {
+
+      fillBoard();
+
+      if (secondStepFindOneMissingDigit() != -1) {
+        console.log("KROK NR 2")
+        secondStepFindOneMissingID();
+        secondStepFindCoor();
+        fillMissingDigit();
+        conFirstStep = true;
+      } else {
+        fillBoard();
+        alert(" Wykonaj krok nr 3")
+        conSecondStep = false;
+        conFirstStep = false;
+        console.log(" Nie wykonano kroku nr 2")
+      }
+    }
+
+    function thirdStep() {
+      console.log("KROK NR 3")
+      fillBoard();
+      thirdStepFindOneMissingID();
+      thirdStepFindMissingDigits();
+      thirdStepFindCorsToFillDigit();
+      thirdStepFillDigitsInRightPlace();
+      fillMissingDigit();
+    }
+
 
 
 
