@@ -46,6 +46,9 @@ export default {
     let i = 0;
     let j = 0;
     let counterRowForStep = 0;
+    // counters for third step
+    let tempCounter = 0;
+    let tempCounterFinish = 0;
     // arrays for the help
     let rows = [];
     let columns = [];
@@ -60,6 +63,7 @@ export default {
     let testArr = [1, 2, 3, 4, 5, 6]
     let copyArr = [];
     let idForSwitch = 99;
+    let oldXCorrdinate = 99;
 
     // for the second help
     let missingID = 99;
@@ -146,6 +150,7 @@ export default {
         }
         while (conSecondStep) {
           secondStep();
+          conFirstStep = true;
           if (!isZero) {
             alert("Sudoku ROZWIĄZANE")
             break;
@@ -368,19 +373,19 @@ export default {
         xCor = xCorrdinate + 1;
         yCor = yCorrdinate;
       } else if (xCorrdinate == 6 || xCorrdinate == 7) {
-        if (yCorrdinate < 4) {
+        if (yCorrdinate < 3) {
           xCor = 1;
         } else {
           xCor = 2;
         }
       } else if (xCorrdinate == 8 || xCorrdinate == 9) {
-        if (yCorrdinate < 4) {
+        if (yCorrdinate < 3) {
           xCor = 3;
         } else {
           xCor = 4;
         }
       } else if (xCorrdinate == 10 || xCorrdinate == 11) {
-        if (yCorrdinate < 4) {
+        if (yCorrdinate < 3) {
           xCor = 5;
         } else {
           xCor = 6;
@@ -388,7 +393,7 @@ export default {
       } else if (xCorrdinate == 12 || xCorrdinate == 13 || xCorrdinate == 14) {
         if (yCorrdinate < 2) {
           xCor = 1;
-        } else if (yCorrdinate > 2 && yCorrdinate < 5) {
+        } else if (yCorrdinate >= 2 && yCorrdinate < 4) {
           xCor = 3;
         } else {
           xCor = 5;
@@ -411,19 +416,19 @@ export default {
             yCor = yCorrdinate;
             break;
           case 1:
-            yCor = yCorrdinate + 3;
+            yCor = yCorrdinate + 2;
             break;
           case 2:
             yCor = yCorrdinate - 2;
             break;
           case 3:
-            yCor = yCorrdinate + 1;
+            yCor = yCorrdinate;
             break;
           case 4:
             yCor = yCorrdinate - 4;
             break;
           case 5:
-            yCor = yCorrdinate - 1;
+            yCor = yCorrdinate - 2;
             break;
         }
       } else if (xCorrdinate == 13 || xCorrdinate == 16) {
@@ -432,7 +437,7 @@ export default {
             yCor = yCorrdinate + 1;
             break;
           case 1:
-            yCor = yCorrdinate + 4;
+            yCor = yCorrdinate + 3;
             break;
           case 2:
             yCor = yCorrdinate - 1;
@@ -445,7 +450,7 @@ export default {
             yCor = yCorrdinate - 3;
             break;
           case 5:
-            yCor = yCorrdinate;
+            yCor = yCorrdinate - 1;
             break;
         }
       } else if (xCorrdinate == 14 || xCorrdinate == 17) {
@@ -454,19 +459,19 @@ export default {
             yCor = yCorrdinate + 2;
             break;
           case 1:
-            yCor = yCorrdinate + 5;
+            yCor = yCorrdinate + 4;
             break;
           case 2:
             yCor = yCorrdinate;
             break;
           case 3:
-            yCor = yCorrdinate + 3;
+            yCor = yCorrdinate + 2;
             break;
           case 4:
             yCor = yCorrdinate - 2;
             break;
           case 5:
-            yCor = yCorrdinate + 1;
+            yCor = yCorrdinate;
             break;
         }
       } else if (xCorrdinate == 6 || xCorrdinate == 8 || xCorrdinate == 10) {
@@ -1201,6 +1206,7 @@ export default {
       console.log("thirdStepFindOneMissingID")
 
 
+
       endCondition = true;
       while (endCondition) {
         for (i = 0; i < miniMatrixs.length; i++) {
@@ -1209,7 +1215,7 @@ export default {
               countOfZero++;
             }
           }
-          if (countOfZero == 2) {
+          if (countOfZero == 2 && oldXCorrdinate != i) {
             xCorrdinate = i;
             endCondition = false;
             break;
@@ -1225,6 +1231,8 @@ export default {
       }
 
       console.log("Współrzędna macierzy z dwoma zerami: " + xCorrdinate)
+      oldXCorrdinate = xCorrdinate;
+      console.log("oldXCorrdinate: " + oldXCorrdinate)
       endCondition = true;
       countOfZero = 0;
 
@@ -1237,23 +1245,6 @@ export default {
       secondMissingDigit = 99;
 
       console.log("macierz szukana: " + miniMatrixs[xCorrdinate])
-      /*       for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-              copyArr[i] = miniMatrixs[xCorrdinate][i];
-            }
-      
-            copyArr.sort();
-            console.log("macierz szukana posortowna: " + copyArr)
-            console.log("macierz wzorcowa: " + testArr)
-      
-            for (i = 0; i < 6; i++) {
-              if (copyArr[i + 1] != testArr[i] && missingDigit == 99) {
-                console.log("Brakuje cyfry: " + testArr[i]);
-                missingDigit = testArr[i];
-              } else if (copyArr[i + 1] != testArr[i] && secondMissingDigit == 99) {
-                console.log("Brakuje cyfry: " + testArr[i]);
-                secondMissingDigit = testArr[i];
-              }
-            } */
 
       for (i = 1; i < 7; i++) {
         if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
@@ -1264,7 +1255,6 @@ export default {
           }
         }
       }
-
 
       console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
     }
@@ -1298,13 +1288,15 @@ export default {
       console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
       console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
       console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-
+      console.log("--------------------------------------------");
       missingID = xCorrdinate;
       idForSwitch = xCorrdinate + 1;
 
       console.log("MissingID: " + missingID);
       console.log("idForSwitch: " + idForSwitch);
-      let tempCounter = 0;
+      console.log("--------------------------------------------");
+
+      tempCounter = 0;
 
 
       for (i = 0; i < 6; i++) {
@@ -1318,6 +1310,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      tempCounter++;
                       yCor = 0;
                       break;
                     }
@@ -1329,6 +1322,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -1340,6 +1334,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -1351,6 +1346,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      tempCounter++;
                       yCor = 3;
                       break;
                     }
@@ -1362,6 +1358,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -1373,6 +1370,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1389,6 +1387,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      tempCounter++;
                       yCor = 0;
                       break;
                     }
@@ -1400,6 +1399,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -1411,6 +1411,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -1422,6 +1423,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE tutaj" + 3)
+                      tempCounter++;
                       yCor = 3;
                       tempCounter++;
                       break;
@@ -1434,6 +1436,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       tempCounter++;
                       break;
@@ -1446,6 +1449,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1462,6 +1466,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      tempCounter++;
                       yCor = 0;
                       break;
                     }
@@ -1473,6 +1478,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -1484,6 +1490,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -1495,6 +1502,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      tempCounter++;
                       yCor = 3;
                       break;
                     }
@@ -1506,6 +1514,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -1517,6 +1526,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1534,6 +1544,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
                       yCor = 0;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -1544,6 +1555,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -1555,6 +1567,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -1566,6 +1579,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      tempCounter++;
                       yCor = 3;
                       break;
                     }
@@ -1577,6 +1591,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -1588,6 +1603,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1604,6 +1620,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      tempCounter++;
                       yCor = 0;
                       break;
                     }
@@ -1615,6 +1632,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -1626,6 +1644,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -1637,6 +1656,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      tempCounter++;
                       yCor = 3;
                       break;
                     }
@@ -1648,6 +1668,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -1659,6 +1680,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1676,6 +1698,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
                       yCor = 0;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -1687,6 +1710,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
                       yCor = 1;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -1698,6 +1722,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
                       yCor = 2;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -1709,6 +1734,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
                       yCor = 3;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -1719,6 +1745,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -1730,6 +1757,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1746,7 +1774,7 @@ export default {
 
       if (tempCounter == 2) {
         console.log("tempCounter = 2. Musimy wykonać dla drugiej cyfry ")
-        tempCounter = 0;
+        tempCounterFinish++;
         missingDigit = secondMissingDigit;
       } else {
         console.log("Musimy wpisać : " + missingDigit)
@@ -1766,6 +1794,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      tempCounter++;
                       yCor = 0;
                       break;
                     }
@@ -1777,6 +1806,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -1788,6 +1818,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -1799,6 +1830,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      tempCounter++;
                       yCor = 3;
                       break;
                     }
@@ -1810,6 +1842,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -1821,6 +1854,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1837,6 +1871,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      tempCounter++;
                       yCor = 0;
                       break;
                     }
@@ -1848,6 +1883,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -1859,6 +1895,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -1870,6 +1907,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE tutaj" + 3)
+                      tempCounter++;
                       yCor = 3;
                       tempCounter++;
                       break;
@@ -1882,6 +1920,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       tempCounter++;
                       break;
@@ -1894,6 +1933,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1910,6 +1950,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      tempCounter++;
                       yCor = 0;
                       break;
                     }
@@ -1921,6 +1962,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -1932,6 +1974,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -1943,6 +1986,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      tempCounter++;
                       yCor = 3;
                       break;
                     }
@@ -1954,6 +1998,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -1965,6 +2010,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -1982,6 +2028,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
                       yCor = 0;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -1992,6 +2039,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -2003,6 +2051,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -2014,6 +2063,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      tempCounter++;
                       yCor = 3;
                       break;
                     }
@@ -2025,6 +2075,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -2036,6 +2087,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -2052,6 +2104,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
+                      tempCounter++;
                       yCor = 0;
                       break;
                     }
@@ -2063,6 +2116,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
+                      tempCounter++;
                       yCor = 1;
                       break;
                     }
@@ -2074,6 +2128,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
+                      tempCounter++;
                       yCor = 2;
                       break;
                     }
@@ -2085,6 +2140,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
+                      tempCounter++;
                       yCor = 3;
                       break;
                     }
@@ -2096,6 +2152,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -2107,6 +2164,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -2124,6 +2182,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 0);
                       yCor = 0;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -2135,6 +2194,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 1);
                       yCor = 1;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -2146,6 +2206,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 2);
                       yCor = 2;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -2157,6 +2218,7 @@ export default {
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 3)
                       yCor = 3;
+                      tempCounter++;
                       break;
                     }
                   }
@@ -2167,6 +2229,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 4);
+                      tempCounter++;
                       yCor = 4;
                       break;
                     }
@@ -2178,6 +2241,7 @@ export default {
                       break;
                     } else {
                       console.log("ZAWIERA SZUKANA CYFRE" + 5);
+                      tempCounter++;
                       yCor = 5;
                       break;
                     }
@@ -2192,24 +2256,23 @@ export default {
         }
       }
 
-      if (tempCounter == 2) {
-        console.log("tempCounter = 2. Musimy wykonać dla drugiej cyfry ")
-        tempCounter = 0;
+      if (tempCounter == 4) {
+        console.log("tempCounter = 2. Musimy wykonać dla innej Macierzy ")
+      
+        tempCounterFinish++;
+        /* thirdStepFindOneMissingID(); */
       } else {
         console.log("Musimy wpisać : " + missingDigit)
         xCor = xCorrdinate + 1;
         yCor = yCorrdinate;
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
-
+      console.log("tempCounterFinish: " + tempCounterFinish)
     }
 
 
     function firstStep() {
-
       fillBoard();
-
-
       if (findEmptyFieldsInMatrix() != -1) {
         console.log("KROK NR 1")
         findCorsToFillDigit();
@@ -2248,7 +2311,22 @@ export default {
       thirdStepFindMissingDigits();
       thirdStepFindCorsToFillDigit();
       thirdStepFillDigitsInRightPlace();
-      fillMissingDigit();
+      if(tempCounter == 4){
+              thirdStepFindOneMissingID();
+                    thirdStepFindMissingDigits();
+        thirdStepFindCorsToFillDigit();
+        thirdStepFillDigitsInRightPlace();
+           fillMissingDigit();
+      } else {
+        if (tempCounterFinish == 2) {
+          thirdStepFillDigitsInRightPlace();
+          fillMissingDigit();
+        } else {
+          fillMissingDigit();
+        }
+      }
+
+
     }
 
 
