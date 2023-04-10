@@ -1,3 +1,5 @@
+
+
 <template>
   <div class="containerApp__game__board__field" id="square1">
     <input type="text" class="inputField" value="0">
@@ -50,14 +52,18 @@
 </template>
 
 <script>
+
+
+
 export default {
   name: 'BoardFields',
 }
+
+
 </script>
 
 <style lang="scss" scoped>
 .containerApp__game__board {
-
 
   &__field {
     align-content: space-around;
