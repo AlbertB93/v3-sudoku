@@ -1,19 +1,19 @@
 <template>
   <div class="containerApp">
     <!--     <h1>Sudoku</h1> -->
-        <ButtonsSingleGame :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
-          :findMissingDigit="findMissingDigit" :fillMissingDigit="fillMissingDigit" :fillBoard="fillBoard"
-          :secondStepFindOneMissingDigit="secondStepFindOneMissingDigit"
-          :secondStepFindOneMissingID="secondStepFindOneMissingID" :secondStepFindCoor="secondStepFindCoor"
-          :thirdStepFindOneMissingID="thirdStepFindOneMissingID" :thirdStepFindMissingDigits="thirdStepFindMissingDigits"
-          :thirdStepFindCorsToFillDigit="thirdStepFindCorsToFillDigit"
-          :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :finishGame="finishGame" :firstStep="firstStep"
-          :secondStep="secondStep" :thirdStep="thirdStep" 
-          :fourthStepFindOneMissingID="fourthStepFindOneMissingID" :fourthStepFindMissingDigits="fourthStepFindMissingDigits"
-          :fourthStepFindCorsToFillDigit="fourthStepFindCorsToFillDigit"/>
+    <ButtonsSingleGame :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
+      :findMissingDigit="findMissingDigit" :fillMissingDigit="fillMissingDigit" :fillBoard="fillBoard"
+      :secondStepFindOneMissingDigit="secondStepFindOneMissingDigit"
+      :secondStepFindOneMissingID="secondStepFindOneMissingID" :secondStepFindCoor="secondStepFindCoor"
+      :thirdStepFindOneMissingID="thirdStepFindOneMissingID" :thirdStepFindMissingDigits="thirdStepFindMissingDigits"
+      :thirdStepFindCorsToFillDigit="thirdStepFindCorsToFillDigit"
+      :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :finishGame="finishGame" :firstStep="firstStep"
+      :secondStep="secondStep" :thirdStep="thirdStep" :fourthStepFindOneMissingID="fourthStepFindOneMissingID"
+      :fourthStepFindMissingDigits="fourthStepFindMissingDigits"
+      :fourthStepFindCorsToFillDigit="fourthStepFindCorsToFillDigit" />
     <div class="containerApp__game">
 
-              <ButtonsGame :fillBoard="fillBoard" :drawGame="drawGame"/> 
+      <ButtonsGame :fillBoard="fillBoard" :drawGame="drawGame" />
       <div class="containerApp__game__board">
         <BoardFields />
       </div>
@@ -28,7 +28,7 @@
 
 /* import { computed } from "@vue/reactivity";*/
 /*  import { ref } from "vue";  */
-import { games6x6 } from "../data/Games"  
+import { games6x6LevelEasy, games6x6LevelHard } from "../data/Games"
 import ButtonsGame from "../components/buttons/ButtonsGame.vue";
 import ButtonsSingleGame from "./buttons/ButtonsSingleGame.vue";
 import BoardFields from "./BoardFields.vue";
@@ -37,7 +37,7 @@ import BoardFields from "./BoardFields.vue";
 export default {
   name: 'SudokuContainer',
   components: {
-         ButtonsGame, 
+    ButtonsGame,
     ButtonsSingleGame,
     BoardFields,
     /*  ScreenForSteps, */
@@ -46,13 +46,14 @@ export default {
   setup() {
 
     // to draw Game
-    const gamesArr = games6x6;
+    const gamesLevelEasy = games6x6LevelEasy;
+    const gamesLevelHard = games6x6LevelHard;
 
 
     //counters
     let i = 0;
     let j = 0;
-  /*   let counterRowForStep = 0; */
+    /*   let counterRowForStep = 0; */
     // counters for third step
     let tempCounter = 0;
     let tempCounterFinish = 0;
@@ -80,10 +81,10 @@ export default {
     let ySecondCor = 9;
     let secondMissingDigit = 99;
 
-    
+
     // for the fourth help
     let thirdMissingDigit = 99;
-/*     let yThirdCor = 9; */
+    /*     let yThirdCor = 9; */
 
     //conditions
 
@@ -94,15 +95,14 @@ export default {
 
     function drawGame(exampleNumber) {
       console.log("drawGame");
-       let tablica = document.getElementsByClassName('inputField');
+      let tablica = document.getElementsByClassName('inputField');
       console.log(tablica);
 
-     /*  console.log("Czy wyświetliło 4 ? "  + gamesArr[0][1] ); */
+      /*  console.log("Czy wyświetliło 4 ? "  + gamesArr[0][1] ); */
 
-
-     for (let i = 0; i < tablica.length; i++) {
-          tablica[i].value = gamesArr[exampleNumber][i];
-      } 
+      for (let i = 0; i < tablica.length; i++) {
+        tablica[i].value = gamesLevelEasy[exampleNumber][i];
+      }
 
     }
 
@@ -1089,9 +1089,6 @@ export default {
       xCorrdinate = 0;
       countOfZero = 0;
 
-      console.log("xCorrdinate przed wejściem do pętli: " + xCorrdinate)
-
-
       endCondition = true;
       while (endCondition) {
         for (i = 0; i < miniMatrixs.length; i++) {
@@ -1129,7 +1126,7 @@ export default {
       missingDigit = 99;
       secondMissingDigit = 99;
 
-      console.log("macierz szukana: " + miniMatrixs[xCorrdinate])
+      console.log("Macierz szukana: " + miniMatrixs[xCorrdinate])
 
       for (i = 1; i < 7; i++) {
         if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
@@ -1169,9 +1166,7 @@ export default {
 
     function thirdStepFillDigitsInRightPlace() {
       console.log("thirdStepFillDigitsInRightPlace")
-      console.log("--------------------------------------------");
-      console.log("--------    KROK 3  -----------------");
-      console.log("--------------------------------------------");
+
       console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
       console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
       console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
@@ -1184,7 +1179,7 @@ export default {
 
 
       tempCounter = 0;
-
+      tempCounterFinish = 0;
 
       for (i = 0; i < 6; i++) {
         switch (idForSwitch) {
@@ -2146,8 +2141,7 @@ export default {
       }
 
       if (tempCounter == 4) {
-        console.log("tempCounter = 2. Musimy wykonać dla innej Macierzy ")
-
+        console.log("tempCounter = 4. Musimy wykonać dla innej Macierzy ")
         tempCounterFinish++;
         /* thirdStepFindOneMissingID(); */
       } else {
@@ -2161,7 +2155,7 @@ export default {
 
     // FUNCTIONS FOR THE FOURTH STEP
 
-     function fourthStepFindOneMissingID() {
+    function fourthStepFindOneMissingID() {
       console.log("thirdStepFindOneMissingID")
 
       xCorrdinate = 0;
@@ -2214,9 +2208,9 @@ export default {
         if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
           if (missingDigit == 99) {
             missingDigit = i;
-          } else if(secondMissingDigit == 99){
+          } else if (secondMissingDigit == 99) {
             secondMissingDigit = i;
-          } else{
+          } else {
             thirdMissingDigit = i;
           }
         }
@@ -2253,7 +2247,7 @@ export default {
     function firstStep() {
       fillBoard();
       if (findEmptyFieldsInMatrix() != -1) {
-        console.log("KROK NR 1")
+        console.log("********** KROK NR 1 **********")
         findCorsToFillDigit();
         findMissingDigit();
         fillMissingDigit();
@@ -2262,7 +2256,7 @@ export default {
         alert(" Wykonaj krok nr 2")
         console.log(" Nie wykonano kroku nr 1")
         conFirstStep = false;
-                conSecondStep = true;
+        conSecondStep = true;
       }
 
     }
@@ -2272,12 +2266,12 @@ export default {
       fillBoard();
 
       if (secondStepFindOneMissingDigit() != -1) {
-        console.log("KROK NR 2")
+        console.log("****** KROK NR 2 *******")
         secondStepFindOneMissingID();
         secondStepFindCoor();
         fillMissingDigit();
         conFirstStep = true;
-                conSecondStep = false;
+        conSecondStep = false;
       } else {
         fillBoard();
         alert(" Wykonaj krok nr 3")
@@ -2288,7 +2282,7 @@ export default {
     }
 
     function thirdStep() {
-      console.log("KROK NR 3")
+      console.log("******** KROK NR 3 ******")
       fillBoard();
       thirdStepFindOneMissingID();
       thirdStepFindMissingDigits();
@@ -2324,7 +2318,11 @@ export default {
 
 
 
-    return { drawGame, sprawdz, confirmBoardGame, nextMove, checkGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit, secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace,firstStep, secondStep, thirdStep, isZero,  gamesArr, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit  }
+    return {
+      drawGame, sprawdz, confirmBoardGame, nextMove, checkGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
+      secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace, firstStep, secondStep, thirdStep, isZero,
+      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit
+    }
   }
 }
 </script>
@@ -2338,7 +2336,7 @@ export default {
 .containerApp {
   align-items: center;
   background-color: rgb(24, 23, 23);
-/*   border: solid 3px yellow; */
+  /*   border: solid 3px yellow; */
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -2356,7 +2354,7 @@ export default {
 
   .containerApp__game {
     align-items: center;
- /*    border: dotted 3px red; */
+    /*    border: dotted 3px red; */
     border-radius: 8px;
     color: aqua;
     display: flex;

@@ -10,6 +10,10 @@
             <button class="buttons--game" @click="drawGame(3)">4</button>
             <button class="buttons--game" @click="drawGame(4)">5</button>
             <button class="buttons--game" @click="drawGame(5)">6</button>
+            <button class="buttons--game" @click="drawGame(6)">7</button>
+            <button class="buttons--game" @click="drawGame(7)">8</button>
+            <button class="buttons--game" @click="drawGame(8)">9</button>
+            <button class="buttons--game" @click="drawGame(9)">10</button>
         </div>
         <div class="containerApp__game__buttons--title">
             <p>MEDIUM</p>
@@ -24,7 +28,7 @@
             <p>HARD</p>
         </div>
         <div class="containerApp__game__buttons--box">
-                <button class="buttons--game" @click="drawGame(6)">1</button>
+            <button class="buttons--game" @click="drawGame(6)">1</button>
             <button class="buttons--game" @click="drawGame(7)">1a</button>
             <!--             <button class="buttons--game" @click="nextMove">Wykonaj kolejny ruch</button>
             <button class="buttons--game" @click="checkGame">Sprawdź planszę - mały kwadracik</button>
@@ -62,7 +66,7 @@ export default {
 
     &--box {
         align-items: center;
-       
+
         display: flex;
         flex-direction: row;
         justify-content: start;
