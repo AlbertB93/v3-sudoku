@@ -1089,6 +1089,8 @@ export default {
       xCorrdinate = 0;
       countOfZero = 0;
 
+      dodać 3 miejsce jako oldestCorrdinate
+
       endCondition = true;
       while (endCondition) {
         for (i = 0; i < miniMatrixs.length; i++) {
