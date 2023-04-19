@@ -72,6 +72,7 @@ export default {
     let copyArr = [];
     let idForSwitch = 99;
     let oldXCorrdinate = 99;
+    /*     let oldestXCorrdinate = 99; */
 
     // for the second help
     let missingID = 99;
@@ -1089,7 +1090,7 @@ export default {
       xCorrdinate = 0;
       countOfZero = 0;
 
-      dodać 3 miejsce jako oldestCorrdinate
+      /*       dodać 3 miejsce jako oldestCorrdinate */
 
       endCondition = true;
       while (endCondition) {
@@ -2291,6 +2292,7 @@ export default {
       thirdStepFindCorsToFillDigit();
       thirdStepFillDigitsInRightPlace();
       if (tempCounter == 4) {
+        console.log("----------TEST------- JAKIE OLDXCOORR?" + oldXCorrdinate)
         thirdStepFindOneMissingID();
         thirdStepFindMissingDigits();
         thirdStepFindCorsToFillDigit();
