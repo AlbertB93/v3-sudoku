@@ -72,7 +72,7 @@ export default {
     let copyArr = [];
     let idForSwitch = 99;
     let oldXCorrdinate = 99;
-    /*     let oldestXCorrdinate = 99; */
+    let oldestXCorrdinate = 99;
 
     // for the second help
     let missingID = 99;
@@ -85,7 +85,7 @@ export default {
 
     // for the fourth help
     let thirdMissingDigit = 99;
-    /*     let yThirdCor = 9; */
+    let yThirdCor = 9;
 
     //conditions
 
@@ -102,7 +102,7 @@ export default {
       /*  console.log("Czy wyświetliło 4 ? "  + gamesArr[0][1] ); */
 
       for (let i = 0; i < tablica.length; i++) {
-        tablica[i].value = gamesLevelEasy[exampleNumber][i];
+        tablica[i].value = gamesLevelHard[exampleNumber][i];
       }
 
     }
@@ -1092,6 +1092,10 @@ export default {
 
       /*       dodać 3 miejsce jako oldestCorrdinate */
 
+
+      console.log("Poprzednia współrzędna macierzy z dwoma zerami: " + oldXCorrdinate)
+      console.log("Najstarsza współrzędna macierzy z dwoma zerami: " + oldestXCorrdinate)
+
       endCondition = true;
       while (endCondition) {
         for (i = 0; i < miniMatrixs.length; i++) {
@@ -1100,7 +1104,7 @@ export default {
               countOfZero++;
             }
           }
-          if (countOfZero == 2 && oldXCorrdinate != i) {
+          if (countOfZero == 2 && oldXCorrdinate != i && oldestXCorrdinate != i) {
             xCorrdinate = i;
             endCondition = false;
             break;
@@ -1114,10 +1118,8 @@ export default {
         }
 
       }
-
       console.log("Aktualna współrzędna macierzy z dwoma zerami: " + xCorrdinate)
-      oldXCorrdinate = xCorrdinate;
-      console.log("Poprzednia współrzędna macierzy z dwoma zerami: " + oldXCorrdinate)
+
       endCondition = true;
       countOfZero = 0;
 
@@ -2181,7 +2183,7 @@ export default {
             break;
           } else if (i == 17 && countOfZero != 1) {
             endCondition = false;
-            alert(" Nie ma macierzy z 2 wolnym miejscem!")
+            alert(" Nie ma macierzy z 3 wolnym miejscem!")
             break;
           } else {
             countOfZero = 0;
@@ -2243,6 +2245,15 @@ export default {
       copyArr[yCorrdinate] = 9;
       ySecondCor = copyArr.indexOf('0');
       console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+
+      for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+        copyArr[i] = miniMatrixs[xCorrdinate][i];
+      }
+      copyArr[yCorrdinate] = 9;
+      copyArr[ySecondCor] = 9;
+      yThirdCor = copyArr.indexOf('0');
+      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + yThirdCor);
+
     }
 
     // FINALLY STEPS
@@ -2293,14 +2304,40 @@ export default {
       thirdStepFillDigitsInRightPlace();
       if (tempCounter == 4) {
         console.log("----------TEST------- JAKIE OLDXCOORR?" + oldXCorrdinate)
+        if (oldXCorrdinate == 99) {
+          oldXCorrdinate = xCorrdinate;
+        } else {
+          oldestXCorrdinate = oldXCorrdinate;
+          oldXCorrdinate = xCorrdinate;
+        }
         thirdStepFindOneMissingID();
         thirdStepFindMissingDigits();
         thirdStepFindCorsToFillDigit();
         thirdStepFillDigitsInRightPlace();
-        conFirstStep = true;
-        conSecondStep = true;
-        fillMissingDigit();
-
+        if (tempCounter == 4) {
+          console.log("----------TEST---2------- JAKIE OLDXCOORR?" + oldXCorrdinate)
+          if (oldXCorrdinate == 99) {
+            oldXCorrdinate = xCorrdinate;
+          } else {
+            oldestXCorrdinate = oldXCorrdinate;
+            oldXCorrdinate = xCorrdinate;
+          }
+          thirdStepFindOneMissingID();
+          thirdStepFindMissingDigits();
+          thirdStepFindCorsToFillDigit();
+          thirdStepFillDigitsInRightPlace();
+          conFirstStep = true;
+          conSecondStep = true;
+          fillMissingDigit();
+        } else {
+          thirdStepFindOneMissingID();
+          thirdStepFindMissingDigits();
+          thirdStepFindCorsToFillDigit();
+          thirdStepFillDigitsInRightPlace();
+          conFirstStep = true;
+          conSecondStep = true;
+          fillMissingDigit();
+        }
       } else {
         if (tempCounterFinish == 2) {
           thirdStepFillDigitsInRightPlace();
