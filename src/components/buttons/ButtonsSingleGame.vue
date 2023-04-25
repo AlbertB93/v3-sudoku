@@ -27,7 +27,7 @@
                 <button class="single--button" @click="fourthStepFindOneMissingID"> 4a. Znajdź macierz gdzie są 3 zera</button>
                 <button class="single--button" @click="fourthStepFindMissingDigits"> 4b. Sprawdź jakich liczb brakuje</button>
                 <button class="single--button" @click="fourthStepFindCorsToFillDigit"> 4c. Znajdź miejsca zerowe</button>
-<!--                 <button class="single--button" @click=""> </button> -->
+                    <button class="single--button" @click="fourthStepFillDigitsInRightPlace"> 4c. Znajdź odpowiednie miejsce</button>
             </div>
         <div class="buttons--help--box">
             <button class="single--button" @click="firstStep"> PIERWSZY KROK</button>
@@ -44,7 +44,7 @@
 export default {
     name: 'ButtonsSingleGame',
     props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindOneMissingID', 'thirdStepFindMissingDigits', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep',
-'fourthStepFindOneMissingID','fourthStepFindMissingDigits','fourthStepFindCorsToFillDigit'],
+'fourthStepFindOneMissingID','fourthStepFindMissingDigits','fourthStepFindCorsToFillDigit','fourthStepFillDigitsInRightPlace'],
 
 }
 

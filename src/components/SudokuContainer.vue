@@ -10,7 +10,8 @@
       :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :finishGame="finishGame" :firstStep="firstStep"
       :secondStep="secondStep" :thirdStep="thirdStep" :fourthStepFindOneMissingID="fourthStepFindOneMissingID"
       :fourthStepFindMissingDigits="fourthStepFindMissingDigits"
-      :fourthStepFindCorsToFillDigit="fourthStepFindCorsToFillDigit" />
+      :fourthStepFindCorsToFillDigit="fourthStepFindCorsToFillDigit"
+      :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace" />
     <div class="containerApp__game">
 
       <ButtonsGame :fillBoard="fillBoard" :drawGame="drawGame" />
@@ -86,6 +87,9 @@ export default {
     // for the fourth help
     let thirdMissingDigit = 99;
     let yThirdCor = 9;
+    let warunekPom = true;
+
+    let arrayOfCondition = [true, true, true]
 
     //conditions
 
@@ -93,6 +97,7 @@ export default {
     let conSecondStep = true;
     let conThirdStep = true;
     let conFinishGame = false;
+
 
     function drawGame(exampleNumber) {
       console.log("drawGame");
@@ -2252,9 +2257,374 @@ export default {
       copyArr[yCorrdinate] = 9;
       copyArr[ySecondCor] = 9;
       yThirdCor = copyArr.indexOf('0');
-      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + yThirdCor);
+      console.log("współrzędne 3 punktu: " + xCorrdinate + " i " + yThirdCor);
 
     }
+
+    function fourthStepFillDigitsInRightPlace() {
+      console.log("***fourthStepFillDigitsInRightPlace***")
+
+      /*       console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit + " oraz " + thirdMissingDigit);
+            console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
+            console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+            console.log("współrzędne 3 punktu: " + xCorrdinate + " i " + yThirdCor); */
+      /* 
+            console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit + " oraz " + thirdMissingDigit);
+            console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
+            console.log("Macierz 6 : " + miniMatrixs[6]);
+            console.log("Macierz 12 : " + miniMatrixs[12]); */
+      let counterCondition = 0;
+
+      console.log("-----[1]---------- ");
+      arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
+      arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yCorrdinate);
+      arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yCorrdinate);
+
+      for (i = 0; i < 3; i++) {
+        if (arrayOfCondition[i]) {
+          counterCondition++;
+        }
+      }
+      console.log(" ILE WYNOSI COUNTER? " + counterCondition)
+      console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
+      console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
+      console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
+
+
+      console.log(" ILE WYNOSI COUNTER przed 2? " + counterCondition)
+      if (counterCondition == 1) {
+        console.log("Musimy wpisać poprzednią cyfrę")
+      } else {
+        console.log("-------[2]--------- ");
+        counterCondition = 0;
+        arrayOfCondition[0] = fourthStepHelp(missingDigit, ySecondCor);
+        arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, ySecondCor);
+        arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, ySecondCor);
+
+        for (i = 0; i < 3; i++) {
+          if (arrayOfCondition[i]) {
+            counterCondition++;
+          }
+        }
+        console.log(" ILE WYNOSI COUNTER? " + counterCondition)
+        console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
+        console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
+        console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
+      }
+
+
+      console.log(" ILE WYNOSI COUNTER przed 3? " + counterCondition)
+      if (counterCondition == 1) {
+        console.log("Musimy wpisać cyfrę teraz.")
+      } else {
+        console.log("-------[3]--------- ");
+        counterCondition = 0;
+        arrayOfCondition[0] = fourthStepHelp(missingDigit, yThirdCor);
+        arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yThirdCor);
+        arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yThirdCor);
+
+        for (i = 0; i < 3; i++) {
+          if (arrayOfCondition[i]) {
+            counterCondition++;
+          }
+        }
+        console.log(" ILE WYNOSI COUNTER? " + counterCondition)
+        console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
+        console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
+        console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
+      }
+
+
+      console.log(" ILE WYNOSI COUNTER przed 4? " + counterCondition)
+      if (counterCondition == 1) {
+        console.log("Musimy wpisać cyfrę [poprzednią].")
+      } else {
+        console.log("-------[4]--------- ");
+        counterCondition = 0;
+        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
+        arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yCorrdinate);
+        arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yCorrdinate);
+
+        for (i = 0; i < 3; i++) {
+          if (arrayOfCondition[i]) {
+            counterCondition++;
+          }
+        }
+        console.log(" ILE WYNOSI COUNTER? " + counterCondition)
+        console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
+        console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
+        console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
+      }
+
+      zrobić pętle aby się wykonywało dopóki nie będzie counterCondition == 1. Jak będzie to ustawić warunekPetli na false.
+
+
+/*  1. Pętla dopóki counterCondition będzie równy 1 wtedy ....................  
+    2. Wykonać fourtStepHelp dla 3 brakujących liczb i dla 1 msc zerowego ( yCorrdinate )
+    3. Jeśli arrayOfCondition[i] będzie prawdziwy to zwiększ counterCondition 
+    4. Jeśli counterCondition będzie == 1 to break. Musimy jakoś wyrzucić tą brakującą liczbę i to miejsce zerowe, dla którego będzie to prawdziwe
+    5. Jeśli nie powtórz pętla ale zmień miejsce zerowe , np.  z yCorrdinate  na ySecondCor.*/
+
+
+      let warunekPetli = true;
+
+      while (warunekPetli) {
+
+        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
+        arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yCorrdinate);
+        arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yCorrdinate);
+
+
+      }
+
+
+
+
+    }
+
+    function fourthStepHelp(missingDigit, yCorrdinate) {
+      warunekPom = true;
+      switch (xCorrdinate) {
+        case 0:
+          if (yCorrdinate == 0) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 1) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 2) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 3) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 4) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 5) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          }
+          break;
+        case 1:
+          if (yCorrdinate == 0) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 1) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 2) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 3) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 4) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 5) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          }
+          break;
+        case 2:
+          if (yCorrdinate == 0) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 1) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 2) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 3) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 4) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 5) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          }
+          break;
+        case 3:
+          if (yCorrdinate == 0) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 1) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 2) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 3) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 4) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 5) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          }
+          break;
+        case 4:
+          if (yCorrdinate == 0) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 1) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 2) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 3) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 4) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 5) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          }
+          break;
+        case 5:
+          if (yCorrdinate == 0) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 1) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 2) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 3) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 4) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          } else if (yCorrdinate == 5) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
+                warunekPom = false;
+              }
+            }
+          }
+          break;
+
+      }
+
+      return warunekPom;
+    }
+
 
     // FINALLY STEPS
 
@@ -2362,7 +2732,7 @@ export default {
     return {
       drawGame, sprawdz, confirmBoardGame, nextMove, checkGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
       secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace, firstStep, secondStep, thirdStep, isZero,
-      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit
+      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit, fourthStepFillDigitsInRightPlace
     }
   }
 }
