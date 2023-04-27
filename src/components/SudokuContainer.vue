@@ -11,7 +11,9 @@
       :secondStep="secondStep" :thirdStep="thirdStep" :fourthStepFindOneMissingID="fourthStepFindOneMissingID"
       :fourthStepFindMissingDigits="fourthStepFindMissingDigits"
       :fourthStepFindCorsToFillDigit="fourthStepFindCorsToFillDigit"
-      :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace" />
+      :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace"
+      :fourthStep="fourthStep"
+      />
     <div class="containerApp__game">
 
       <ButtonsGame :fillBoard="fillBoard" :drawGame="drawGame" />
@@ -54,7 +56,6 @@ export default {
     //counters
     let i = 0;
     let j = 0;
-    /*   let counterRowForStep = 0; */
     // counters for third step
     let tempCounter = 0;
     let tempCounterFinish = 0;
@@ -79,10 +80,8 @@ export default {
     let missingID = 99;
 
     // for the third help
-
     let ySecondCor = 9;
     let secondMissingDigit = 99;
-
 
     // for the fourth help
     let thirdMissingDigit = 99;
@@ -110,14 +109,6 @@ export default {
         tablica[i].value = gamesLevelHard[exampleNumber][i];
       }
 
-    }
-
-    function sprawdz() {
-      let t1 = document.querySelector("#s91");
-      let t2 = document.querySelector("#s92");
-      let t3 = document.querySelector("#s93");
-
-      console.log("TESTING" + "t1: " + t1.value + t2.value + t3.value)
     }
 
     function confirmBoardGame() {
@@ -154,27 +145,13 @@ export default {
       }
     }
 
-    function checkGame() {
-      console.log("checkGame");
-    }
-
     // function, which sholud finish game for one click
     function finishGame() {
       console.log("finishGame");
-
-      // dopóki warunek końca gry "conFinishGame" jeśli fałszywy to wykonujemy kroki
-      // Step 1. Sprawdzamy czy isZero zwraca -1, jeśli tak to koniec gry, nie ma pola o wartości zero na planszy.
-      // Step 2.
-      // Step 3. Jeśli warunek dla firstStep jest fałszywy ( nie ma minimacierzy z jednym wolnym polem) oraz warunek dla secondStep jest fałszywy ( nie ma cyfry występującej na planszy n-1 raza)
-      // Wtedy wykonujemy Step3. Step 3  - szuka minimacierzy, w której są dwa puste pola, znajduje jakich cyfr brakuje, znajduje dla nich współrzędne oraz wybiera odpowiednią cyfrę do wpisania.
-      // Po wykonaniu kroku Step 3, ustawiamy znowu warunki "true" dla Step1 i Step 2 aby mogły się wykonać ( są prostsze do zrealizowania ).
-
       while (!conFinishGame) {
         while (conFirstStep) {
           console.log("***************** KROK 1 ************************")
-
           firstStep();
-
           if (isZero() == -1) {
             conFinishGame = true;
             alert("Gratulacje! Rozwiązano Sudoku!")
@@ -191,19 +168,14 @@ export default {
             alert("Gratulacje! Rozwiązano Sudoku!")
             break;
           }
-
         }
         if (conFirstStep == false && conSecondStep == false && conThirdStep == true) {
           console.log("***************** KROK 3 ************************")
-
           isZero();
-
           conFirstStep = true;
           conSecondStep = true;
           thirdStep();
-
         }
-
       }
     }
 
@@ -2262,125 +2234,84 @@ export default {
     }
 
     function fourthStepFillDigitsInRightPlace() {
-      console.log("***fourthStepFillDigitsInRightPlace***")
+      console.log("***fourthStepFillDigitsInRightPlace-2-***")
 
-      /*       console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit + " oraz " + thirdMissingDigit);
-            console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
-            console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-            console.log("współrzędne 3 punktu: " + xCorrdinate + " i " + yThirdCor); */
-      /* 
-            console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit + " oraz " + thirdMissingDigit);
-            console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
-            console.log("Macierz 6 : " + miniMatrixs[6]);
-            console.log("Macierz 12 : " + miniMatrixs[12]); */
+
+      /*       zrobić pętle aby się wykonywało dopóki nie będzie counterCondition == 1. Jak będzie to ustawić warunekPetli na false. */
+
+
+      /*  1. Pętla dopóki counterCondition będzie równy 1 wtedy ....................  
+          2. Wykonać fourtStepHelp dla 3 brakujących liczb i dla 1 msc zerowego ( yCorrdinate )
+          3. Jeśli arrayOfCondition[i] będzie prawdziwy to zwiększ counterCondition 
+          4. Jeśli counterCondition będzie == 1 to break. Musimy jakoś wyrzucić tą brakującą liczbę i to miejsce zerowe, dla którego będzie to prawdziwe
+          5. Jeśli nie powtórz pętla ale zmień miejsce zerowe , np.  z yCorrdinate  na ySecondCor.*/
+
       let counterCondition = 0;
-
-      console.log("-----[1]---------- ");
-      arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
-      arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yCorrdinate);
-      arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yCorrdinate);
-
-      for (i = 0; i < 3; i++) {
-        if (arrayOfCondition[i]) {
-          counterCondition++;
-        }
-      }
-      console.log(" ILE WYNOSI COUNTER? " + counterCondition)
-      console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
-      console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
-      console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
-
-
-      console.log(" ILE WYNOSI COUNTER przed 2? " + counterCondition)
-      if (counterCondition == 1) {
-        console.log("Musimy wpisać poprzednią cyfrę")
-      } else {
-        console.log("-------[2]--------- ");
-        counterCondition = 0;
-        arrayOfCondition[0] = fourthStepHelp(missingDigit, ySecondCor);
-        arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, ySecondCor);
-        arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, ySecondCor);
-
-        for (i = 0; i < 3; i++) {
-          if (arrayOfCondition[i]) {
-            counterCondition++;
-          }
-        }
-        console.log(" ILE WYNOSI COUNTER? " + counterCondition)
-        console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
-        console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
-        console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
-      }
-
-
-      console.log(" ILE WYNOSI COUNTER przed 3? " + counterCondition)
-      if (counterCondition == 1) {
-        console.log("Musimy wpisać cyfrę teraz.")
-      } else {
-        console.log("-------[3]--------- ");
-        counterCondition = 0;
-        arrayOfCondition[0] = fourthStepHelp(missingDigit, yThirdCor);
-        arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yThirdCor);
-        arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yThirdCor);
-
-        for (i = 0; i < 3; i++) {
-          if (arrayOfCondition[i]) {
-            counterCondition++;
-          }
-        }
-        console.log(" ILE WYNOSI COUNTER? " + counterCondition)
-        console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
-        console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
-        console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
-      }
-
-
-      console.log(" ILE WYNOSI COUNTER przed 4? " + counterCondition)
-      if (counterCondition == 1) {
-        console.log("Musimy wpisać cyfrę [poprzednią].")
-      } else {
-        console.log("-------[4]--------- ");
-        counterCondition = 0;
-        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
-        arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yCorrdinate);
-        arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yCorrdinate);
-
-        for (i = 0; i < 3; i++) {
-          if (arrayOfCondition[i]) {
-            counterCondition++;
-          }
-        }
-        console.log(" ILE WYNOSI COUNTER? " + counterCondition)
-        console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
-        console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
-        console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
-      }
-
-      zrobić pętle aby się wykonywało dopóki nie będzie counterCondition == 1. Jak będzie to ustawić warunekPetli na false.
-
-
-/*  1. Pętla dopóki counterCondition będzie równy 1 wtedy ....................  
-    2. Wykonać fourtStepHelp dla 3 brakujących liczb i dla 1 msc zerowego ( yCorrdinate )
-    3. Jeśli arrayOfCondition[i] będzie prawdziwy to zwiększ counterCondition 
-    4. Jeśli counterCondition będzie == 1 to break. Musimy jakoś wyrzucić tą brakującą liczbę i to miejsce zerowe, dla którego będzie to prawdziwe
-    5. Jeśli nie powtórz pętla ale zmień miejsce zerowe , np.  z yCorrdinate  na ySecondCor.*/
-
-
       let warunekPetli = true;
+
 
       while (warunekPetli) {
 
+        console.log(" JESTEM TU ?")
         arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
         arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yCorrdinate);
         arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yCorrdinate);
 
+        for (i = 0; i < 3; i++) {
+          if (arrayOfCondition[i]) {
+            counterCondition++;
+          }
+        }
+
+        console.log(" ILE WYNOSI COUNTER? " + counterCondition)
+        console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
+        console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
+        console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
+
+
+        if (counterCondition == 1) {
+          if (arrayOfCondition[0]) {
+          /*   missingDigit = missingDigit; */
+            warunekPetli = false;
+            break;
+          } else if (arrayOfCondition[1]) {
+            missingDigit = secondMissingDigit;
+            warunekPetli = false;
+            break;
+          } else {
+            missingDigit = thirdMissingDigit
+            warunekPetli = false;
+            break;
+          }
+
+        } else {
+          if (yCorrdinate != ySecondCor) {
+            yCorrdinate = ySecondCor;
+            counterCondition = 0;
+            console.log(" JESTEM TU sec?")
+            console.log(" yCoordinate  = " + yCorrdinate)
+            continue;
+          } else {
+            yCorrdinate = yThirdCor;
+            counterCondition = 0;
+            console.log(" JESTEM TU thi?")
+            console.log(" yCoordinate  = " + yCorrdinate)
+            continue;
+          }
+        }
+
 
       }
 
+     /*  xCor = xCorrdinate + 1; */
+      yCor = yCorrdinate;
+      xCor = xCorrdinate+1;
 
-
+      console.log("Współrzędne do wpisania: " + xCor + " i " + yCor)
+   
 
     }
+
 
     function fourthStepHelp(missingDigit, yCorrdinate) {
       warunekPom = true;
@@ -2726,13 +2657,21 @@ export default {
 
     }
 
+    function fourthStep(){
+            console.log("******** KROK NR 4 ******")
+            fourthStepFindOneMissingID();
+            fourthStepFindMissingDigits();
+            fourthStepFindCorsToFillDigit();
+            fourthStepFillDigitsInRightPlace();
+            fillMissingDigit();
+    }
 
 
 
     return {
-      drawGame, sprawdz, confirmBoardGame, nextMove, checkGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
+      drawGame, confirmBoardGame, nextMove, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
       secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace, firstStep, secondStep, thirdStep, isZero,
-      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit, fourthStepFillDigitsInRightPlace
+      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit, fourthStepFillDigitsInRightPlace,fourthStep
     }
   }
 }

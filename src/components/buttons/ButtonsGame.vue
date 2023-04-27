@@ -42,7 +42,7 @@
         </div>
         <div class="containerApp__game__buttons--box">
             <button class="buttons--game" @click="drawGame(6)">1</button>
-            <button class="buttons--game" @click="drawGame(7)">1a</button>
+            <button class="buttons--game2" @click="drawGame(7)">1a</button>
             <!--             <button class="buttons--game" @click="nextMove">Wykonaj kolejny ruch</button>
             <button class="buttons--game" @click="checkGame">Sprawdź planszę - mały kwadracik</button>
             <button class="buttons--game" @click="finishGame">Rozwiąż planszę</button>
@@ -87,6 +87,21 @@ export default {
         .buttons--game {
             background-color: rgb(55, 54, 54);
             border: solid 2px whitesmoke;
+            color: whitesmoke;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            height: auto;
+            margin: 10px;
+            padding: 10px;
+            width: auto;
+        }
+
+                .buttons--game2 {
+            background-color: rgb(55, 54, 54);
+            border: solid 2px whitesmoke;
+            border-radius: 8px;
+            box-shadow: -3px 3px white;
             color: whitesmoke;
             cursor: pointer;
             font-size: 16px;

@@ -21,18 +21,21 @@
             <button class="single--button" @click="thirdStepFindOneMissingID"> 3. Znajdź macierz, która ma dwa zera</button>
             <button class="single--button" @click="thirdStepFindMissingDigits"> 3. Znajdź brakujące dwie cyfry</button>
             <button class="single--button" @click="thirdStepFindCorsToFillDigit"> 3. Znajdź współrzędne do wpisania</button>
-            <button class="single--button" @click="thirdStepFillDigitsInRightPlace"> 3. Wpisz cyfrę w jedno z dwóch miejsc</button>
+            <button class="single--button" @click="thirdStepFillDigitsInRightPlace"> 3. Wpisz cyfrę w jedno z dwóch
+                miejsc</button>
         </div>
-                <div class="buttons--help--box">
-                <button class="single--button" @click="fourthStepFindOneMissingID"> 4a. Znajdź macierz gdzie są 3 zera</button>
-                <button class="single--button" @click="fourthStepFindMissingDigits"> 4b. Sprawdź jakich liczb brakuje</button>
-                <button class="single--button" @click="fourthStepFindCorsToFillDigit"> 4c. Znajdź miejsca zerowe</button>
-                    <button class="single--button" @click="fourthStepFillDigitsInRightPlace"> 4c. Znajdź odpowiednie miejsce</button>
-            </div>
+        <div class="buttons--help--box">
+            <button class="single--button" @click="fourthStepFindOneMissingID"> 4a. Znajdź macierz gdzie są 3 zera</button>
+            <button class="single--button" @click="fourthStepFindMissingDigits"> 4b. Sprawdź jakich liczb brakuje</button>
+            <button class="single--button" @click="fourthStepFindCorsToFillDigit"> 4c. Znajdź miejsca zerowe</button>
+            <button class="single--button" @click="fourthStepFillDigitsInRightPlace"> 4c. Znajdź odpowiednie
+                miejsce</button>
+        </div>
         <div class="buttons--help--box">
             <button class="single--button" @click="firstStep"> PIERWSZY KROK</button>
             <button class="single--button" @click="secondStep"> DRUGI KROK</button>
             <button class="single--button" @click="thirdStep"> TRZECI KROK</button>
+            <button class="single--button" @click="fourthStep"> CZWARTY KROK</button>
         </div>
     </div>
 </template>
@@ -44,7 +47,7 @@
 export default {
     name: 'ButtonsSingleGame',
     props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindOneMissingID', 'thirdStepFindMissingDigits', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep',
-'fourthStepFindOneMissingID','fourthStepFindMissingDigits','fourthStepFindCorsToFillDigit','fourthStepFillDigitsInRightPlace'],
+        'fourthStepFindOneMissingID', 'fourthStepFindMissingDigits', 'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStep'],
 
 }
 
@@ -55,7 +58,7 @@ export default {
 
 <style lang="scss" scoped>
 .containerApp__game__helpButtons {
-/*     border: solid 3px whitesmoke; */
+    /*     border: solid 3px whitesmoke; */
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -65,7 +68,7 @@ export default {
 
     .buttons--main--box,
     .buttons--help--box {
-    
+
         background-color: rgb(55, 54, 54);
         border-radius: 12px;
         flex-direction: column;
