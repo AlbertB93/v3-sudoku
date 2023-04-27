@@ -97,20 +97,20 @@ export default {
     let conThirdStep = true;
     let conFinishGame = false;
 
+    //FUNCTIONS
 
+    //SPRAWDZIĆ
     function drawGame(exampleNumber) {
       console.log("drawGame");
       let tablica = document.getElementsByClassName('inputField');
       console.log(tablica);
 
-      /*  console.log("Czy wyświetliło 4 ? "  + gamesArr[0][1] ); */
-
       for (let i = 0; i < tablica.length; i++) {
-        tablica[i].value = gamesLevelHard[exampleNumber][i];
+        tablica[i].value = gamesLevelEasy[exampleNumber][i];
       }
 
     }
-
+    //SPRAWDZIĆ
     function confirmBoardGame() {
       console.log("confirmBoardGame");
 
@@ -125,7 +125,7 @@ export default {
 
       }
     }
-
+    //SPRAWDZIĆ
     function nextMove() {
       console.log("nextMove");
 
@@ -145,7 +145,7 @@ export default {
       }
     }
 
-    // function, which sholud finish game for one click
+    // function, which sholud finish game for one click     // ALREADY CHECK
     function finishGame() {
       console.log("finishGame");
       while (!conFinishGame) {
@@ -179,12 +179,8 @@ export default {
       }
     }
 
-    // function, which check is there any "O" in fields
+    // function, which check is there any "O" in fields     // ALREADY CHECK
     function isZero() {
-
-      // przeszukujemy każde pole, jeśli znajdziemy 0 to ustawiamy warunek końca Sudoku na true.
-      // Warunkiem kończącym sudoku jest conFinishGame ustawiony na false lub -1.
-      console.log(" JESTEŚMY W PĘTLI KOŃCÓWEJ")
       for (i = 0; i < 6; i++) {
         for (j = 0; j < 6; j++) {
           if (miniMatrixs[i][j] == 0) {
@@ -193,26 +189,18 @@ export default {
           }
         }
       }
-      conFirstStep = false;
-      conSecondStep = false;
-      conThirdStep = false;
+      conFirstStep, conSecondStep, conThirdStep = false;
       conFinishGame = true;
-      console.log("Nie ma zer w grze")
       return -1;
-
-
     }
 
     // functions for the main buttons
-
 
     // function, which fill interial minimatrix
     function fillBoard() {
       console.log("fillBoard")
 
       let tempArray = [];
-
-
       for (i = 1; i < 7; i++) {
         tempArray[i - 1] = document.getElementById('square' + i).getElementsByClassName('inputField');
       }
@@ -293,15 +281,6 @@ export default {
           miniMatrixs[i + 12][j] = columns[i][j];
         }
       }
-
-      /*       console.log("KOMPLETNA MINIMATRIX")
-            for (i = 0; i < 18; i++) {
-              console.log(miniMatrixs[i])
-            }
-       */
-
-
-
     }
 
     // function, which fill right number for right place in BoardGame
