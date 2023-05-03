@@ -6,11 +6,11 @@
             <button class="single--button" @click="finishGame"> ROZWIĄŻ SUDOKU</button>
         </div>
         <div class="buttons--help--box">
-            <button class="single--button" @click="findEmptyFieldsInMatrix"> Podaj macierze z ilością pustych
+            <button class="single--button" @click="findEmptyFieldsInMatrix"> 1. Podaj macierze z ilością pustych
                 miejsc</button>
-            <button class="single--button" @click="findCorsToFillDigit"> Znajdź współrzędne na wpisanie brakujące
+            <button class="single--button" @click="findCorsToFillDigit"> 1. Znajdź współrzędne na wpisanie brakujące
                 cyfry</button>
-            <button class="single--button" @click="findMissingDigit"> Sprawdź jakiej cyfry brakuje</button>
+            <button class="single--button" @click="findMissingDigit"> 1. Sprawdź jakiej cyfry brakuje</button>
         </div>
         <div class="buttons--help--box">
             <button class="single--button" @click="secondStepFindOneMissingDigit"> 2. Czy jest jakaś cyfra n-1?</button>
@@ -31,6 +31,9 @@
             <button class="single--button" @click="fourthStepFillDigitsInRightPlace"> 4c. Znajdź odpowiednie
                 miejsce</button>
         </div>
+                <div class="buttons--help--box">
+                <button class="single--button" @click="fifthStepFindMiniMatrixWithTwoZeros"> 5. Znajdź miniMacierze z dwoma pustymi miejscami</button>
+            </div>
         <div class="buttons--help--box">
             <button class="single--button" @click="firstStep"> PIERWSZY KROK</button>
             <button class="single--button" @click="secondStep"> DRUGI KROK</button>
@@ -47,7 +50,7 @@
 export default {
     name: 'ButtonsSingleGame',
     props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindOneMissingID', 'thirdStepFindMissingDigits', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep',
-        'fourthStepFindOneMissingID', 'fourthStepFindMissingDigits', 'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStep'],
+        'fourthStepFindOneMissingID', 'fourthStepFindMissingDigits', 'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStep', 'fifthStepFindMiniMatrixWithTwoZeros'],
 
 }
 
@@ -69,10 +72,16 @@ export default {
     .buttons--main--box,
     .buttons--help--box {
 
-        background-color: rgb(55, 54, 54);
+
+
+        box-shadow: -4px 6px 10px #4ea4f0;
+        background: radial-gradient(#2e8bba, #000d56);
+        /*   background-color: #000d56; */
         border-radius: 12px;
+        display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
+        justify-content: space-around;
         height: auto;
         margin-top: 30px;
         width: 150px;
@@ -80,11 +89,13 @@ export default {
 
     .single--button {
         background-color: rgb(18, 22, 22);
-        border: solid 2px whitesmoke;
+        background-color: #4ea4f0;
+        border: solid 1px black;
         border-radius: 8px;
-        color: whitesmoke;
+        color: black;
         cursor: pointer;
-        font-size: 10px;
+        font-size: 14px;
+        font-weight: 600;
         margin: 8px;
         padding: 6px;
         width: auto;

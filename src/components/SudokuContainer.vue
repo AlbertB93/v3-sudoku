@@ -11,12 +11,11 @@
       :secondStep="secondStep" :thirdStep="thirdStep" :fourthStepFindOneMissingID="fourthStepFindOneMissingID"
       :fourthStepFindMissingDigits="fourthStepFindMissingDigits"
       :fourthStepFindCorsToFillDigit="fourthStepFindCorsToFillDigit"
-      :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace"
-      :fourthStep="fourthStep"
-      />
+      :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace" :fourthStep="fourthStep"
+      :fifthStepFindMiniMatrixWithTwoZeros="fifthStepFindMiniMatrixWithTwoZeros" />
     <div class="containerApp__game">
 
-      <ButtonsGame :fillBoard="fillBoard" :drawGame="drawGame" />
+      <ButtonsGame :fillBoard="fillBoard" :drawGame="drawGame" :drawGameHard="drawGameHard" />
       <div class="containerApp__game__board">
         <BoardFields />
       </div>
@@ -56,6 +55,7 @@ export default {
     //counters
     let i = 0;
     let j = 0;
+    let k = 0;
     // counters for third step
     let tempCounter = 0;
     let tempCounterFinish = 0;
@@ -82,6 +82,8 @@ export default {
     // for the third help
     let ySecondCor = 9;
     let secondMissingDigit = 99;
+    let arrayOfZero = [];
+    let lengthOfarrayOfZero = 0;
 
     // for the fourth help
     let thirdMissingDigit = 99;
@@ -107,6 +109,17 @@ export default {
 
       for (let i = 0; i < tablica.length; i++) {
         tablica[i].value = gamesLevelEasy[exampleNumber][i];
+      }
+
+    }
+
+    function drawGameHard(exampleNumber) {
+      console.log("drawGame");
+      let tablica = document.getElementsByClassName('inputField');
+      console.log(tablica);
+
+      for (let i = 0; i < tablica.length; i++) {
+        tablica[i].value = gamesLevelHard[exampleNumber][i];
       }
 
     }
@@ -289,17 +302,10 @@ export default {
       console.log("================ WPISANO [ " + missingDigit + " ] ====== [ " + xCor + " ] oraz [ " + yCor + " ] =======")
 
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].value = missingDigit;
-
-      /*       setTimeout(() => {
-              document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
-            }, 5000) */
-
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
 
       /*       document.getElementById('rowOfStep' + counterRowForStep).innerHTML = "Krok " + (counterRowForStep + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
             counterRowForStep++; */
-
-
     }
 
     // FUNCTIONS FOR THE FIRST STEP
@@ -307,9 +313,6 @@ export default {
     // function, which find miniMatrix, which has one empty field and return ID.
     function findEmptyFieldsInMatrix() {
       console.log("findEmptyFieldsInMatrix");
-
-      // znajdywanie 0 w małych macierzach i dopisywanie ich do tablicy.
-
       endCondition = true;
       while (endCondition) {
         for (i = 0; miniMatrixs.length; i++) {
@@ -326,37 +329,22 @@ export default {
             endCondition = false;
             alert(" Nie ma macierzy z 1 wolnym miejscem!")
             return -1;
-            /* break; */
           } else {
             countOfZero = 0;
           }
         }
-
       }
-
       console.log("Współrzędna X: " + xCorrdinate)
       endCondition = true;
       countOfZero = 0;
-
-
-
     }
 
     // function, which find corrdinates in miniMatrix for the empty field
     function findCorsToFillDigit() {
-
-      // sprawdzenie jakiej cyfry brakuje w macierzy
       console.log("findCorsToFillDigit");
-
-      console.log(miniMatrixs[xCorrdinate]);
-
       yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
-      console.log(yCorrdinate);
-
-      console.log("współrzędne punktu: " + xCorrdinate + " i " + yCorrdinate);
-
-
-      // ustalamy poprawną współrzędną X do wpisania w square o ID
+      console.log("współrzędna Y w Minimacierzy: " + yCorrdinate);
+      console.log("Pierwotne współrzędne punktu: " + xCorrdinate + " i " + yCorrdinate);
 
       if (xCorrdinate < 6) {
         xCor = xCorrdinate + 1;
@@ -396,9 +384,7 @@ export default {
           xCor = 6;
         }
       }
-
       // ustalamy poprawną współrzędną Y do wpisania w square o ID
-
       if (xCorrdinate == 12 || xCorrdinate == 15) {
         switch (yCorrdinate) {
           case 0:
@@ -432,7 +418,6 @@ export default {
             yCor = yCorrdinate - 1;
             break;
           case 3:
-            //            yCor = yCorrdinate + 2;
             yCor = yCorrdinate + 1;
             break;
           case 4:
@@ -477,21 +462,15 @@ export default {
         }
       }
       console.log(" Nowe współrzędne punktu: " + xCor + " i " + yCor);
-
     }
 
     // function, which find one missing number in miniMatrix, which has one empty field.
     function findMissingDigit() {
       console.log("FindMissingDigit");
-
       for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
         copyArr[i] = miniMatrixs[xCorrdinate][i];
       }
-
       copyArr.sort();
-      console.log("macierz szukana: " + copyArr)
-      console.log("macierz wzorcowa: " + testArr)
-
       for (i = 0; i < 6; i++) {
         if (copyArr[i + 1] != testArr[i]) {
           console.log("Brakuje cyfry: " + testArr[i]);
@@ -500,7 +479,6 @@ export default {
           break;
         }
       }
-      console.log(miniMatrixs[xCorrdinate]);
     }
 
 
@@ -513,11 +491,8 @@ export default {
     // function, which find one number , which occurs in Sudoku n-1 times
     function secondStepFindOneMissingDigit() {
       console.log("secondStepFindOneMissingDigit");
-
       let arrayOfDigits = [0, 0, 0, 0, 0, 0]
-
       let numberCondition = false;
-
       for (i = 0; i < 6; i++) {
         for (j = 0; j < 6; j++) {
           switch (miniMatrixs[i][j]) {
@@ -546,18 +521,15 @@ export default {
           }
         }
       }
-      console.log(" Tablica numerków " + arrayOfDigits)
 
       for (i = 0; i < arrayOfDigits.length; i++) {
         if (arrayOfDigits[i] == 5) {
           missingDigit = i + 1;
-          console.log(" Element Tablica numerków " + arrayOfDigits[i])
           numberCondition = false;
           break;
         }
         numberCondition = true;
       }
-
 
       if (numberCondition) {
         alert("Nie ma cyfry występujące n-1 razy")
@@ -565,18 +537,11 @@ export default {
       } else {
         console.log(" Szukany numerek: " + missingDigit)
       }
-
-
-
     }
 
     // function, which find miniMatrix ID for one number , which occurs in Sudoku n-1 times. This function return matrix ID, which wanted number isn't occur. 
     function secondStepFindOneMissingID() {
       console.log("secondStepFindOneMissingID")
-
-
-      console.log("missing DIGIT: " + missingDigit)
-
 
       for (i = 0; i < 17; i++) {
         if (miniMatrixs[i].some(item => item == missingDigit) == false) {
@@ -585,563 +550,25 @@ export default {
         }
       }
       console.log("missing ID: " + missingID)
-
     }
 
     // function, which find corrdinates in miniMatrix for the empty field and wanted number.
     function secondStepFindCoor() {
       console.log("secondStepFindCoor")
-      console.log("MISSING ID: " + missingID)
-
+      console.log("missingID przed zmianą: " + missingID)
       xCor = missingID;
-
       idForSwitch = missingID;
       missingID = missingID - 1;
 
+      console.log("idForSwitch: " + idForSwitch)
+      console.log("missingID po: " + missingID)
 
-      for (i = 0; i < 6; i++) {
-        switch (idForSwitch) {
-          case 1:
-            if (miniMatrixs[missingID][i] == 0) {
-              switch (i) {
-                case 0:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      yCor = 0;
-                      break;
-                    }
-                  }
-                  break;
-                case 1:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      yCor = 1;
-                      break;
-                    }
-                  }
-                  break;
-                case 2:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      yCor = 2;
-                      break;
-                    }
-                  }
-                  break;
-                case 3:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      yCor = 3;
-                      break;
-                    }
-                  }
-                  break;
-                case 4:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      yCor = 4;
-                      break;
-                    }
-                  }
-                  break;
-                case 5:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      yCor = 5;
-                      break;
-                    }
-                  }
-
-              }
-            } break;
-          case 2:
-            if (miniMatrixs[missingID][i] == 0) {
-              switch (i) {
-                case 0:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      yCor = 0;
-                      break;
-                    }
-                  }
-                  break;
-                case 1:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      yCor = 1;
-                      break;
-                    }
-                  }
-                  break;
-                case 2:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      yCor = 2;
-                      break;
-                    }
-                  }
-                  break;
-                case 3:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      yCor = 3;
-                      break;
-                    }
-                  }
-                  break;
-                case 4:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      yCor = 4;
-                      break;
-                    }
-                  }
-                  break;
-                case 5:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      yCor = 5;
-                      break;
-                    }
-                  }
-
-              }
-            } break;
-          case 3:
-            if (miniMatrixs[missingID][i] == 0) {
-              switch (i) {
-                case 0:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      yCor = 0;
-                      break;
-                    }
-                  }
-                  break;
-                case 1:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      yCor = 1;
-                      break;
-                    }
-                  }
-                  break;
-                case 2:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      yCor = 2;
-                      break;
-                    }
-                  }
-                  break;
-                case 3:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      yCor = 3;
-                      break;
-                    }
-                  }
-                  break;
-                case 4:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      yCor = 4;
-                      break;
-                    }
-                  }
-                  break;
-                case 5:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      yCor = 5;
-                      break;
-                    }
-                  }
-
-              }
-            } break;
-          case 4:
-            if (miniMatrixs[missingID][i] == 0) {
-              switch (i) {
-                case 0:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      yCor = 0;
-                      break;
-                    }
-                  }
-                  break;
-                case 1:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      yCor = 1;
-                      break;
-                    }
-                  }
-                  break;
-                case 2:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      yCor = 2;
-                      break;
-                    }
-                  }
-                  break;
-                case 3:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      yCor = 3;
-                      break;
-                    }
-                  }
-                  break;
-                case 4:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      yCor = 4;
-                      break;
-                    }
-                  }
-                  break;
-                case 5:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      yCor = 5;
-                      break;
-                    }
-                  }
-
-              }
-            } break;
-          case 5:
-            if (miniMatrixs[missingID][i] == 0) {
-              switch (i) {
-                case 0:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      yCor = 0;
-                      break;
-                    }
-                  }
-                  break;
-                case 1:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      yCor = 1;
-                      break;
-                    }
-                  }
-                  break;
-                case 2:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      yCor = 2;
-                      break;
-                    }
-                  }
-                  break;
-                case 3:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      yCor = 3;
-                      break;
-                    }
-                  }
-                  break;
-                case 4:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      yCor = 4;
-                      break;
-                    }
-                  }
-                  break;
-                case 5:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      yCor = 5;
-                      break;
-                    }
-                  }
-
-              }
-            } break;
-          case 6:
-            if (miniMatrixs[missingID][i] == 0) {
-              switch (i) {
-                case 0:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      yCor = 0;
-                      break;
-                    }
-                  }
-                  break;
-                case 1:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      yCor = 1;
-                      break;
-                    }
-                  }
-                  break;
-                case 2:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      yCor = 2;
-                      break;
-                    }
-                  }
-                  break;
-                case 3:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      yCor = 3;
-                      break;
-                    }
-                  }
-                  break;
-                case 4:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      yCor = 4;
-                      break;
-                    }
-                  }
-                  break;
-                case 5:
-                  for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                      break;
-                    } else {
-                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      yCor = 5;
-                      break;
-                    }
-                  }
-
-              }
-            } break;
-          default: {
-            console.log("Błąd w pętli  z ID")
-            break;
-          }
-        }
-      }
-
+      helpForCorrectCorrdinates(idForSwitch, missingID)
       console.log("Szukane współrzędne: " + xCor + " - " + yCor)
 
     }
 
-    // FUNCTIONS FOR THE THIRD STEP
-
-    function thirdStepFindOneMissingID() {
-      console.log("thirdStepFindOneMissingID")
-
-      xCorrdinate = 0;
-      countOfZero = 0;
-
-      /*       dodać 3 miejsce jako oldestCorrdinate */
-
-
-      console.log("Poprzednia współrzędna macierzy z dwoma zerami: " + oldXCorrdinate)
-      console.log("Najstarsza współrzędna macierzy z dwoma zerami: " + oldestXCorrdinate)
-
-      endCondition = true;
-      while (endCondition) {
-        for (i = 0; i < miniMatrixs.length; i++) {
-          for (j = 0; j < 6; j++) {
-            if (miniMatrixs[i][j] == 0) {
-              countOfZero++;
-            }
-          }
-          if (countOfZero == 2 && oldXCorrdinate != i && oldestXCorrdinate != i) {
-            xCorrdinate = i;
-            endCondition = false;
-            break;
-          } else if (i == 17 && countOfZero != 1) {
-            endCondition = false;
-            alert(" Nie ma macierzy z 2 wolnym miejscem!")
-            break;
-          } else {
-            countOfZero = 0;
-          }
-        }
-
-      }
-      console.log("Aktualna współrzędna macierzy z dwoma zerami: " + xCorrdinate)
-
-      endCondition = true;
-      countOfZero = 0;
-
-    }
-
-    function thirdStepFindMissingDigits() {
-      console.log("thirdStepFindMissingDigits")
-
-      missingDigit = 99;
-      secondMissingDigit = 99;
-
-      console.log("Macierz szukana: " + miniMatrixs[xCorrdinate])
-
-      for (i = 1; i < 7; i++) {
-        if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
-          if (missingDigit == 99) {
-            missingDigit = i;
-          } else {
-            secondMissingDigit = i;
-          }
-        }
-      }
-
-      console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
-    }
-
-    function thirdStepFindCorsToFillDigit() {
-
-      // sprawdzenie jakiej cyfry brakuje w macierzy
-      console.log("thirdStepFindCorsToFillDigit");
-
-      /* console.log("Macierz z dwoma pustymi polami" + miniMatrixs[xCorrdinate]); */
-
-      let copyArr = [];
-
-      yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
-
-      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
-
-      // We copied our matrix to temporary matrix (copyArr) and when I found index for "0", I fill to it expample number(9).
-      // Next, I repeat function to found second cor for '0'
-      for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-        copyArr[i] = miniMatrixs[xCorrdinate][i];
-      }
-      copyArr[yCorrdinate] = 9;
-      ySecondCor = copyArr.indexOf('0');
-      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-    }
-
-    function thirdStepFillDigitsInRightPlace() {
-      console.log("thirdStepFillDigitsInRightPlace")
-
-      console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
-      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
-      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-
-      missingID = xCorrdinate;
-      idForSwitch = xCorrdinate + 1;
-
-      console.log("MissingID: " + missingID);
-      console.log("idForSwitch: " + idForSwitch);
-
-
-      tempCounter = 0;
-      tempCounterFinish = 0;
-
+    function helpForCorrectCorrdinates(idForSwitch, missingID) {
       for (i = 0; i < 6; i++) {
         switch (idForSwitch) {
           case 1:
@@ -1268,7 +695,6 @@ export default {
                       console.log("Nie zawiera szukanej cyfry czyli:  tutaj" + 3)
                       tempCounter++;
                       yCor = 3;
-                      tempCounter++;
                       break;
                     }
                   }
@@ -1281,7 +707,6 @@ export default {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
                       tempCounter++;
                       yCor = 4;
-                      tempCounter++;
                       break;
                     }
                   }
@@ -1608,507 +1033,975 @@ export default {
 
               }
             } break;
+          case 8:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+
+              }
+            } break;
+          case 9:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 10:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 11:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 12:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 13:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 14:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 15:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 16:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 17:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
+          case 18:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+                      yCor = 0;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 1:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 1);
+                      yCor = 1;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 2:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 2);
+                      yCor = 2;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 3:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 3)
+                      yCor = 3;
+                      tempCounter++;
+                      break;
+                    }
+                  }
+                  break;
+                case 4:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 4);
+                      tempCounter++;
+                      yCor = 4;
+                      break;
+                    }
+                  }
+                  break;
+                case 5:
+                  for (j = 0; j < 6; j++) {
+                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                      break;
+                    } else {
+                      console.log("Nie zawiera szukanej cyfry czyli: " + 5);
+                      tempCounter++;
+                      yCor = 5;
+                      break;
+                    }
+                  }
+              }
+            } break;
           default: {
             console.log("Błąd w pętli  z ID")
             break;
           }
         }
       }
+    }
+
+    // FUNCTIONS FOR THE THIRD STEP
+
+    function thirdStepFindOneMissingID() {
+      console.log("thirdStepFindOneMissingID")
+      xCorrdinate = 0;
+      countOfZero = 0;
+
+      /*      pokombinować coś z tymi poprzednimi i aktualnymi współrzędnymi dla 2 przykładu z levelu Hard */
+
+      endCondition = true;
+      while (endCondition) {
+        for (i = 0; i < miniMatrixs.length; i++) {
+          for (j = 0; j < 6; j++) {
+            if (miniMatrixs[i][j] == 0) {
+              countOfZero++;
+            }
+          }
+          if (countOfZero == 2 && oldXCorrdinate != i && oldestXCorrdinate != i) {
+            xCorrdinate = i;
+            endCondition = false;
+            break;
+          } else if (i == 17 && countOfZero != 1) {
+            endCondition = false;
+            alert(" Nie ma macierzy z 2 wolnym miejscem!")
+            break;
+          } else {
+            countOfZero = 0;
+          }
+        }
+      }
+
+
+      console.log("Aktualna współrzędna macierzy z dwoma zerami: " + xCorrdinate)
+      console.log("Poprzednia współrzędna macierzy z dwoma zerami: " + oldXCorrdinate)
+      console.log("Najstarsza współrzędna macierzy z dwoma zerami: " + oldestXCorrdinate)
+      endCondition = true;
+      countOfZero = 0;
+    }
+
+    function thirdStepFindMissingDigits() {
+      console.log("thirdStepFindMissingDigits")
+      missingDigit = 99;
+      secondMissingDigit = 99;
+      console.log("Macierz szukana: " + miniMatrixs[xCorrdinate])
+      for (i = 1; i < 7; i++) {
+        if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
+          if (missingDigit == 99) {
+            missingDigit = i;
+          } else {
+            secondMissingDigit = i;
+          }
+        }
+      }
+      console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
+    }
+
+    function thirdStepFindCorsToFillDigit() {
+
+      // sprawdzenie jakiej cyfry brakuje w macierzy
+      console.log("thirdStepFindCorsToFillDigit");
+      let copyArr = [];
+      console.log("xCorrdiante: " + xCorrdinate);
+      console.log("oldXCorrdinate: " + oldXCorrdinate);
+      console.log("oldestXCorrdinate: " + oldestXCorrdinate);
+
+      /*       if(oldXCorrdinate != 99){
+              xCorrdinate = oldXCorrdinate;
+            }
+       */
+
+      yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
+      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
+
+      // We copied our matrix to temporary matrix (copyArr) and when I found index for "0", I fill to it expample number(9).
+      // Next, I repeat function to found second cor for '0'
+      for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+        copyArr[i] = miniMatrixs[xCorrdinate][i];
+      }
+      copyArr[yCorrdinate] = 9;
+      ySecondCor = copyArr.indexOf('0');
+      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+    }
+
+    function thirdStepFillDigitsInRightPlace() {
+      console.log("thirdStepFillDigitsInRightPlace")
+
+      console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
+      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
+      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+
+
+      missingID = xCorrdinate;
+      idForSwitch = xCorrdinate + 1;
+
+      console.log("MissingID: " + missingID);
+      console.log("idForSwitch: " + idForSwitch);
+
+
+      tempCounter = 0;
+      tempCounterFinish = 0;
+
+      helpForCorrectCorrdinates(idForSwitch, missingID)
 
       if (tempCounter == 2) {
         console.log("tempCounter = 2. Musimy wykonać dla drugiej cyfry ")
         tempCounterFinish++;
         missingDigit = secondMissingDigit;
+        helpForCorrectCorrdinates(idForSwitch, missingID)
       } else {
         console.log("Musimy wpisać : " + missingDigit)
         xCor = xCorrdinate + 1;
-        /* yCor = yCorrdinate; */
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
 
-      if (tempCounter == 2) {
-        for (i = 0; i < 6; i++) {
-          switch (idForSwitch) {
-            case 1:
-              if (miniMatrixs[missingID][i] == 0) {
-                switch (i) {
-                  case 0:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                        tempCounter++;
-                        yCor = 0;
-                        break;
-                      }
-                    }
-                    break;
-                  case 1:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                        tempCounter++;
-                        yCor = 1;
-                        break;
-                      }
-                    }
-                    break;
-                  case 2:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                        tempCounter++;
-                        yCor = 2;
-                        break;
-                      }
-                    }
-                    break;
-                  case 3:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                        tempCounter++;
-                        yCor = 3;
-                        break;
-                      }
-                    }
-                    break;
-                  case 4:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                        tempCounter++;
-                        yCor = 4;
-                        break;
-                      }
-                    }
-                    break;
-                  case 5:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                        tempCounter++;
-                        yCor = 5;
-                        break;
-                      }
-                    }
-
-                }
-              } break;
-            case 2:
-              if (miniMatrixs[missingID][i] == 0) {
-                switch (i) {
-                  case 0:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                        tempCounter++;
-                        yCor = 0;
-                        break;
-                      }
-                    }
-                    break;
-                  case 1:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                        tempCounter++;
-                        yCor = 1;
-                        break;
-                      }
-                    }
-                    break;
-                  case 2:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                        tempCounter++;
-                        yCor = 2;
-                        break;
-                      }
-                    }
-                    break;
-                  case 3:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli:  tutaj" + 3)
-                        tempCounter++;
-                        yCor = 3;
-                        tempCounter++;
-                        break;
-                      }
-                    }
-                    break;
-                  case 4:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                        tempCounter++;
-                        yCor = 4;
-                        tempCounter++;
-                        break;
-                      }
-                    }
-                    break;
-                  case 5:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[7].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                        tempCounter++;
-                        yCor = 5;
-                        break;
-                      }
-                    }
-
-                }
-              } break;
-            case 3:
-              if (miniMatrixs[missingID][i] == 0) {
-                switch (i) {
-                  case 0:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                        tempCounter++;
-                        yCor = 0;
-                        break;
-                      }
-                    }
-                    break;
-                  case 1:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                        tempCounter++;
-                        yCor = 1;
-                        break;
-                      }
-                    }
-                    break;
-                  case 2:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                        tempCounter++;
-                        yCor = 2;
-                        break;
-                      }
-                    }
-                    break;
-                  case 3:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                        tempCounter++;
-                        yCor = 3;
-                        break;
-                      }
-                    }
-                    break;
-                  case 4:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                        tempCounter++;
-                        yCor = 4;
-                        break;
-                      }
-                    }
-                    break;
-                  case 5:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                        tempCounter++;
-                        yCor = 5;
-                        break;
-                      }
-                    }
-
-                }
-              } break;
-            case 4:
-              if (miniMatrixs[missingID][i] == 0) {
-                switch (i) {
-                  case 0:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                        yCor = 0;
-                        tempCounter++;
-                        break;
-                      }
-                    }
-                    break;
-                  case 1:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                        tempCounter++;
-                        yCor = 1;
-                        break;
-                      }
-                    }
-                    break;
-                  case 2:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[8].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                        tempCounter++;
-                        yCor = 2;
-                        break;
-                      }
-                    }
-                    break;
-                  case 3:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                        tempCounter++;
-                        yCor = 3;
-                        break;
-                      }
-                    }
-                    break;
-                  case 4:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                        tempCounter++;
-                        yCor = 4;
-                        break;
-                      }
-                    }
-                    break;
-                  case 5:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[9].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                        tempCounter++;
-                        yCor = 5;
-                        break;
-                      }
-                    }
-
-                }
-              } break;
-            case 5:
-              if (miniMatrixs[missingID][i] == 0) {
-                switch (i) {
-                  case 0:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                        tempCounter++;
-                        yCor = 0;
-                        break;
-                      }
-                    }
-                    break;
-                  case 1:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                        tempCounter++;
-                        yCor = 1;
-                        break;
-                      }
-                    }
-                    break;
-                  case 2:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                        tempCounter++;
-                        yCor = 2;
-                        break;
-                      }
-                    }
-                    break;
-                  case 3:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                        tempCounter++;
-                        yCor = 3;
-                        break;
-                      }
-                    }
-                    break;
-                  case 4:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                        tempCounter++;
-                        yCor = 4;
-                        break;
-                      }
-                    }
-                    break;
-                  case 5:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                        tempCounter++;
-                        yCor = 5;
-                        break;
-                      }
-                    }
-
-                }
-              } break;
-            case 6:
-              if (miniMatrixs[missingID][i] == 0) {
-                switch (i) {
-                  case 0:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                        yCor = 0;
-                        tempCounter++;
-                        break;
-                      }
-                    }
-                    break;
-                  case 1:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                        yCor = 1;
-                        tempCounter++;
-                        break;
-                      }
-                    }
-                    break;
-                  case 2:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                        yCor = 2;
-                        tempCounter++;
-                        break;
-                      }
-                    }
-                    break;
-                  case 3:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                        yCor = 3;
-                        tempCounter++;
-                        break;
-                      }
-                    }
-                    break;
-                  case 4:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                        tempCounter++;
-                        yCor = 4;
-                        break;
-                      }
-                    }
-                    break;
-                  case 5:
-                    for (j = 0; j < 6; j++) {
-                      if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
-                        break;
-                      } else {
-                        console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                        tempCounter++;
-                        yCor = 5;
-                        break;
-                      }
-                    }
-
-                }
-              } break;
-            default: {
-              console.log("Błąd w pętli  z ID")
-              break;
-            }
-          }
-        }
-      }
+      /*       if (tempCounter == 2) {
+              helpForCorrectCorrdinates(idForSwitch, missingID)
+            } */
 
       if (tempCounter == 4) {
         console.log("tempCounter = 4. Musimy wykonać dla innej Macierzy ")
         tempCounterFinish++;
-        /* thirdStepFindOneMissingID(); */
       } else {
         console.log("Musimy wpisać : " + missingDigit)
         xCor = xCorrdinate + 1;
-        /* yCor = yCorrdinate; */
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
       console.log("tempCounterFinish: " + tempCounterFinish)
@@ -2250,7 +2143,7 @@ export default {
 
         if (counterCondition == 1) {
           if (arrayOfCondition[0]) {
-          /*   missingDigit = missingDigit; */
+            /*   missingDigit = missingDigit; */
             warunekPetli = false;
             break;
           } else if (arrayOfCondition[1]) {
@@ -2282,12 +2175,12 @@ export default {
 
       }
 
-     /*  xCor = xCorrdinate + 1; */
+      /*  xCor = xCorrdinate + 1; */
       yCor = yCorrdinate;
-      xCor = xCorrdinate+1;
+      xCor = xCorrdinate + 1;
 
       console.log("Współrzędne do wpisania: " + xCor + " i " + yCor)
-   
+
 
     }
 
@@ -2535,6 +2428,33 @@ export default {
       return warunekPom;
     }
 
+    // FUNCTIONS FOR THE FIFTH STEP
+
+    function fifthStepFindMiniMatrixWithTwoZeros() {
+      console.log("fifthStepFindMiniMatrixWithTwoZeros");
+      countOfZero = 0;
+      for (i = 0; i < miniMatrixs.length; i++) {
+        for (j = 0; j < 6; j++) {
+          if (miniMatrixs[i][j] == 0) {
+            countOfZero++;
+          }
+        }
+        if (countOfZero == 2) {
+          arrayOfZero[k] = i
+          k++;
+          countOfZero = 0;
+        } else {
+          countOfZero = 0;
+        }
+      }
+
+      lengthOfarrayOfZero = arrayOfZero.length;
+      console.log("Tablica z ID macierzy, w których są dwa msc. zerowe: " + arrayOfZero)
+      console.log("Length arrayOfZero: " + lengthOfarrayOfZero)
+      countOfZero = 0;
+      xCorrdinate = arrayOfZero[0];
+    }
+
 
     // FINALLY STEPS
 
@@ -2556,11 +2476,11 @@ export default {
     }
 
     function secondStep() {
-
+      console.log("****** KROK NR 2 *******")
       fillBoard();
 
       if (secondStepFindOneMissingDigit() != -1) {
-        console.log("****** KROK NR 2 *******")
+
         secondStepFindOneMissingID();
         secondStepFindCoor();
         fillMissingDigit();
@@ -2573,76 +2493,78 @@ export default {
         conFirstStep = false;
         console.log(" Nie wykonano kroku nr 2")
       }
+
+      oldXCorrdinate = 99;
+      oldestXCorrdinate = 99;
     }
+
 
     function thirdStep() {
       console.log("******** KROK NR 3 ******")
       fillBoard();
-      thirdStepFindOneMissingID();
+      fifthStepFindMiniMatrixWithTwoZeros();
       thirdStepFindMissingDigits();
       thirdStepFindCorsToFillDigit();
       thirdStepFillDigitsInRightPlace();
       if (tempCounter == 4) {
-        console.log("----------TEST------- JAKIE OLDXCOORR?" + oldXCorrdinate)
-        if (oldXCorrdinate == 99) {
-          oldXCorrdinate = xCorrdinate;
-        } else {
-          oldestXCorrdinate = oldXCorrdinate;
-          oldXCorrdinate = xCorrdinate;
-        }
-        thirdStepFindOneMissingID();
+        console.log("*******JESTEŚMY TUTAJ TEMPCOUNTER == 4 **********")
+        xCorrdinate = arrayOfZero[1];
         thirdStepFindMissingDigits();
         thirdStepFindCorsToFillDigit();
         thirdStepFillDigitsInRightPlace();
         if (tempCounter == 4) {
-          console.log("----------TEST---2------- JAKIE OLDXCOORR?" + oldXCorrdinate)
-          if (oldXCorrdinate == 99) {
-            oldXCorrdinate = xCorrdinate;
-          } else {
-            oldestXCorrdinate = oldXCorrdinate;
-            oldXCorrdinate = xCorrdinate;
-          }
-          thirdStepFindOneMissingID();
+          console.log("*******JESTEŚMY TUTAJ TEMPCOUNTER == 4xxxx222 **********")
+          xCorrdinate = arrayOfZero[2];
           thirdStepFindMissingDigits();
           thirdStepFindCorsToFillDigit();
           thirdStepFillDigitsInRightPlace();
           conFirstStep = true;
           conSecondStep = true;
+          if (xCor > 5) {
+            findCorsToFillDigit();
+          }
           fillMissingDigit();
         } else {
-          thirdStepFindOneMissingID();
-          thirdStepFindMissingDigits();
-          thirdStepFindCorsToFillDigit();
-          thirdStepFillDigitsInRightPlace();
+          console.log("*******JESTEŚMY TUTAJ ????/**********")
           conFirstStep = true;
           conSecondStep = true;
+          if (xCor > 5) {
+            findCorsToFillDigit();
+          }
           fillMissingDigit();
         }
       } else {
+        console.log("*******JESTEŚMY TUTAJ TEMPCOUNTER ELSE **********")
         if (tempCounterFinish == 2) {
           thirdStepFillDigitsInRightPlace();
           conFirstStep = true;
           conSecondStep = true;
+          if (xCor > 5) {
+            findCorsToFillDigit();
+          }
           fillMissingDigit();
-
+          k = 0;
         } else {
           conFirstStep = true;
           conSecondStep = true;
+          if (xCor > 6) {
+            findCorsToFillDigit();
+          }
           fillMissingDigit();
-
+          k = 0;
         }
+        k = 0;
       }
-
-
+      k = 0;
     }
 
-    function fourthStep(){
-            console.log("******** KROK NR 4 ******")
-            fourthStepFindOneMissingID();
-            fourthStepFindMissingDigits();
-            fourthStepFindCorsToFillDigit();
-            fourthStepFillDigitsInRightPlace();
-            fillMissingDigit();
+    function fourthStep() {
+      console.log("******** KROK NR 4 ******")
+      fourthStepFindOneMissingID();
+      fourthStepFindMissingDigits();
+      fourthStepFindCorsToFillDigit();
+      fourthStepFillDigitsInRightPlace();
+      fillMissingDigit();
     }
 
 
@@ -2650,7 +2572,7 @@ export default {
     return {
       drawGame, confirmBoardGame, nextMove, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
       secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace, firstStep, secondStep, thirdStep, isZero,
-      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit, fourthStepFillDigitsInRightPlace,fourthStep
+      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit, fourthStepFillDigitsInRightPlace, fourthStep, drawGameHard, fifthStepFindMiniMatrixWithTwoZeros
     }
   }
 }
@@ -2664,8 +2586,13 @@ export default {
 
 .containerApp {
   align-items: center;
-  background-color: rgb(24, 23, 23);
+  /*   background-color: rgb(24, 23, 23); */
+  /*      background: linear-gradient(#e66465, #9198e5); */
   /*   border: solid 3px yellow; */
+  background: linear-gradient(#067dbd, #9198e5);
+
+  background: linear-gradient(#067dbd, #9198e5);
+  background: radial-gradient(#2e8bba, #000d56);
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -2683,7 +2610,6 @@ export default {
 
   .containerApp__game {
     align-items: center;
-    /*    border: dotted 3px red; */
     border-radius: 8px;
     color: aqua;
     display: flex;
@@ -2695,8 +2621,12 @@ export default {
 
     .containerApp__game__board {
       align-content: space-around;
-      border: solid 3px whitesmoke;
-      border-radius: 8px;
+      /*     border: solid 3px rgb(73, 31, 225); */
+      box-shadow: 4px 6px 10px #000d56;
+
+      background: linear-gradient(#2e8bba, #000d56);
+      /*  background-color: #000d56; */
+      border-radius: 12px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;

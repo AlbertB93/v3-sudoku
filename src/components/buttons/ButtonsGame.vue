@@ -41,8 +41,12 @@
             <p>HARD</p>
         </div>
         <div class="containerApp__game__buttons--box">
-            <button class="buttons--game" @click="drawGame(6)">1</button>
-            <button class="buttons--game2" @click="drawGame(7)">1a</button>
+                <button class="buttons--game" @click="drawGameHard(0)">1</button>
+                <button class="buttons--game" @click="drawGameHard(1)">2</button>
+                <button class="buttons--game" @click="drawGameHard(2)">2a</button>
+                      <button class="buttons--game" @click="drawGameHard(3)">2b</button>
+                      <button class="buttons--game" @click="drawGameHard(4)">3</button>
+
             <!--             <button class="buttons--game" @click="nextMove">Wykonaj kolejny ruch</button>
             <button class="buttons--game" @click="checkGame">Sprawdź planszę - mały kwadracik</button>
             <button class="buttons--game" @click="finishGame">Rozwiąż planszę</button>
@@ -54,7 +58,7 @@
 <script>
 export default {
     name: 'ButtonsGame',
-    props: ['fillBoard', 'drawGame'],
+    props: ['fillBoard', 'drawGame','drawGameHard'],
 };
 
 </script>
@@ -62,13 +66,19 @@ export default {
 <style lang="scss" scoped>
 .containerApp__game__buttons {
     display: flex;
-    border: solid 3px whitesmoke;
+/*     border: solid 3px whitesmoke;
     border-radius: 12px;
+    box-shadow: -4px 6px 10px white; */
+      /*   border: solid 3px rgb(73, 31, 225); */
+    border-radius: 12px;
+    box-shadow: -4px 6px 10px #4ea4f0;
+      background: linear-gradient(#2e8bba, #000d56);
     flex-direction: column;
     justify-content: space-around;
     height: 420px;
     margin: 20px;
-    width: 40vw;
+    padding: 0px 30px;
+    width: auto;
 
     &--title {
         color: whitesmoke;
@@ -79,37 +89,29 @@ export default {
 
     &--box {
         align-items: center;
-
         display: flex;
         flex-direction: row;
         justify-content: start;
 
         .buttons--game {
-            background-color: rgb(55, 54, 54);
+/*             background-color: rgb(55, 54, 54);
             border: solid 2px whitesmoke;
-            color: whitesmoke;
+            border-radius: 20px;
+            color: whitesmoke; */
+                      background-color: rgb(0, 0, 0);
+ background-color: #9198e5;
+            border: solid 2px rgb(57, 5, 200);
+            border-radius: 20px;
+                box-shadow: -2px 2px 10px rgb(57, 5, 200);
+                  background-color: #000d56;
+            color: whitesmoke;;
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            height: auto;
+            height: 40px;
             margin: 10px;
-            padding: 10px;
-            width: auto;
-        }
-
-                .buttons--game2 {
-            background-color: rgb(55, 54, 54);
-            border: solid 2px whitesmoke;
-            border-radius: 8px;
-            box-shadow: -3px 3px white;
-            color: whitesmoke;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            height: auto;
-            margin: 10px;
-            padding: 10px;
-            width: auto;
+            padding: 5px;
+            width: 40px;
         }
     }
 }

@@ -1,5 +1,4 @@
 
-
 <template>
   <div class="containerApp__game__board__field" id="square1">
     <input type="text" class="inputField" value="0">
@@ -36,7 +35,7 @@
   <div class="containerApp__game__board__field" id="square5">
     <input type="text" class="inputField" value="5">
     <input type="text" class="inputField" value="1">
-    <input type="text" class="inputField" value="0">
+    <input type="text" class="inputField" value="4">
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="2">
@@ -44,10 +43,10 @@
   <div class="containerApp__game__board__field" id="square6">
     <input type="text" class="inputField" value="2">
     <input type="text" class="inputField" value="6">
-    <input type="text" class="inputField" value="0">
+    <input type="text" class="inputField" value="3">
     <input type="text" class="inputField" value="1">
     <input type="text" class="inputField" value="4">
-    <input type="text" class="inputField" value="0">
+    <input type="text" class="inputField" value="5">
   </div>
 </template>
 
@@ -64,7 +63,6 @@ export default {
 
 <style lang="scss" scoped>
 .containerApp__game__board {
-
   &__field {
     align-content: space-around;
     display: flex;
@@ -85,9 +83,11 @@ export default {
   }
 
   .inputField {
-    background-color: rgb(55, 54, 54);
+   
+                 background-color: #000d56;
     color: whitesmoke;
     font-size: 24px;
+    font-weight: 600;
     height: 40px;
     width: 25%;
     text-align: center;
