@@ -56,9 +56,10 @@ export default {
     let i = 0;
     let j = 0;
     let k = 0;
+    let counterThirdStep = 0;
     // counters for third step
-    let tempCounter = 0;
-    let tempCounterFinish = 0;
+    let counterCondition = 0;
+    let counterConditionFinish = 0;
     // arrays for the help
     let rows = [];
     let columns = [];
@@ -98,6 +99,9 @@ export default {
     let conSecondStep = true;
     let conThirdStep = true;
     let conFinishGame = false;
+    let conLoopThirdStep = true;
+
+    //testing
 
     //FUNCTIONS
 
@@ -161,33 +165,56 @@ export default {
     // function, which sholud finish game for one click     // ALREADY CHECK
     function finishGame() {
       console.log("finishGame");
+      fillBoard();
       while (!conFinishGame) {
         while (conFirstStep) {
           console.log("***************** KROK 1 ************************")
-          firstStep();
           if (isZero() == -1) {
             conFinishGame = true;
             alert("Gratulacje! Rozwiązano Sudoku!")
             break;
+          } else {
+            firstStep();
+            conThirdStep = true;
           }
-          conThirdStep = true;
+
         }
         while (conSecondStep) {
           console.log("***************** KROK 2 ************************")
-          secondStep();
-          conThirdStep = true;
           if (isZero() == -1) {
             conFinishGame = true;
             alert("Gratulacje! Rozwiązano Sudoku!")
             break;
+          } else {
+            secondStep();
+            conThirdStep = true;
           }
         }
         if (conFirstStep == false && conSecondStep == false && conThirdStep == true) {
           console.log("***************** KROK 3 ************************")
-          isZero();
-          conFirstStep = true;
-          conSecondStep = true;
-          thirdStep();
+          if (isZero() == -1) {
+            conFinishGame = true;
+            alert("Gratulacje! Rozwiązano Sudoku!")
+            break;
+          } else {
+            conFirstStep = true;
+            conSecondStep = true;
+            thirdStep();
+          }
+        }
+        if (conThirdStep == false) {
+          console.log("***************** KROK 4 ************************")
+          if (isZero() == -1) {
+            conFinishGame = true;
+            alert("Gratulacje! Rozwiązano Sudoku!")
+            break;
+          } else {
+            conFirstStep = true;
+            conSecondStep = true;
+            conThirdStep = true;
+            fourthStep();
+          }
+
         }
       }
     }
@@ -568,7 +595,24 @@ export default {
 
     }
 
+
+    function checkMiniMatrixForMissingDigit(a, b, i) {
+      console.log("checkMiniMatrixForMissingDigit");
+      console.log("A= " + a + " i B= " + b);
+      for (j = 0; j < 6; j++) {
+        if ((miniMatrixs[a].some(item => item == missingDigit)) || (miniMatrixs[b].some(item => item == missingDigit))) {
+          break;
+        } else {
+          console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+          yCor = i;
+          counterCondition++;
+          break;
+        }
+      }
+    }
+
     function helpForCorrectCorrdinates(idForSwitch, missingID) {
+      console.log("helpForCorrectCorrdinates")
       for (i = 0; i < 6; i++) {
         switch (idForSwitch) {
           case 1:
@@ -580,7 +624,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 0;
                       break;
                     }
@@ -592,7 +636,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 1;
                       break;
                     }
@@ -604,7 +648,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 2;
                       break;
                     }
@@ -616,7 +660,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 3;
                       break;
                     }
@@ -628,7 +672,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -640,7 +684,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -657,7 +701,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 0;
                       break;
                     }
@@ -669,7 +713,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 1;
                       break;
                     }
@@ -681,7 +725,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 2;
                       break;
                     }
@@ -693,7 +737,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli:  tutaj" + 3)
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 3;
                       break;
                     }
@@ -705,7 +749,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -717,7 +761,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -734,7 +778,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 0;
                       break;
                     }
@@ -746,7 +790,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 1;
                       break;
                     }
@@ -758,7 +802,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 2;
                       break;
                     }
@@ -770,7 +814,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 3;
                       break;
                     }
@@ -782,7 +826,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -794,7 +838,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -812,7 +856,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -823,7 +867,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 1;
                       break;
                     }
@@ -835,7 +879,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 2;
                       break;
                     }
@@ -847,7 +891,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 3;
                       break;
                     }
@@ -859,7 +903,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -871,7 +915,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -888,7 +932,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 0;
                       break;
                     }
@@ -900,7 +944,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 1;
                       break;
                     }
@@ -912,7 +956,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 2;
                       break;
                     }
@@ -924,7 +968,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 3;
                       break;
                     }
@@ -936,7 +980,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -948,7 +992,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -958,62 +1002,85 @@ export default {
             } break;
           case 6:
             if (miniMatrixs[missingID][i] == 0) {
+              console.log("***********TESTUJEMY FUNKCJĘ TESTOWĄ *************")
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(10, 15, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(10, 16, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(10, 17, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(11, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(11, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 17, i);
+              }
+            } break;
+          case 7:
+            if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
                   for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[12].some(item => item == missingDigit))) {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
                   break;
                 case 1:
                   for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
                   break;
                 case 2:
                   for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[10].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[14].some(item => item == missingDigit))) {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
                   break;
                 case 3:
                   for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[15].some(item => item == missingDigit))) {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
                   break;
                 case 4:
                   for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[16].some(item => item == missingDigit))) {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1021,11 +1088,11 @@ export default {
                   break;
                 case 5:
                   for (j = 0; j < 6; j++) {
-                    if ((miniMatrixs[11].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
+                    if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[17].some(item => item == missingDigit))) {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1043,7 +1110,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1055,7 +1122,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1067,7 +1134,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1079,7 +1146,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1090,7 +1157,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1102,7 +1169,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1120,7 +1187,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1132,7 +1199,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1144,7 +1211,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1156,7 +1223,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1167,7 +1234,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1179,7 +1246,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1196,7 +1263,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1208,7 +1275,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1220,7 +1287,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1232,7 +1299,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1243,7 +1310,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1255,7 +1322,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1272,7 +1339,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1284,7 +1351,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1296,7 +1363,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1308,7 +1375,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1319,7 +1386,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1331,7 +1398,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1348,7 +1415,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1360,7 +1427,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1372,7 +1439,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1384,7 +1451,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1395,7 +1462,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1407,7 +1474,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1424,7 +1491,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1436,7 +1503,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1448,7 +1515,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1460,7 +1527,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1471,7 +1538,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1483,7 +1550,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1500,7 +1567,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1512,7 +1579,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1524,7 +1591,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1536,7 +1603,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1547,7 +1614,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1559,7 +1626,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1576,7 +1643,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1588,7 +1655,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1600,7 +1667,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1612,7 +1679,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1623,7 +1690,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1635,7 +1702,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1652,7 +1719,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1664,7 +1731,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1676,7 +1743,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1688,7 +1755,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1699,7 +1766,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1711,7 +1778,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1728,7 +1795,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1740,7 +1807,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1752,7 +1819,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1764,7 +1831,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1775,7 +1842,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1787,7 +1854,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1804,7 +1871,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 0);
                       yCor = 0;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1816,7 +1883,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 1);
                       yCor = 1;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1828,7 +1895,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 2);
                       yCor = 2;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1840,7 +1907,7 @@ export default {
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 3)
                       yCor = 3;
-                      tempCounter++;
+                      counterCondition++;
                       break;
                     }
                   }
@@ -1851,7 +1918,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 4);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 4;
                       break;
                     }
@@ -1863,7 +1930,7 @@ export default {
                       break;
                     } else {
                       console.log("Nie zawiera szukanej cyfry czyli: " + 5);
-                      tempCounter++;
+                      counterCondition++;
                       yCor = 5;
                       break;
                     }
@@ -1922,6 +1989,7 @@ export default {
       missingDigit = 99;
       secondMissingDigit = 99;
       console.log("Macierz szukana: " + miniMatrixs[xCorrdinate])
+      console.log("ID Macierz szukana: " + xCorrdinate)
       for (i = 1; i < 7; i++) {
         if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
           if (missingDigit == 99) {
@@ -1976,14 +2044,14 @@ export default {
       console.log("idForSwitch: " + idForSwitch);
 
 
-      tempCounter = 0;
-      tempCounterFinish = 0;
+      counterCondition = 0;
+      counterConditionFinish = 0;
 
       helpForCorrectCorrdinates(idForSwitch, missingID)
 
-      if (tempCounter == 2) {
-        console.log("tempCounter = 2. Musimy wykonać dla drugiej cyfry ")
-        tempCounterFinish++;
+      if (counterCondition == 2) {
+        console.log("counterCondition = 2. Musimy wykonać dla drugiej cyfry ")
+        counterConditionFinish++;
         missingDigit = secondMissingDigit;
         helpForCorrectCorrdinates(idForSwitch, missingID)
       } else {
@@ -1992,19 +2060,19 @@ export default {
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
 
-      /*       if (tempCounter == 2) {
+      /*       if (counterCondition == 2) {
               helpForCorrectCorrdinates(idForSwitch, missingID)
             } */
 
-      if (tempCounter == 4) {
-        console.log("tempCounter = 4. Musimy wykonać dla innej Macierzy ")
-        tempCounterFinish++;
+      if (counterCondition == 4) {
+        console.log("counterCondition = 4. Musimy wykonać dla innej Macierzy ")
+        counterConditionFinish++;
       } else {
         console.log("Musimy wpisać : " + missingDigit)
         xCor = xCorrdinate + 1;
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
-      console.log("tempCounterFinish: " + tempCounterFinish)
+      console.log("counterConditionFinish: " + counterConditionFinish)
     }
 
     // FUNCTIONS FOR THE FOURTH STEP
@@ -2503,59 +2571,108 @@ export default {
       console.log("******** KROK NR 3 ******")
       fillBoard();
       fifthStepFindMiniMatrixWithTwoZeros();
-      thirdStepFindMissingDigits();
-      thirdStepFindCorsToFillDigit();
-      thirdStepFillDigitsInRightPlace();
-      if (tempCounter == 4) {
-        console.log("*******JESTEŚMY TUTAJ TEMPCOUNTER == 4 **********")
-        xCorrdinate = arrayOfZero[1];
-        thirdStepFindMissingDigits();
-        thirdStepFindCorsToFillDigit();
-        thirdStepFillDigitsInRightPlace();
-        if (tempCounter == 4) {
-          console.log("*******JESTEŚMY TUTAJ TEMPCOUNTER == 4xxxx222 **********")
-          xCorrdinate = arrayOfZero[2];
+      counterThirdStep = 0;
+      conThirdStep = true;
+
+      while (conLoopThirdStep) {
+        if (counterThirdStep <= lengthOfarrayOfZero) {
           thirdStepFindMissingDigits();
           thirdStepFindCorsToFillDigit();
           thirdStepFillDigitsInRightPlace();
-          conFirstStep = true;
-          conSecondStep = true;
-          if (xCor > 5) {
-            findCorsToFillDigit();
+          while (counterCondition == 4 && counterThirdStep < lengthOfarrayOfZero - 1) {
+            console.log("*******JESTEŚMY TUTAJ counterCondition == 4 **********")
+            counterThirdStep++;
+            xCorrdinate = arrayOfZero[counterThirdStep];
+            console.log(" COUNTER THIRD STEP == " + counterThirdStep)
+            console.log(" LENGTH OF ARRAY == " + lengthOfarrayOfZero)
+            thirdStepFindMissingDigits();
+            thirdStepFindCorsToFillDigit();
+            thirdStepFillDigitsInRightPlace();
           }
-          fillMissingDigit();
+          if (counterCondition == 1 || counterConditionFinish == 1) {
+            console.log("*******counterCondition jest różny od 4 *********")
+            console.log(" COUNTERCONDITION == " + counterCondition)
+            conFirstStep = true;
+            conSecondStep = true;
+            if (xCor > 6) {
+              findCorsToFillDigit();
+            }
+            fillMissingDigit();
+            conLoopThirdStep = false;
+          }
+          else {
+            conLoopThirdStep = false;
+            alert(" WYKONAJ KROK 4")
+            conThirdStep = false;
+          }
         } else {
-          console.log("*******JESTEŚMY TUTAJ ????/**********")
-          conFirstStep = true;
-          conSecondStep = true;
-          if (xCor > 5) {
-            findCorsToFillDigit();
-          }
-          fillMissingDigit();
+          conLoopThirdStep = false;
+          alert(" WYKONAJ KROK 4")
+          conThirdStep = false;
         }
-      } else {
-        console.log("*******JESTEŚMY TUTAJ TEMPCOUNTER ELSE **********")
-        if (tempCounterFinish == 2) {
-          thirdStepFillDigitsInRightPlace();
-          conFirstStep = true;
-          conSecondStep = true;
-          if (xCor > 5) {
-            findCorsToFillDigit();
-          }
-          fillMissingDigit();
-          k = 0;
-        } else {
-          conFirstStep = true;
-          conSecondStep = true;
-          if (xCor > 6) {
-            findCorsToFillDigit();
-          }
-          fillMissingDigit();
-          k = 0;
-        }
-        k = 0;
       }
+
       k = 0;
+      conLoopThirdStep = true;
+
+
+
+
+
+      /*    thirdStepFindMissingDigits();
+         thirdStepFindCorsToFillDigit();
+         thirdStepFillDigitsInRightPlace();
+         if (counterCondition == 4) {
+           console.log("*******JESTEŚMY TUTAJ counterCondition == 4 **********")
+           xCorrdinate = arrayOfZero[1];
+           thirdStepFindMissingDigits();
+           thirdStepFindCorsToFillDigit();
+           thirdStepFillDigitsInRightPlace();
+           if (counterCondition == 4) {
+             console.log("*******JESTEŚMY TUTAJ counterCondition == 4xxxx222 **********")
+             xCorrdinate = arrayOfZero[2];
+             thirdStepFindMissingDigits();
+             thirdStepFindCorsToFillDigit();
+             thirdStepFillDigitsInRightPlace();
+             conFirstStep = true;
+             conSecondStep = true;
+             if (xCor > 5) {
+               findCorsToFillDigit();
+             }
+             fillMissingDigit();
+           } else {
+             console.log("*******JESTEŚMY TUTAJ ????/**********")
+             conFirstStep = true;
+             conSecondStep = true;
+             if (xCor > 5) {
+               findCorsToFillDigit();
+             }
+             fillMissingDigit();
+           }
+         } else {
+           console.log("*******JESTEŚMY TUTAJ counterCondition ELSE **********")
+           if (counterConditionFinish == 2) {
+             thirdStepFillDigitsInRightPlace();
+             conFirstStep = true;
+             conSecondStep = true;
+             if (xCor > 6) {
+               findCorsToFillDigit();
+             }
+             fillMissingDigit();
+             k = 0;
+           } else {
+             conFirstStep = true;
+             conSecondStep = true;
+             if (xCor > 6) {
+               findCorsToFillDigit();
+             }
+             fillMissingDigit();
+             k = 0;
+           }
+           k = 0;
+         }
+         k = 0; */
+
     }
 
     function fourthStep() {
@@ -2572,7 +2689,7 @@ export default {
     return {
       drawGame, confirmBoardGame, nextMove, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
       secondStepFindOneMissingID, secondStepFindCoor, thirdStepFindOneMissingID, thirdStepFindMissingDigits, thirdStepFindCorsToFillDigit, thirdStepFillDigitsInRightPlace, firstStep, secondStep, thirdStep, isZero,
-      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit, fourthStepFillDigitsInRightPlace, fourthStep, drawGameHard, fifthStepFindMiniMatrixWithTwoZeros
+      gamesLevelEasy, gamesLevelHard, fourthStepFindOneMissingID, fourthStepFindMissingDigits, fourthStepFindCorsToFillDigit, fourthStepFillDigitsInRightPlace, fourthStep, drawGameHard, fifthStepFindMiniMatrixWithTwoZeros, checkMiniMatrixForMissingDigit,
     }
   }
 }
@@ -2589,10 +2706,16 @@ export default {
   /*   background-color: rgb(24, 23, 23); */
   /*      background: linear-gradient(#e66465, #9198e5); */
   /*   border: solid 3px yellow; */
-  background: linear-gradient(#067dbd, #9198e5);
-
+/*   background: linear-gradient(#067dbd, #9198e5);
   background: linear-gradient(#067dbd, #9198e5);
   background: radial-gradient(#2e8bba, #000d56);
+background-image: linear-gradient(to left top, #44c7bb, #37c0ae, #2cbaa1, #22b394, #1aac86, #1aa379, #1a9b6c, #1b9260, #1e8653, #1e7a46, #1e6e3a, #1d632e);
+background-image: linear-gradient(to left top, #0da16b, #0c9665, #0b8c5f, #0b8159, #0c7753, #0e724e, #0f6d49, #106844, #13673f, #166639, #1a6434, #1d632e); */
+
+background-image: linear-gradient(to top, #cdefe3, #aad5c5, #88bca8, #67a38b, #458a6f, #357f61, #247352, #106844, #13673f, #166639, #1a6434, #1d632e);
+background-image: linear-gradient(to top, #004f0c, #005223, #005534, #005743, #00594f, #00625d, #006c6b, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
+background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
+
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -2622,9 +2745,10 @@ export default {
     .containerApp__game__board {
       align-content: space-around;
       /*     border: solid 3px rgb(73, 31, 225); */
-      box-shadow: 4px 6px 10px #000d56;
+      box-shadow: 6px 6px 10px #aad5c5;
 
-      background: linear-gradient(#2e8bba, #000d56);
+     background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
+     background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
       /*  background-color: #000d56; */
       border-radius: 12px;
       display: flex;

@@ -74,9 +74,11 @@ export default {
 
 
 
-        box-shadow: -4px 6px 10px #4ea4f0;
-        background: radial-gradient(#2e8bba, #000d56);
+        box-shadow: -4px 6px 10px #aad5c5;
+   background-color: #1b7e90;
         /*   background-color: #000d56; */
+             background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
+/*              background-image: linear-gradient(to bottom right, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8); */
         border-radius: 12px;
         display: flex;
         flex-direction: column;
@@ -88,11 +90,10 @@ export default {
     }
 
     .single--button {
-        background-color: rgb(18, 22, 22);
-        background-color: #4ea4f0;
-        border: solid 1px black;
+        background-color: transparent;
+        border: solid 1px whitesmoke;
         border-radius: 8px;
-        color: black;
+        color: white;
         cursor: pointer;
         font-size: 14px;
         font-weight: 600;
