@@ -5,7 +5,7 @@
             <button class="single--button" @click="fillMissingDigit"> Wpisz brakującą cyfrę</button>
             <button class="single--button" @click="finishGame"> ROZWIĄŻ SUDOKU</button>
         </div>
-        <div class="buttons--help--box">
+        <!--         <div class="buttons--help--box">
             <button class="single--button" @click="findEmptyFieldsInMatrix"> 1. Podaj macierze z ilością pustych
                 miejsc</button>
             <button class="single--button" @click="findCorsToFillDigit"> 1. Znajdź współrzędne na wpisanie brakujące
@@ -30,10 +30,13 @@
             <button class="single--button" @click="fourthStepFindCorsToFillDigit"> 4c. Znajdź miejsca zerowe</button>
             <button class="single--button" @click="fourthStepFillDigitsInRightPlace"> 4c. Znajdź odpowiednie
                 miejsce</button>
+        </div> -->
+        <button class="button-game"> NOWA GRA</button>
+                <button class="button-game"> KOLEJNY RUCH</button>
+        <div class="buttons--help--box">
+            <button class="single--button" @click="fifthStepFindMiniMatrixWithTwoZeros"> 5. Znajdź miniMacierze z dwoma
+                pustymi miejscami</button>
         </div>
-                <div class="buttons--help--box">
-                <button class="single--button" @click="fifthStepFindMiniMatrixWithTwoZeros"> 5. Znajdź miniMacierze z dwoma pustymi miejscami</button>
-            </div>
         <div class="buttons--help--box">
             <button class="single--button" @click="firstStep"> PIERWSZY KROK</button>
             <button class="single--button" @click="secondStep"> DRUGI KROK</button>
@@ -69,16 +72,25 @@ export default {
     margin: 10px;
     width: 90vw;
 
+    .button-game{
+        border: solid 0px white;
+                box-shadow: -4px 6px 10px #aad5c5;
+                border-radius: 50px;
+        color: white;
+        background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
+        height: 100px;
+        width: 100px;
+        padding: 10px;
+             font-weight: 600;
+    }
+
     .buttons--main--box,
     .buttons--help--box {
-
-
-
         box-shadow: -4px 6px 10px #aad5c5;
-   background-color: #1b7e90;
+        background-color: #1b7e90;
         /*   background-color: #000d56; */
-             background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
-/*              background-image: linear-gradient(to bottom right, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8); */
+        background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
+        /*              background-image: linear-gradient(to bottom right, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8); */
         border-radius: 12px;
         display: flex;
         flex-direction: column;
@@ -101,5 +113,9 @@ export default {
         padding: 6px;
         width: auto;
     }
+
+
+
+
 }
 </style>
