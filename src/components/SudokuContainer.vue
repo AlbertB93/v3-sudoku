@@ -90,7 +90,6 @@ export default {
     let thirdMissingDigit = 99;
     let yThirdCor = 9;
     let warunekPom = true;
-
     let arrayOfCondition = [true, true, true]
 
     //conditions
@@ -2186,72 +2185,60 @@ export default {
           4. Jeśli counterCondition będzie == 1 to break. Musimy jakoś wyrzucić tą brakującą liczbę i to miejsce zerowe, dla którego będzie to prawdziwe
           5. Jeśli nie powtórz pętla ale zmień miejsce zerowe , np.  z yCorrdinate  na ySecondCor.*/
 
-      let counterCondition = 0;
-      let warunekPetli = true;
 
 
-      while (warunekPetli) {
+      fourthStepHelpFindCondition(missingDigit);
 
-        console.log(" JESTEM TU ?")
-        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
-        arrayOfCondition[1] = fourthStepHelp(secondMissingDigit, yCorrdinate);
-        arrayOfCondition[2] = fourthStepHelp(thirdMissingDigit, yCorrdinate);
-
-        for (i = 0; i < 3; i++) {
-          if (arrayOfCondition[i]) {
-            counterCondition++;
-          }
+      if (counterCondition == 1) {
+        if (arrayOfCondition[0]) {
+          yCor = yCorrdinate;
+        } else if (arrayOfCondition[1]) {
+          yCor = ySecondCor
+        } else {
+          yCor = yThirdCor
         }
-
-        console.log(" ILE WYNOSI COUNTER? " + counterCondition)
-        console.log(" JAKI WARUNEK  conForFirstDigit ???" + arrayOfCondition[0])
-        console.log(" JAKI WARUNEK  conForSecondDigit ???" + arrayOfCondition[1])
-        console.log(" JAKI WARUNEK  conForThirdDigit ???" + arrayOfCondition[2])
-
-
+      } else {
+        fourthStepHelpFindCondition(secondMissingDigit);
         if (counterCondition == 1) {
           if (arrayOfCondition[0]) {
-            /*   missingDigit = missingDigit; */
-            warunekPetli = false;
-            break;
+            missingDigit = secondMissingDigit;
+            yCor = yCorrdinate;
           } else if (arrayOfCondition[1]) {
             missingDigit = secondMissingDigit;
-            warunekPetli = false;
-            break;
+            yCor = ySecondCor
           } else {
-            missingDigit = thirdMissingDigit
-            warunekPetli = false;
-            break;
+            missingDigit = secondMissingDigit;
+            yCor = yThirdCor
           }
-
         } else {
-          if (yCorrdinate != ySecondCor) {
-            yCorrdinate = ySecondCor;
-            counterCondition = 0;
-            console.log(" JESTEM TU sec?")
-            console.log(" yCoordinate  = " + yCorrdinate)
-            continue;
+          fourthStepHelpFindCondition(thirdMissingDigit);
+          console.log(" Jesteśmy tutaj?")
+          console.log(" Tablica warunków?" + arrayOfCondition)
+          console.log(" Countercondition?" + counterCondition)
+          if (counterCondition == 1) {
+            console.log(" Jesteśmy tutaj 2?")
+            if (arrayOfCondition[0]) {
+              missingDigit = thirdMissingDigit;
+              yCor = yCorrdinate;
+            } else if (arrayOfCondition[1]) {
+              missingDigit = thirdMissingDigit;
+              yCor = ySecondCor
+            } else {
+              missingDigit = thirdMissingDigit;
+              yCor = yThirdCor
+            }
           } else {
-            yCorrdinate = yThirdCor;
-            counterCondition = 0;
-            console.log(" JESTEM TU thi?")
-            console.log(" yCoordinate  = " + yCorrdinate)
-            continue;
+            console.log("Musimy wykonać dla innej macierzy")
           }
         }
-
-
       }
 
-      /*  xCor = xCorrdinate + 1; */
-      yCor = yCorrdinate;
       xCor = xCorrdinate + 1;
 
-      console.log("Współrzędne do wpisania: " + xCor + " i " + yCor)
+      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
 
 
     }
-
 
     function fourthStepHelp(missingDigit, yCorrdinate) {
       warunekPom = true;
@@ -2496,6 +2483,19 @@ export default {
       return warunekPom;
     }
 
+    function fourthStepHelpFindCondition(a) {
+      counterCondition = 0;
+      arrayOfCondition[0] = fourthStepHelp(a, yCorrdinate);
+      arrayOfCondition[1] = fourthStepHelp(a, ySecondCor);
+      arrayOfCondition[2] = fourthStepHelp(a, yThirdCor);
+
+      for (i = 0; i < 3; i++) {
+        if (arrayOfCondition[i]) {
+          counterCondition++;
+        }
+      }
+    }
+
     // FUNCTIONS FOR THE FIFTH STEP
 
     function fifthStepFindMiniMatrixWithTwoZeros() {
@@ -2706,15 +2706,15 @@ export default {
   /*   background-color: rgb(24, 23, 23); */
   /*      background: linear-gradient(#e66465, #9198e5); */
   /*   border: solid 3px yellow; */
-/*   background: linear-gradient(#067dbd, #9198e5);
+  /*   background: linear-gradient(#067dbd, #9198e5);
   background: linear-gradient(#067dbd, #9198e5);
   background: radial-gradient(#2e8bba, #000d56);
 background-image: linear-gradient(to left top, #44c7bb, #37c0ae, #2cbaa1, #22b394, #1aac86, #1aa379, #1a9b6c, #1b9260, #1e8653, #1e7a46, #1e6e3a, #1d632e);
 background-image: linear-gradient(to left top, #0da16b, #0c9665, #0b8c5f, #0b8159, #0c7753, #0e724e, #0f6d49, #106844, #13673f, #166639, #1a6434, #1d632e); */
 
-background-image: linear-gradient(to top, #cdefe3, #aad5c5, #88bca8, #67a38b, #458a6f, #357f61, #247352, #106844, #13673f, #166639, #1a6434, #1d632e);
-background-image: linear-gradient(to top, #004f0c, #005223, #005534, #005743, #00594f, #00625d, #006c6b, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
-background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
+  background-image: linear-gradient(to top, #cdefe3, #aad5c5, #88bca8, #67a38b, #458a6f, #357f61, #247352, #106844, #13673f, #166639, #1a6434, #1d632e);
+  background-image: linear-gradient(to top, #004f0c, #005223, #005534, #005743, #00594f, #00625d, #006c6b, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
+  background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
 
   display: flex;
   flex-direction: column;
@@ -2747,8 +2747,8 @@ background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #0
       /*     border: solid 3px rgb(73, 31, 225); */
       box-shadow: 6px 6px 10px #aad5c5;
 
-     background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
-     background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
+      background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
+      background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
       /*  background-color: #000d56; */
       border-radius: 12px;
       display: flex;
