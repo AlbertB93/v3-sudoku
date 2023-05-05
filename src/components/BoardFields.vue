@@ -1,6 +1,6 @@
 
 <template>
-  <div class="containerApp__game__board__field" id="square1">
+  <div class="containerApp__game__board__field" id="square0">
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="5">
@@ -8,7 +8,7 @@
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="1">
   </div>
-  <div class="containerApp__game__board__field" id="square2">
+  <div class="containerApp__game__board__field" id="square1">
     <input type="text" class="inputField" value="3">
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="0">
@@ -16,7 +16,7 @@
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="6">
   </div>
-  <div class="containerApp__game__board__field" id="square3">
+  <div class="containerApp__game__board__field" id="square2">
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="0">
@@ -24,7 +24,7 @@
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="0">
   </div>
-  <div class="containerApp__game__board__field" id="square4">
+  <div class="containerApp__game__board__field" id="square3">
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="1">
     <input type="text" class="inputField" value="0">
@@ -32,7 +32,7 @@
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="0">
   </div>
-  <div class="containerApp__game__board__field" id="square5">
+  <div class="containerApp__game__board__field" id="square4">
     <input type="text" class="inputField" value="5">
     <input type="text" class="inputField" value="1">
     <input type="text" class="inputField" value="4">
@@ -40,7 +40,7 @@
     <input type="text" class="inputField" value="0">
     <input type="text" class="inputField" value="2">
   </div>
-  <div class="containerApp__game__board__field" id="square6">
+  <div class="containerApp__game__board__field" id="square5">
     <input type="text" class="inputField" value="2">
     <input type="text" class="inputField" value="6">
     <input type="text" class="inputField" value="3">

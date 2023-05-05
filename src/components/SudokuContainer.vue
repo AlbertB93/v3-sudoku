@@ -73,7 +73,6 @@ export default {
     let miniMatrixs = [];
     let testArr = [1, 2, 3, 4, 5, 6]
     let copyArr = [];
-    let idForSwitch = 99;
     let oldXCorrdinate = 99;
     let oldestXCorrdinate = 99;
 
@@ -240,8 +239,8 @@ export default {
       console.log("fillBoard")
 
       let tempArray = [];
-      for (i = 1; i < 7; i++) {
-        tempArray[i - 1] = document.getElementById('square' + i).getElementsByClassName('inputField');
+      for (i = 0; i < 6; i++) {
+        tempArray[i] = document.getElementById('square' + i).getElementsByClassName('inputField');
       }
 
       // tworzenie 2 wyamirowej tablicy
@@ -368,46 +367,47 @@ export default {
     // function, which find corrdinates in miniMatrix for the empty field
     function findCorsToFillDigit() {
       console.log("findCorsToFillDigit");
+      console.log("współrzędna Y w Minimacierzy: PRZED " + yCorrdinate);
       yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
       console.log("współrzędna Y w Minimacierzy: " + yCorrdinate);
       console.log("Pierwotne współrzędne punktu: " + xCorrdinate + " i " + yCorrdinate);
 
       if (xCorrdinate < 6) {
-        xCor = xCorrdinate + 1;
+        xCor = xCorrdinate;
         yCor = yCorrdinate;
       } else if (xCorrdinate == 6 || xCorrdinate == 7) {
         if (yCorrdinate < 3) {
-          xCor = 1;
+          xCor = 0;
         } else {
-          xCor = 2;
+          xCor = 1;
         }
       } else if (xCorrdinate == 8 || xCorrdinate == 9) {
         if (yCorrdinate < 3) {
-          xCor = 3;
+          xCor = 2;
         } else {
-          xCor = 4;
+          xCor = 3;
         }
       } else if (xCorrdinate == 10 || xCorrdinate == 11) {
         if (yCorrdinate < 3) {
-          xCor = 5;
+          xCor = 4;
         } else {
-          xCor = 6;
+          xCor = 5;
         }
       } else if (xCorrdinate == 12 || xCorrdinate == 13 || xCorrdinate == 14) {
+        if (yCorrdinate < 2) {
+          xCor = 0;
+        } else if (yCorrdinate >= 2 && yCorrdinate < 4) {
+          xCor = 2;
+        } else {
+          xCor = 4;
+        }
+      } else if (xCorrdinate == 15 || xCorrdinate == 16 || xCorrdinate == 17) {
         if (yCorrdinate < 2) {
           xCor = 1;
         } else if (yCorrdinate >= 2 && yCorrdinate < 4) {
           xCor = 3;
         } else {
           xCor = 5;
-        }
-      } else if (xCorrdinate == 15 || xCorrdinate == 16 || xCorrdinate == 17) {
-        if (yCorrdinate < 2) {
-          xCor = 2;
-        } else if (yCorrdinate >= 2 && yCorrdinate < 4) {
-          xCor = 4;
-        } else {
-          xCor = 6;
         }
       }
       // ustalamy poprawną współrzędną Y do wpisania w square o ID
@@ -571,7 +571,7 @@ export default {
 
       for (i = 0; i < 17; i++) {
         if (miniMatrixs[i].some(item => item == missingDigit) == false) {
-          missingID = i + 1;
+          missingID = i;
           break;
         }
       }
@@ -581,15 +581,9 @@ export default {
     // function, which find corrdinates in miniMatrix for the empty field and wanted number.
     function secondStepFindCoor() {
       console.log("secondStepFindCoor")
-      console.log("missingID przed zmianą: " + missingID)
       xCor = missingID;
-      idForSwitch = missingID;
-      missingID = missingID - 1;
 
-      console.log("idForSwitch: " + idForSwitch)
-      console.log("missingID po: " + missingID)
-
-      helpForCorrectCorrdinates(idForSwitch, missingID)
+      helpForCorrectCorrdinates(missingID)
       console.log("Szukane współrzędne: " + xCor + " - " + yCor)
 
     }
@@ -597,12 +591,11 @@ export default {
 
     function checkMiniMatrixForMissingDigit(a, b, i) {
       console.log("checkMiniMatrixForMissingDigit");
-      console.log("A= " + a + " i B= " + b);
       for (j = 0; j < 6; j++) {
         if ((miniMatrixs[a].some(item => item == missingDigit)) || (miniMatrixs[b].some(item => item == missingDigit))) {
           break;
         } else {
-          console.log("Nie zawiera szukanej cyfry czyli: " + 0);
+          console.log("Nie zawiera szukanej cyfry - zwiększ counterCondition");
           yCor = i;
           counterCondition++;
           break;
@@ -610,11 +603,11 @@ export default {
       }
     }
 
-    function helpForCorrectCorrdinates(idForSwitch, missingID) {
+    function helpForCorrectCorrdinates(missingID) {
       console.log("helpForCorrectCorrdinates")
       for (i = 0; i < 6; i++) {
-        switch (idForSwitch) {
-          case 1:
+        switch (missingID) {
+          case 0:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -691,7 +684,7 @@ export default {
 
               }
             } break;
-          case 2:
+          case 1:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -768,7 +761,7 @@ export default {
 
               }
             } break;
-          case 3:
+          case 2:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -845,7 +838,7 @@ export default {
 
               }
             } break;
-          case 4:
+          case 3:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -922,7 +915,7 @@ export default {
 
               }
             } break;
-          case 5:
+          case 4:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -999,7 +992,7 @@ export default {
 
               }
             } break;
-          case 6:
+          case 5:
             if (miniMatrixs[missingID][i] == 0) {
               console.log("***********TESTUJEMY FUNKCJĘ TESTOWĄ *************")
               switch (i) {
@@ -1022,7 +1015,7 @@ export default {
                   checkMiniMatrixForMissingDigit(11, 17, i);
               }
             } break;
-          case 7:
+          case 6:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1099,7 +1092,7 @@ export default {
 
               }
             } break;
-          case 8:
+          case 7:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1176,7 +1169,7 @@ export default {
 
               }
             } break;
-          case 9:
+          case 8:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1252,7 +1245,7 @@ export default {
                   }
               }
             } break;
-          case 10:
+          case 9:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1328,7 +1321,7 @@ export default {
                   }
               }
             } break;
-          case 11:
+          case 10:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1404,7 +1397,7 @@ export default {
                   }
               }
             } break;
-          case 12:
+          case 11:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1480,7 +1473,7 @@ export default {
                   }
               }
             } break;
-          case 13:
+          case 12:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1556,7 +1549,7 @@ export default {
                   }
               }
             } break;
-          case 14:
+          case 13:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1632,7 +1625,7 @@ export default {
                   }
               }
             } break;
-          case 15:
+          case 14:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1708,7 +1701,7 @@ export default {
                   }
               }
             } break;
-          case 16:
+          case 15:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1784,7 +1777,7 @@ export default {
                   }
               }
             } break;
-          case 17:
+          case 16:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1860,7 +1853,7 @@ export default {
                   }
               }
             } break;
-          case 18:
+          case 17:
             if (miniMatrixs[missingID][i] == 0) {
               switch (i) {
                 case 0:
@@ -1950,9 +1943,6 @@ export default {
       console.log("thirdStepFindOneMissingID")
       xCorrdinate = 0;
       countOfZero = 0;
-
-      /*      pokombinować coś z tymi poprzednimi i aktualnymi współrzędnymi dla 2 przykładu z levelu Hard */
-
       endCondition = true;
       while (endCondition) {
         for (i = 0; i < miniMatrixs.length; i++) {
@@ -1974,7 +1964,6 @@ export default {
           }
         }
       }
-
 
       console.log("Aktualna współrzędna macierzy z dwoma zerami: " + xCorrdinate)
       console.log("Poprzednia współrzędna macierzy z dwoma zerami: " + oldXCorrdinate)
@@ -2010,10 +1999,6 @@ export default {
       console.log("oldXCorrdinate: " + oldXCorrdinate);
       console.log("oldestXCorrdinate: " + oldestXCorrdinate);
 
-      /*       if(oldXCorrdinate != 99){
-              xCorrdinate = oldXCorrdinate;
-            }
-       */
 
       yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
       console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
@@ -2037,41 +2022,33 @@ export default {
 
 
       missingID = xCorrdinate;
-      idForSwitch = xCorrdinate + 1;
-
-      console.log("MissingID: " + missingID);
-      console.log("idForSwitch: " + idForSwitch);
-
 
       counterCondition = 0;
       counterConditionFinish = 0;
 
-      helpForCorrectCorrdinates(idForSwitch, missingID)
+      helpForCorrectCorrdinates(missingID)
 
       if (counterCondition == 2) {
         console.log("counterCondition = 2. Musimy wykonać dla drugiej cyfry ")
         counterConditionFinish++;
         missingDigit = secondMissingDigit;
-        helpForCorrectCorrdinates(idForSwitch, missingID)
+        helpForCorrectCorrdinates(missingID)
       } else {
         console.log("Musimy wpisać : " + missingDigit)
-        xCor = xCorrdinate + 1;
+        xCor = xCorrdinate;
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
-
-      /*       if (counterCondition == 2) {
-              helpForCorrectCorrdinates(idForSwitch, missingID)
-            } */
 
       if (counterCondition == 4) {
         console.log("counterCondition = 4. Musimy wykonać dla innej Macierzy ")
         counterConditionFinish++;
       } else {
         console.log("Musimy wpisać : " + missingDigit)
-        xCor = xCorrdinate + 1;
+        xCor = xCorrdinate;
         console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
       }
       console.log("counterConditionFinish: " + counterConditionFinish)
+
     }
 
     // FUNCTIONS FOR THE FOURTH STEP
@@ -2145,12 +2122,9 @@ export default {
       // sprawdzenie jakiej cyfry brakuje w macierzy
       console.log("thirdStepFindCorsToFillDigit");
 
-      /* console.log("Macierz z dwoma pustymi polami" + miniMatrixs[xCorrdinate]); */
 
       let copyArr = [];
-
       yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
-
       console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
 
       // We copied our matrix to temporary matrix (copyArr) and when I found index for "0", I fill to it expample number(9).
@@ -2233,7 +2207,7 @@ export default {
         }
       }
 
-      xCor = xCorrdinate + 1;
+      xCor = xCorrdinate;
 
       console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
 
@@ -2571,109 +2545,55 @@ export default {
       console.log("******** KROK NR 3 ******")
       fillBoard();
       fifthStepFindMiniMatrixWithTwoZeros();
+
       counterThirdStep = 0;
       conThirdStep = true;
 
-      while (conLoopThirdStep) {
-        if (counterThirdStep <= lengthOfarrayOfZero) {
-          thirdStepFindMissingDigits();
-          thirdStepFindCorsToFillDigit();
-          thirdStepFillDigitsInRightPlace();
-          while (counterCondition == 4 && counterThirdStep < lengthOfarrayOfZero - 1) {
-            console.log("*******JESTEŚMY TUTAJ counterCondition == 4 **********")
-            counterThirdStep++;
-            xCorrdinate = arrayOfZero[counterThirdStep];
-            console.log(" COUNTER THIRD STEP == " + counterThirdStep)
-            console.log(" LENGTH OF ARRAY == " + lengthOfarrayOfZero)
+      if (lengthOfarrayOfZero == 0) {
+        console.log("WYKONAJ KROK NR 4")
+      } else {
+        while (conLoopThirdStep) {
+          if (counterThirdStep <= lengthOfarrayOfZero) {
             thirdStepFindMissingDigits();
             thirdStepFindCorsToFillDigit();
             thirdStepFillDigitsInRightPlace();
-          }
-          if (counterCondition == 1 || counterConditionFinish == 1) {
-            console.log("*******counterCondition jest różny od 4 *********")
-            console.log(" COUNTERCONDITION == " + counterCondition)
-            conFirstStep = true;
-            conSecondStep = true;
-            if (xCor > 6) {
-              findCorsToFillDigit();
+            while (counterCondition == 4 && counterThirdStep < lengthOfarrayOfZero - 1) {
+              console.log("*******JESTEŚMY TUTAJ counterCondition == 4 **********")
+              counterThirdStep++;
+              xCorrdinate = arrayOfZero[counterThirdStep];
+              console.log(" COUNTER THIRD STEP == " + counterThirdStep)
+              console.log(" LENGTH OF ARRAY == " + lengthOfarrayOfZero)
+              thirdStepFindMissingDigits();
+              thirdStepFindCorsToFillDigit();
+              thirdStepFillDigitsInRightPlace();
             }
-            fillMissingDigit();
-            conLoopThirdStep = false;
-          }
-          else {
+            if (counterCondition == 1 || counterConditionFinish == 1) {
+              console.log("*******counterCondition jest różny od 4 *********")
+              console.log(" COUNTERCONDITION == " + counterCondition)
+              conFirstStep = true;
+              conSecondStep = true;
+              if (xCor > 5) {
+                findCorsToFillDigit();
+              }
+              fillMissingDigit();
+              conLoopThirdStep = false;
+            }
+            else {
+              conLoopThirdStep = false;
+              alert(" WYKONAJ KROK 4")
+              conThirdStep = false;
+            }
+          } else {
             conLoopThirdStep = false;
             alert(" WYKONAJ KROK 4")
             conThirdStep = false;
           }
-        } else {
-          conLoopThirdStep = false;
-          alert(" WYKONAJ KROK 4")
-          conThirdStep = false;
         }
+        k = 0;
+        conLoopThirdStep = true;
       }
-
-      k = 0;
-      conLoopThirdStep = true;
-
-
-
-
-
-      /*    thirdStepFindMissingDigits();
-         thirdStepFindCorsToFillDigit();
-         thirdStepFillDigitsInRightPlace();
-         if (counterCondition == 4) {
-           console.log("*******JESTEŚMY TUTAJ counterCondition == 4 **********")
-           xCorrdinate = arrayOfZero[1];
-           thirdStepFindMissingDigits();
-           thirdStepFindCorsToFillDigit();
-           thirdStepFillDigitsInRightPlace();
-           if (counterCondition == 4) {
-             console.log("*******JESTEŚMY TUTAJ counterCondition == 4xxxx222 **********")
-             xCorrdinate = arrayOfZero[2];
-             thirdStepFindMissingDigits();
-             thirdStepFindCorsToFillDigit();
-             thirdStepFillDigitsInRightPlace();
-             conFirstStep = true;
-             conSecondStep = true;
-             if (xCor > 5) {
-               findCorsToFillDigit();
-             }
-             fillMissingDigit();
-           } else {
-             console.log("*******JESTEŚMY TUTAJ ????/**********")
-             conFirstStep = true;
-             conSecondStep = true;
-             if (xCor > 5) {
-               findCorsToFillDigit();
-             }
-             fillMissingDigit();
-           }
-         } else {
-           console.log("*******JESTEŚMY TUTAJ counterCondition ELSE **********")
-           if (counterConditionFinish == 2) {
-             thirdStepFillDigitsInRightPlace();
-             conFirstStep = true;
-             conSecondStep = true;
-             if (xCor > 6) {
-               findCorsToFillDigit();
-             }
-             fillMissingDigit();
-             k = 0;
-           } else {
-             conFirstStep = true;
-             conSecondStep = true;
-             if (xCor > 6) {
-               findCorsToFillDigit();
-             }
-             fillMissingDigit();
-             k = 0;
-           }
-           k = 0;
-         }
-         k = 0; */
-
     }
+
 
     function fourthStep() {
       console.log("******** KROK NR 4 ******")
@@ -2703,19 +2623,7 @@ export default {
 
 .containerApp {
   align-items: center;
-  /*   background-color: rgb(24, 23, 23); */
-  /*      background: linear-gradient(#e66465, #9198e5); */
-  /*   border: solid 3px yellow; */
-  /*   background: linear-gradient(#067dbd, #9198e5);
-  background: linear-gradient(#067dbd, #9198e5);
-  background: radial-gradient(#2e8bba, #000d56);
-background-image: linear-gradient(to left top, #44c7bb, #37c0ae, #2cbaa1, #22b394, #1aac86, #1aa379, #1a9b6c, #1b9260, #1e8653, #1e7a46, #1e6e3a, #1d632e);
-background-image: linear-gradient(to left top, #0da16b, #0c9665, #0b8c5f, #0b8159, #0c7753, #0e724e, #0f6d49, #106844, #13673f, #166639, #1a6434, #1d632e); */
-
-  background-image: linear-gradient(to top, #cdefe3, #aad5c5, #88bca8, #67a38b, #458a6f, #357f61, #247352, #106844, #13673f, #166639, #1a6434, #1d632e);
-  background-image: linear-gradient(to top, #004f0c, #005223, #005534, #005743, #00594f, #00625d, #006c6b, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
   background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
-
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -2744,12 +2652,8 @@ background-image: linear-gradient(to left top, #0da16b, #0c9665, #0b8c5f, #0b815
 
     .containerApp__game__board {
       align-content: space-around;
-      /*     border: solid 3px rgb(73, 31, 225); */
       box-shadow: 6px 6px 10px #aad5c5;
-
-      background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
       background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
-      /*  background-color: #000d56; */
       border-radius: 12px;
       display: flex;
       flex-wrap: wrap;
@@ -2758,7 +2662,6 @@ background-image: linear-gradient(to left top, #0da16b, #0c9665, #0b8c5f, #0b815
       margin: 20px;
       width: 400px;
     }
-
   }
 }
 </style>
