@@ -18,30 +18,35 @@
             <button class="single--button" @click="secondStepFindCoor"> 2. Jakie współrzędne ?</button>
         </div>
         <div class="buttons--help--box">
-            <button class="single--button" @click="thirdStepFindOneMissingID"> 3. Znajdź macierz, która ma dwa zera</button>
-            <button class="single--button" @click="thirdStepFindMissingDigits"> 3. Znajdź brakujące dwie cyfry</button>
-            <button class="single--button" @click="thirdStepFindCorsToFillDigit"> 3. Znajdź współrzędne do wpisania</button>
-            <button class="single--button" @click="thirdStepFillDigitsInRightPlace"> 3. Wpisz cyfrę w jedno z dwóch
+            <button class="single--button" @click="findMiniMatrixWithZeros(2)"> 3. Znajdź macierz, która ma dwa
+                zera</button>
+            <button class="single--button" @click="findMissingDigits(2)"> 3. Znajdź brakujące dwie cyfry</button>
+            <button class="single--button" @click="findCorsToFillDigitExtend(2)"> 3. Znajdź współrzędne do wpisania</button>
+            <button class="single--button" @click="thirdStepFillDigitsInRightPlace"> 3d. Wpisz cyfrę w jedno z dwóch
                 miejsc</button>
         </div>
         <div class="buttons--help--box">
-            <button class="single--button" @click="fourthStepFindOneMissingID"> 4a. Znajdź macierz gdzie są 3 zera</button>
-            <button class="single--button" @click="fourthStepFindMissingDigits"> 4b. Sprawdź jakich liczb brakuje</button>
-            <button class="single--button" @click="fourthStepFindCorsToFillDigit"> 4c. Znajdź miejsca zerowe</button>
+            <button class="single--button" @click="findMiniMatrixWithZeros(3)"> 4a. Znajdź macierz gdzie są 3 zera</button>
+            <button class="single--button" @click="findMissingDigits(3)"> 4b. Sprawdź jakich liczb brakuje</button>
+            <button class="single--button" @click="findCorsToFillDigitExtend(3)"> 4c. Znajdź miejsca zerowe</button>
             <button class="single--button" @click="fourthStepFillDigitsInRightPlace"> 4c. Znajdź odpowiednie
                 miejsce</button>
         </div>
         <!--         <button class="button-game"> NOWA GRA</button>
                 <button class="button-game"> KOLEJNY RUCH</button> -->
         <div class="buttons--help--box">
-            <button class="single--button" @click="fifthStepFindMiniMatrixWithTwoZeros"> 5. Znajdź miniMacierze z dwoma
-                pustymi miejscami</button>
+            <button class="single--button" @click="findMiniMatrixWithZeros(4)"> 5a. Znajdź macierz gdzie są 4 zera</button>
+            <button class="single--button" @click="findMissingDigits(4)"> 5b. Znajdź 4 brakujące cyfry</button>
+            <button class="single--button" @click="findCorsToFillDigitExtend(4)"> 5b. Znajdź 4 brakujące miejsca
+                zerowe</button>
+                            <button class="single--button" @click="fourthStepFillDigitsInRightPlace5"> 5b. Prawidłowe miejsce?</button>
         </div>
         <div class="buttons--help--box">
             <button class="single--button" @click="firstStep"> PIERWSZY KROK</button>
             <button class="single--button" @click="secondStep"> DRUGI KROK</button>
             <button class="single--button" @click="thirdStep"> TRZECI KROK</button>
             <button class="single--button" @click="fourthStep"> CZWARTY KROK</button>
+                        <button class="single--button" @click="fifthStep"> PIĄTY KROK</button>
         </div>
     </div>
 </template>
@@ -52,8 +57,8 @@
 
 export default {
     name: 'ButtonsSingleGame',
-    props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindOneMissingID', 'thirdStepFindMissingDigits', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep',
-        'fourthStepFindOneMissingID', 'fourthStepFindMissingDigits', 'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStep', 'fifthStepFindMiniMatrixWithTwoZeros'],
+    props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep',
+        'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStep', 'findMiniMatrixWithZeros', 'findMissingDigits', 'findCorsToFillDigitExtend', 'fourthStepFillDigitsInRightPlace5','fifthStep'],
 
 }
 

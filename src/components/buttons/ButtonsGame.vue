@@ -20,7 +20,7 @@
             <p>MEDIUM</p>
         </div>
         <div class="containerApp__game__buttons--box">
-            <button class="buttons--game" @click="drawGame(0)">1</button>
+            <button class="buttons--game" @click="drawGameMedium(0)">1</button>
             <button class="buttons--game" @click="drawGame(1)">2</button>
             <button class="buttons--game" @click="drawGame(2)">3</button>
             <button class="buttons--game" @click="drawGame(3)">4</button>
@@ -43,10 +43,14 @@
         <div class="containerApp__game__buttons--box">
             <button class="buttons--game" @click="drawGameHard(0)">1</button>
             <button class="buttons--game" @click="drawGameHard(1)">2</button>
-            <button class="buttons--game" @click="drawGameHard(2)">2a</button>
-            <button class="buttons--game" @click="drawGameHard(3)">2b</button>
-            <button class="buttons--game" @click="drawGameHard(4)">3</button>
-
+            <button class="buttons--game" @click="drawGameHard(2)">3</button>
+            <button class="buttons--game" @click="drawGameHard(3)">4</button>
+            <button class="buttons--game" @click="drawGameHard(4)">5</button>
+            <button class="buttons--game" @click="drawGameHard(5)">6</button>
+            <button class="buttons--game" @click="drawGameHard(6)">7</button>
+            <button class="buttons--game" @click="drawGameHard(7)">8</button>
+            <button class="buttons--game" @click="drawGameHard(8)">9</button>
+            <button class="buttons--game" @click="drawGameHard(9)">10</button>
             <!--             <button class="buttons--game" @click="nextMove">Wykonaj kolejny ruch</button>
             <button class="buttons--game" @click="checkGame">Sprawdź planszę - mały kwadracik</button>
             <button class="buttons--game" @click="finishGame">Rozwiąż planszę</button>
@@ -58,7 +62,7 @@
 <script>
 export default {
     name: 'ButtonsGame',
-    props: ['fillBoard', 'drawGame', 'drawGameHard'],
+    props: ['fillBoard', 'drawGame', 'drawGameHard', 'drawGameMedium'],
 };
 
 </script>
