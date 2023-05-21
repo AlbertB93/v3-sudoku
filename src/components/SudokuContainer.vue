@@ -1,25 +1,34 @@
 <template>
   <div class="containerApp">
-    <h1>Sudoku</h1>
-    <h3>Poznaj sposób na rozwiązanie...</h3>
-    <ButtonsSingleGame :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
-      :findMissingDigit="findMissingDigit" :fillMissingDigit="fillMissingDigit" :fillBoard="fillBoard"
-      :secondStepFindOneMissingDigit="secondStepFindOneMissingDigit"
-      :secondStepFindOneMissingID="secondStepFindOneMissingID" :secondStepFindCoor="secondStepFindCoor"
-      :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :finishGame="finishGame" :firstStep="firstStep"
-      :secondStep="secondStep" :thirdStep="thirdStep" :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace"
-      :fourthStep="fourthStep" :findMiniMatrixWithZeros="findMiniMatrixWithZeros" :findMissingDigits="findMissingDigits"
-      :findCorsToFillDigitExtend="findCorsToFillDigitExtend"
-      :fourthStepFillDigitsInRightPlace5="fourthStepFillDigitsInRightPlace5" :fifthStep="fifthStep"/>
-    <div class="containerApp__game">
-      <ButtonsGame :fillBoard="fillBoard" :drawGame="drawGame" :drawGameMedium="drawGameMedium"
-        :drawGameHard="drawGameHard" />
-      <div class="containerApp__game__board">
-        <BoardFields />
+    <div class="containerApp__title">
+      <h1>Sudoku - poznaj sposób na rozwiązanie...
+      </h1>
+    </div>
+    <div class="containerApp__box">
+      <div class="containerApp__buttons">
+        <ButtonsGame :drawGame="drawGame" />
+
       </div>
-      <!--       <div class="containerApp__game__screen">
+      <div class="containerApp__game">
+        <div class="containerApp__game--board">
+          <BoardFields />
+        </div>
+        <div class="containerApp__game--steps">
+          <ButtonsSteps :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
+            :findMissingDigit="findMissingDigit" :fillMissingDigit="fillMissingDigit" :fillBoard="fillBoard"
+            :secondStepFindOneMissingDigit="secondStepFindOneMissingDigit"
+            :secondStepFindOneMissingID="secondStepFindOneMissingID" :secondStepFindCoor="secondStepFindCoor"
+            :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :finishGame="finishGame"
+            :firstStep="firstStep" :secondStep="secondStep" :thirdStep="thirdStep"
+            :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace" :fourthStep="fourthStep"
+            :findMiniMatrixWithZeros="findMiniMatrixWithZeros" :findMissingDigits="findMissingDigits"
+            :findCorsToFillDigitExtend="findCorsToFillDigitExtend"
+            :fourthStepFillDigitsInRightPlace5="fourthStepFillDigitsInRightPlace5" :fifthStep="fifthStep" />
+        </div>
+      </div>
+      <div class="containerApp__screen">
         <ScreenForSteps />
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -30,17 +39,17 @@
 /*  import { ref } from "vue";  */
 import { games6x6LevelEasy, games6x6LevelMedium, games6x6LevelHard } from "../data/Games"
 import ButtonsGame from "../components/buttons/ButtonsGame.vue";
-import ButtonsSingleGame from "./buttons/ButtonsSingleGame.vue";
+import ButtonsSteps from "./buttons/ButtonsSteps.vue";
 import BoardFields from "./BoardFields.vue";
-/* import ScreenForSteps from "./ScreenForSteps.vue"; */
+import ScreenForSteps from "./ScreenForSteps.vue";
 
 export default {
   name: 'SudokuContainer',
   components: {
     ButtonsGame,
-    ButtonsSingleGame,
+    ButtonsSteps,
     BoardFields,
-    /*  ScreenForSteps, */
+    ScreenForSteps,
   },
 
   setup() {
@@ -59,6 +68,7 @@ export default {
     // counters for third step
     let counterCondition = 0;
     let counterConditionFinish = 0;
+    let counterRowForStep = 0;
     // arrays for the help
     let rows = [];
     let columns = [];
@@ -102,38 +112,34 @@ export default {
 
 
     //SPRAWDZIĆ
-    function drawGame(exampleNumber) {
+    function drawGame(levelOfGame) {
       console.log("drawGame");
       let tablica = document.getElementsByClassName('inputField');
       console.log(tablica);
-
-      for (let i = 0; i < tablica.length; i++) {
-        tablica[i].value = gamesLevelEasy[exampleNumber][i];
+      let numberOfGame = 0;
+      numberOfGame = Math.floor(Math.random() * 10 + 1);
+      switch (levelOfGame) {
+        case 'easy':
+          for (let i = 0; i < tablica.length; i++) {
+            tablica[i].value = gamesLevelEasy[numberOfGame][i];
+          }
+          break;
+        case 'medium':
+          for (let i = 0; i < tablica.length; i++) {
+            tablica[i].value = gamesLevelMedium[numberOfGame][i];
+          }
+          break;
+        case 'hard':
+          for (let i = 0; i < tablica.length; i++) {
+            tablica[i].value = gamesLevelHard[numberOfGame][i];
+          }
+          break;
+        default:
+          alert("Error during drawing Game")
+          break;
       }
-
     }
 
-    function drawGameMedium(exampleNumber) {
-      console.log("drawGameMedium");
-      let tablica = document.getElementsByClassName('inputField');
-      console.log(tablica);
-
-      for (let i = 0; i < tablica.length; i++) {
-        tablica[i].value = gamesLevelMedium[exampleNumber][i];
-      }
-
-    }
-
-    function drawGameHard(exampleNumber) {
-      console.log("drawGame");
-      let tablica = document.getElementsByClassName('inputField');
-      console.log(tablica);
-
-      for (let i = 0; i < tablica.length; i++) {
-        tablica[i].value = gamesLevelHard[exampleNumber][i];
-      }
-
-    }
     //SPRAWDZIĆ
     function confirmBoardGame() {
       console.log("confirmBoardGame");
@@ -338,8 +344,8 @@ export default {
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].value = missingDigit;
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
 
-      /*       document.getElementById('rowOfStep' + counterRowForStep).innerHTML = "Krok " + (counterRowForStep + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
-            counterRowForStep++; */
+      document.getElementById('rowOfStep' + counterRowForStep).innerHTML = "Krok " + (counterRowForStep + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
+      counterRowForStep++;
     }
 
     // FUNCTIONS FOR THE FIRST STEP
@@ -1407,7 +1413,7 @@ export default {
       fourthStepHelpFindCondition(missingDigit, 4);
 
       if (counterCondition == 1) {
-               console.log("Tablica warunków: " + arrayOfCondition)
+        console.log("Tablica warunków: " + arrayOfCondition)
         if (arrayOfCondition[0]) {
           yCor = yCorrdinate;
         } else if (arrayOfCondition[1]) {
@@ -1770,7 +1776,7 @@ export default {
 
     }
 
-    function fifthStep(){
+    function fifthStep() {
       findMiniMatrixWithZeros(4);
       findMissingDigits(4);
       findCorsToFillDigitExtend(4);
@@ -1786,7 +1792,7 @@ export default {
     return {
       drawGame, confirmBoardGame, nextMove, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
       secondStepFindOneMissingID, secondStepFindCoor, thirdStepFillDigitsInRightPlace, firstStep, secondStep, thirdStep, isZero,
-      gamesLevelEasy, gamesLevelMedium, gamesLevelHard, fourthStepFillDigitsInRightPlace, fourthStep, drawGameMedium, drawGameHard, findMiniMatrixWithZeros, checkMiniMatrixForMissingDigit, findMissingDigits, findCorsToFillDigitExtend, fourthStepFillDigitsInRightPlace5, fifthStep
+      gamesLevelEasy, gamesLevelMedium, gamesLevelHard, fourthStepFillDigitsInRightPlace, fourthStep, findMiniMatrixWithZeros, checkMiniMatrixForMissingDigit, findMissingDigits, findCorsToFillDigitExtend, fourthStepFillDigitsInRightPlace5, fifthStep
     }
   }
 }
@@ -1808,48 +1814,95 @@ export default {
   text-align: center;
   width: 100vw;
 
-  h1 {
-    color: #004d46;
-    font-size: 3rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-weight: 600;
-    height: 50px;
-    padding-top: 10px;
-    text-align: center;
-    width: auto;
-    text-shadow: -6px 6px 10px #f4fffb;
-  }
 
-  h3 {
-    color: #004d46;
-    font-size: 1.5rem;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    padding-top: 10px;
-  }
+  &__title {
+ 
+    height: 6vh;
 
-  .containerApp__game {
-    align-items: center;
-    border-radius: 8px;
-    color: aqua;
-    display: flex;
-    flex-direction: row;
-    height: 480px;
-    justify-content: space-around;
-    margin: 20px auto;
-    width: 90vw;
 
-    .containerApp__game__board {
-      align-content: space-around;
-      box-shadow: 6px 6px 10px #aad5c5;
-      background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
-      border-radius: 12px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      height: 400px;
-      margin: 20px;
-      width: 400px;
+    h1 {
+      color: #004d46;
+      font-size: 1.5rem;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-weight: 600;
+      text-align: center;
+      text-shadow: -6px 6px 10px #f4fffb;
     }
   }
+
+  &__box {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 90%;
+    justify-content: space-around;
+    width: 95vw;
+    /* border: solid 1px red; */
+
+    .containerApp__buttons {
+      align-items: center;
+      background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
+      border-radius: 12px;
+/*       box-shadow: -6px -6px 10px #aad5c5; */
+      display: flex;
+      flex-direction: column;
+      height: 80%;
+      justify-content: center;
+      width: 12%;
+      /*             border: dotted 2px red; */
+    }
+
+    .containerApp__game {
+      align-items: center;
+      border-radius: 8px;
+      color: aqua;
+      display: flex;
+      flex-direction: column;
+      height: 90%;
+      justify-content: center  ;
+      width: 50%;
+/*        border: dotted 3px yellow;  */
+
+      .containerApp__game--board {
+        align-content: space-around;
+        box-shadow: 6px 6px 10px #aad5c5;
+        background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
+        border-radius: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        height: 40%;
+        width: 60%;
+        /*       border: dotted 2px red; */
+      }
+
+      .containerApp__game--steps {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 60%;
+        width: 80%;
+        /*         border: solid 4px white; */
+      }
+
+    }
+
+    .containerApp__screen {
+      align-self: flex-start;
+      background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
+      border-radius: 12px;
+      box-shadow: 6px 6px 10px #aad5c5;
+      color: whitesmoke;
+      height: auto;
+      margin: 4vh auto;
+      width: 30%;
+/*         border: dotted 2px green;  */
+
+    }
+
+  }
+
+
 }
 </style>
