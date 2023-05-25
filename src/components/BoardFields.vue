@@ -95,7 +95,7 @@ export default {
   }
 
   .inputConfirmed {
-    color: orange;
+    color: black;
   }
 }
 </style>

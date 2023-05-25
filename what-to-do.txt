@@ -1,0 +1,11 @@
+1. Po kliknięciu new game musimy w planszy zrobić wszystkie białe pola.
+Może żeby wrócić do gry o id tej, która była ostatnio.
+Coś w stylu od nowa
+
+2. Czcionka na wyświetlaczu.
+
+3. Opisy do kroków
+
+4. Przycisk zatwierdź ruch wtedy zatwierdza się coś co wpisał użytkownik, zmienia się kolor ?
+
+5. Zmienić wygląd przysiku z krokami ? 

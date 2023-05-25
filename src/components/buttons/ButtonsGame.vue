@@ -55,9 +55,10 @@ export default {
     }
 
     .button__game:hover {
+        background-color: #3242a5;
         box-shadow: none;
         border: solid 2px whitesmoke;
-        color: black;
+        color: whitesmoke;
         transition-duration: .5s;
         transform: scale(1.1);
     }
@@ -77,9 +78,10 @@ export default {
     }
 
     .button__draw:hover {
+        background-color: #3242a5;
         box-shadow: none;
         border: solid 2px whitesmoke;
-        color: black;
+        color: whitesmoke;
         transition-duration: .5s;
         transform: scale(1.1);
     }
