@@ -64,16 +64,15 @@ export default {
 <style lang="scss" scoped>
 .containerApp__game--board {
 
-
   &__field {
     align-content: space-around;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    height: 30%;
+    height: 20%;
     text-align: center;
-    width: 45%;
-
+    width: 48%;
+    /*     border: solid 1px red; */
 
     &__single {
       border: solid 1px white;
@@ -89,13 +88,14 @@ export default {
     color: whitesmoke;
     font-size: 1rem;
     font-weight: 600;
-    height: 30px;
+    height: auto;
+    padding: 4px 2px;
     width: 25%;
     text-align: center;
   }
 
   .inputConfirmed {
-    color: black;
+    color: yellow;
   }
 }
 </style>

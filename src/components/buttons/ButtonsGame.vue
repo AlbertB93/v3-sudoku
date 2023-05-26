@@ -1,24 +1,22 @@
 <template>
-    <div class="containerApp__buttons--gameButtons">
-        <button class="button__game" @click="drawGame('easy')">
-            NEW GAME
-        </button>
-        <div class="gameButtons--title">
-            <p> Draw Game</p>
-        </div>
-        <button class="button__draw" @click="drawGame('easy')">
-            EASY
-        </button>
-        <button class="button__draw" @click="drawGame('medium')">
-            MEDIUM
-        </button>
-        <button class="button__draw" @click="drawGame('hard')">
-            HARD
-        </button>
-        <button class="button__game" @click="drawGame('medium')">
-            FINISH GAME
-        </button>
-    </div>
+    <button class="button__game" @click="drawGame('easy')">
+        NEW GAME
+    </button>
+    <!--     <div class="gameButtons--title">
+        <p> Draw Game</p>
+    </div> -->
+    <button class="button__draw" @click="drawGame('easy')">
+        EASY
+    </button>
+    <button class="button__draw" @click="drawGame('medium')">
+        MEDIUM
+    </button>
+    <button class="button__draw" @click="drawGame('hard')">
+        HARD
+    </button>
+    <button class="button__game" @click="drawGame('medium')">
+        FINISH GAME
+    </button>
 </template>
 
 <script>

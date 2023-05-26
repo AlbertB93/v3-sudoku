@@ -5,13 +5,12 @@
       </h1>
     </div>
     <div class="containerApp__box">
-      <div class="containerApp__buttons">
-        <ButtonsGame :drawGame="drawGame" />
 
-      </div>
-      <div class="containerApp__game">
-        <div class="containerApp__game--board">
-          <BoardFields />
+      <div class="containerApp__box--container">
+
+        <div class="containerApp__buttons">
+          <ButtonsGame :drawGame="drawGame" />
+
         </div>
         <div class="containerApp__game--steps">
           <ButtonsSteps :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
@@ -25,7 +24,14 @@
             :findCorsToFillDigitExtend="findCorsToFillDigitExtend"
             :fourthStepFillDigitsInRightPlace5="fourthStepFillDigitsInRightPlace5" :fifthStep="fifthStep" />
         </div>
+        <div class="containerApp__game">
+          <div class="containerApp__game--board">
+            <BoardFields />
+          </div>
+        </div>
       </div>
+
+
       <div class="containerApp__screen">
         <ScreenForSteps />
       </div>
@@ -1785,10 +1791,6 @@ export default {
     }
 
 
-
-
-
-
     return {
       drawGame, confirmBoardGame, nextMove, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
       secondStepFindOneMissingID, secondStepFindCoor, thirdStepFillDigitsInRightPlace, firstStep, secondStep, thirdStep, isZero,
@@ -1807,29 +1809,29 @@ export default {
 .containerApp {
   align-items: center;
   background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
-  background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490);
+  /*   background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: center;
+  overflow-y: scroll;
   text-align: center;
   width: 100vw;
 
 
   &__title {
- 
+
     height: 6vh;
 
 
     h1 {
       color: #004d46;
-      color: whitesmoke;
       font-size: 1.5rem;
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
       font-weight: 600;
       padding: 0 10px;
       text-align: center;
-      text-shadow: -6px 6px 16px #f4fffb;
+      text-shadow: -6px 6px 6px #f4fffb;
     }
   }
 
@@ -1837,73 +1839,92 @@ export default {
     align-items: center;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     height: 90%;
     justify-content: space-around;
     width: 95vw;
-    /* border: solid 1px red; */
+    border: solid 1px red;
 
-    .containerApp__buttons {
-      align-items: center;
-      background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
-        background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490);
-      border-radius: 12px;
-/*       box-shadow: -6px -6px 10px #aad5c5; */
+    &--container {
+
+      border: dotted 2px green;
       display: flex;
-      flex-direction: column;
-      height: 80%;
-      justify-content: center;
-      width: 12%;
-      /*             border: dotted 2px red; */
-    }
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 60%;
 
-    .containerApp__game {
-      align-items: center;
-      border-radius: 8px;
-      color: aqua;
-      display: flex;
-      flex-direction: column;
-      height: 90%;
-      justify-content: center  ;
-      width: 50%;
-/*        border: dotted 3px yellow;  */
-
-      .containerApp__game--board {
-        align-content: space-around;
-        box-shadow: 6px 6px 10px #aad5c5;
+      .containerApp__buttons {
+        align-items: center;
         background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
-          background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490);
+        /*       background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
         border-radius: 12px;
+        /*       box-shadow: -6px -6px 10px #aad5c5; */
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-around;
-        height: 40%;
-        width: 60%;
-        /*       border: dotted 2px red; */
+        height: 20%;
+        justify-content: center;
+        width: 88%;
+        border: dotted 2px red;
       }
 
+
       .containerApp__game--steps {
+        align-self: flex-start;
         align-items: center;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        height: 75%;
-        width: 80%;
-/*                border: solid 4px white;  */
+        height: auto;
+        margin-top: 6vh;
+        width: 30%;
+        border: solid 4px white;
       }
 
+      .containerApp__game {
+        align-items: center;
+        border-radius: 8px;
+        color: aqua;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        justify-content: center;
+        width: 60%;
+        border: dotted 3px yellow;
+
+        .containerApp__game--board {
+          align-content: space-around;
+          box-shadow: 6px 6px 10px #aad5c5;
+          background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
+          /*         background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
+          border-radius: 12px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          padding: 8px;
+          height: 90%;
+          width: 90%;
+          border: dotted 2px red;
+        }
+
+
+
+      }
     }
 
+
+
     .containerApp__screen {
-      align-self: flex-start;
+      align-self: center;
       background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
-        background-image: linear-gradient(to left , #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490);
+      /*       background-image: linear-gradient(to left, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
       border-radius: 12px;
-      box-shadow: 6px 6px 10px #1e25fd;
+      box-shadow: 6px 6px 10px whitesmoke;
       color: whitesmoke;
       height: auto;
       margin: 4vh auto;
-      width: 30%;
-/*         border: dotted 2px green;  */
+      width: 35%;
+      border: dotted 2px green;
 
     }
 
