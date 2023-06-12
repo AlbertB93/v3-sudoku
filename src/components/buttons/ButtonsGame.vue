@@ -1,5 +1,5 @@
 <template>
-    <button class="button__game" @click="drawGame('easy')">
+    <button class="button__game" @click="newGame()">
         NEW GAME
     </button>
     <!--     <div class="gameButtons--title">
@@ -14,7 +14,7 @@
     <button class="button__draw" @click="drawGame('hard')">
         HARD
     </button>
-    <button class="button__game" @click="drawGame('medium')">
+    <button class="button__game" @click="finishGame()">
         FINISH GAME
     </button>
 </template>
@@ -22,7 +22,7 @@
 <script>
 export default {
     name: 'ButtonsGame',
-    props: ['fillBoard', 'drawGame'],
+    props: [ 'drawGame', 'newGame','finishGame',],
 };
 
 </script>

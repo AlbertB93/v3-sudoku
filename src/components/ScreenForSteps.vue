@@ -1,6 +1,6 @@
 <template>
     <div class="containerApp__game--screen">
-        <h3> Co uzupełniliśmy w sudoku:</h3>
+        <h3> What was fill on the board:</h3>
 
         <div class="rowOfStep" id="rowOfStep0">
 
@@ -65,11 +65,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300&display=swap');
 .containerApp__screen {
 
-
+    h3{
+    font-family: 'Raleway', sans-serif;
+    margin-top: 10px;
+    }
+   
+       
     .rowOfStep {
         /*         border: solid 1px orange;*/
+       font-family: 'Raleway', sans-serif;
 
         margin: 10px auto;
         padding: 2px;

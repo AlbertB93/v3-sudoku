@@ -69,16 +69,16 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    height: 20%;
+    height: 35%;
     text-align: center;
     width: 48%;
-    /*     border: solid 1px red; */
+/*          border: solid 1px red;  */
 
     &__single {
       border: solid 1px white;
-      height: 30%;
+      height: 25%;
       text-align: center;
-      width: 30%;
+      width: 25%;
     }
   }
 

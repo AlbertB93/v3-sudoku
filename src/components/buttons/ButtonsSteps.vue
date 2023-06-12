@@ -5,12 +5,12 @@
             <button class="singleButtonNew2" @click="displayDescription(0)"> Description</button>
             <button class="singleButtonNew2" @click="firstStep"> Execute</button>
         </div>
-        <div class="stepDescription"> 1. Find miniMatrix ( 2 x 3 ) or single row or single column, which has one "0" <br>
+        <div class="stepDescription"> <button @click="findEmptyFieldsInMatrix">1</button> Find miniMatrix ( 2 x 3 ) or single row or single column, which has one "zero" <br>
             <img src="../../../miniMatrix.png" alt="matrix" class="stepDescription__image">
             <br>
-            2. Find correct coordinates ( which has "0 in field") <br>
-            3. Find missing digit<br>
-            4. Fill missing digit
+            <button @click="firstStepFindEmptyField">2</button> Find correct coordinates ( which has "0 in field") <br>
+            <button @click="findMissingDigit">3</button>  Find missing digit<br>
+             <button @click="fillMissingDigit"> 4</button> Fill missing digit
         </div>
     </div>
     <div class="containerApp__game--steps--singleStep">
@@ -80,8 +80,8 @@
 export default {
     name: 'ButtonsSingleGame',
 
-    props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep', 'drawGame',
-        'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStep', 'findMiniMatrixWithZeros', 'findMissingDigits', 'findCorsToFillDigitExtend', 'fourthStepFillDigitsInRightPlace5', 'fifthStep'
+    props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep', 'drawGame', 
+        'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStep', 'findMiniMatrixWithZeros', 'findMissingDigits', 'findCorsToFillDigitExtend', 'fourthStepFillDigitsInRightPlace5', 'fifthStep', 'firstStepFindEmptyField',
     ],
     setup() {
         function displayDescription(descriptionNumber) {

@@ -2,10 +2,15 @@
 Może żeby wrócić do gry o id tej, która była ostatnio.
 Coś w stylu od nowa
 
-2. Czcionka na wyświetlaczu.
 
-3. Opisy do kroków
 
 4. Przycisk zatwierdź ruch wtedy zatwierdza się coś co wpisał użytkownik, zmienia się kolor ?
 
-5. Zmienić wygląd przysiku z krokami ? 
+
+
+* Zrobić coś takiego dla podkroków jak:
+Np. dla pierwszego podkroku, znajdź macierz, która ma jedno zero to ją obramować np. na zółto.
+
+
+- Podzielić kroki na komponenty? Spróbować na razie zrobić to z pierwszym krokiem. 
+- w głównym komponencie zostawić główne funckję jak losowanie , nowa gra, fillBoard itp.

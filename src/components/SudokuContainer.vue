@@ -5,12 +5,9 @@
       </h1>
     </div>
     <div class="containerApp__box">
-
       <div class="containerApp__box--container">
-
         <div class="containerApp__buttons">
-          <ButtonsGame :drawGame="drawGame" />
-
+          <ButtonsGame :drawGame="drawGame" :newGame="newGame" :finishGame="finishGame" :fillBoard="fillBoard" />
         </div>
         <div class="containerApp__game--steps">
           <ButtonsSteps :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
@@ -20,9 +17,9 @@
             :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :finishGame="finishGame"
             :firstStep="firstStep" :secondStep="secondStep" :thirdStep="thirdStep"
             :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace" :fourthStep="fourthStep"
-            :findMiniMatrixWithZeros="findMiniMatrixWithZeros" :findMissingDigits="findMissingDigits"
+            :findMiniMatrixWithZeros="findMiniMatrixWithZeros"
             :findCorsToFillDigitExtend="findCorsToFillDigitExtend"
-            :fourthStepFillDigitsInRightPlace5="fourthStepFillDigitsInRightPlace5" :fifthStep="fifthStep" />
+            :fourthStepFillDigitsInRightPlace5="fourthStepFillDigitsInRightPlace5" :fifthStep="fifthStep" :firstStepFindEmptyField="firstStepFindEmptyField"/>
         </div>
         <div class="containerApp__game">
           <div class="containerApp__game--board">
@@ -30,8 +27,6 @@
           </div>
         </div>
       </div>
-
-
       <div class="containerApp__screen">
         <ScreenForSteps />
       </div>
@@ -40,9 +35,6 @@
 </template>
 
 <script>
-
-/* import { computed } from "@vue/reactivity";*/
-/*  import { ref } from "vue";  */
 import { games6x6LevelEasy, games6x6LevelMedium, games6x6LevelHard } from "../data/Games"
 import ButtonsGame from "../components/buttons/ButtonsGame.vue";
 import ButtonsSteps from "./buttons/ButtonsSteps.vue";
@@ -60,45 +52,29 @@ export default {
 
   setup() {
 
-    // to draw Game
-    const gamesLevelEasy = games6x6LevelEasy;
-    const gamesLevelMedium = games6x6LevelMedium;
-    const gamesLevelHard = games6x6LevelHard;
 
 
-    //counters
-    let i = 0;
-    let j = 0;
     let k = 0;
     let counterThirdStep = 0;
     // counters for third step
     let counterCondition = 0;
     let counterConditionFinish = 0;
-    let counterRowForStep = 0;
-    // arrays for the help
-    let rows = [];
-    let columns = [];
-    let yCorrdinate = 0;
-    let xCorrdinate = 0;
-    let xCor = 0;
-    let yCor = 0;
-    let missingDigit = 99;
-    let countOfZero = 0;
-    let endCondition = true;
-    let miniMatrixs = [];
+
+
+
+
+
+
+ 
     let testArr = [1, 2, 3, 4, 5, 6]
     let copyArr = [];
-
-
     // for the second help
     let missingID = 99;
-
     // for the third help
     let ySecondCor = 9;
     let secondMissingDigit = 99;
     let arrayOfZero = [];
     let lengthOfarrayOfZero = 0;
-
     // for the fourth / fifth help
     let thirdMissingDigit = 99;
     let fourthMissingDigit = 99;
@@ -107,81 +83,91 @@ export default {
     let warunekPom = true;
     let arrayOfCondition = [true, true, true]
 
-    //conditions
 
+ 
+    let conLoopThirdStep = true;
+
+    // new lets ///////////////////////////////////////
+    //counters
+    let i = 0;
+    let j = 0;
+    let counterStepstoFinish = 0;
+        let countOfZero = 0;
+
+    // to draw Game
+    const gamesLevelEasy = games6x6LevelEasy;
+    const gamesLevelMedium = games6x6LevelMedium;
+    const gamesLevelHard = games6x6LevelHard;
+    let arrayOfInputs;
+    let numberOfGame = 0;
+
+    //conditions
     let conFirstStep = true;
     let conSecondStep = true;
     let conThirdStep = true;
     let conFinishGame = false;
-    let conLoopThirdStep = true;
+    let endCondition = true;
 
+    // other
+    let missingDigit = 99;
+    let xCor = 0;
+    let yCor = 0;
+    let yCorrdinate = 0;
+    let xCorrdinate = 0;
 
+    // arrays for the help
+    let miniMatrixs = [];
+    let rows = [];
+    let columns = [];
 
-    //SPRAWDZIĆ
+    // function, which removes style from board and fill "0" to all fields. // ALREADY CHECK
+    function newGame() {
+      for (i = 0; i < 6; i++) {
+        for (j = 0; j < 6; j++) {
+          document.getElementById('square' + i).getElementsByClassName('inputField')[j].classList.remove("inputConfirmed");
+        }
+      }
+      for (let i = 0; i < arrayOfInputs.length; i++) {
+        arrayOfInputs[i].value = 0;
+      }
+    }
+
+    //function, which draw game. One of three levels and one of ten examples. // ALREADY CHECK
     function drawGame(levelOfGame) {
       console.log("drawGame");
-      let tablica = document.getElementsByClassName('inputField');
-      console.log(tablica);
-      let numberOfGame = 0;
+      arrayOfInputs = document.getElementsByClassName('inputField');
       numberOfGame = Math.floor(Math.random() * 10 + 1);
       switch (levelOfGame) {
         case 'easy':
-          for (let i = 0; i < tablica.length; i++) {
-            tablica[i].value = gamesLevelEasy[numberOfGame][i];
+          {
+            for (let i = 0; i < arrayOfInputs.length; i++) {
+              arrayOfInputs[i].value = gamesLevelEasy[numberOfGame][i];
+            }
           }
           break;
         case 'medium':
-          for (let i = 0; i < tablica.length; i++) {
-            tablica[i].value = gamesLevelMedium[numberOfGame][i];
+          {
+            for (let i = 0; i < arrayOfInputs.length; i++) {
+              arrayOfInputs[i].value = gamesLevelMedium[numberOfGame][i];
+            }
           }
+
           break;
         case 'hard':
-          for (let i = 0; i < tablica.length; i++) {
-            tablica[i].value = gamesLevelHard[numberOfGame][i];
+          {
+            for (let i = 0; i < arrayOfInputs.length; i++) {
+              arrayOfInputs[i].value = gamesLevelHard[numberOfGame][i];
+            }
           }
           break;
         default:
           alert("Error during drawing Game")
           break;
       }
+                 fillBoard();
     }
 
-    //SPRAWDZIĆ
-    function confirmBoardGame() {
-      console.log("confirmBoardGame");
-
-      let tablica = document.getElementsByClassName('inputField');
-      console.log(tablica);
-
-      for (let i = 0; i < tablica.length; i++) {
-        if (tablica[i].value != 0) {
-          tablica[i].classList.add("inputConfirmed");
-          tablica[i].setAttribute('readonly', 'true');
-        }
-
-      }
-    }
-    //SPRAWDZIĆ
-    function nextMove() {
-      console.log("nextMove");
-
-      console.log("Jeśli 1,2,3 to biały kolor");
-      let t1 = document.querySelector("#s91");
-      let t2 = document.querySelector("#s92");
-      let t3 = document.querySelector("#s93");
-      console.log("wartość t3" + t3.value);
-      if (t1.value == 1 && t2.value == 2 && t3.value == 3) {
-        console.log("warunek spełniony");
-        t1.classList.add("inputConfirmed");
-        t2.classList.add("inputConfirmed");
-        t3.classList.add("inputConfirmed");
-        console.log("wartość t3" + t3.value);
-      } else {
-        console.log("Błąd")
-      }
-    }
-
-    // function, which sholud finish game for one click     // ALREADY CHECK
+    // function, which sholud finish game for one click     // CHECK ONCE AGAIN
     function finishGame() {
       console.log("finishGame");
       fillBoard();
@@ -253,8 +239,6 @@ export default {
       return -1;
     }
 
-    // functions for the main buttons
-
     // function, which fill interial minimatrix
     function fillBoard() {
       console.log("fillBoard")
@@ -264,7 +248,7 @@ export default {
         tempArray[i] = document.getElementById('square' + i).getElementsByClassName('inputField');
       }
 
-      // tworzenie 2 wyamirowej tablicy
+      // create two dimensions array
       for (i = 0; i < 18; i++) {
         miniMatrixs[i] = [];
       }
@@ -345,15 +329,17 @@ export default {
     // function, which fill right number for right place in BoardGame
     function fillMissingDigit() {
       console.log("fillMissingDigit")
+      findCorsToFillDigit();
       console.log("================ WPISANO [ " + missingDigit + " ] ====== [ " + xCor + " ] oraz [ " + yCor + " ] =======")
 
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].value = missingDigit;
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
-
-      document.getElementById('rowOfStep' + counterRowForStep).innerHTML = "Krok " + (counterRowForStep + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
-      counterRowForStep++;
+      document.getElementById('rowOfStep' + counterStepstoFinish).innerHTML = (counterStepstoFinish + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
+      counterStepstoFinish++;
     }
 
+
+    
     // FUNCTIONS FOR THE FIRST STEP
 
     // function, which find miniMatrix, which has one empty field and return ID.
@@ -387,6 +373,7 @@ export default {
 
     function firstStepFindEmptyField() {
       yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
+      console.log("Współrzędna: " + yCorrdinate)
     }
 
     // function, which find corrdinates in miniMatrix for the empty field
@@ -608,21 +595,6 @@ export default {
       helpForCorrectCorrdinates(missingID)
       console.log("Szukane współrzędne: " + xCor + " - " + yCor)
 
-    }
-
-
-    function checkMiniMatrixForMissingDigit(a, b, i) {
-      console.log("checkMiniMatrixForMissingDigit");
-      for (j = 0; j < 6; j++) {
-        if ((miniMatrixs[a].some(item => item == missingDigit)) || (miniMatrixs[b].some(item => item == missingDigit))) {
-          break;
-        } else {
-          console.log("Nie zawiera szukanej cyfry - zwiększ counterCondition");
-          yCor = i;
-          counterCondition++;
-          break;
-        }
-      }
     }
 
     function helpForCorrectCorrdinates(missingID) {
@@ -1033,6 +1005,22 @@ export default {
       }
     }
 
+
+    function checkMiniMatrixForMissingDigit(a, b, i) {
+      console.log("checkMiniMatrixForMissingDigit");
+      for (j = 0; j < 6; j++) {
+        if ((miniMatrixs[a].some(item => item == missingDigit)) || (miniMatrixs[b].some(item => item == missingDigit))) {
+          break;
+        } else {
+          console.log("Nie zawiera szukanej cyfry - zwiększ counterCondition");
+          yCor = i;
+          counterCondition++;
+          break;
+        }
+      }
+    }
+
+
     // FUNCTIONS FOR THE THIRD STEP
 
 
@@ -1114,7 +1102,7 @@ export default {
         } else {
           fourthStepHelpFindCondition(thirdMissingDigit, 3);
           console.log(" Jesteśmy tutaj?")
-          console.log(" Tablica warunków?" + arrayOfCondition)
+          console.log(" arrayOfInputs warunków?" + arrayOfCondition)
           console.log(" Countercondition?" + counterCondition)
           if (counterCondition == 1) {
             console.log(" Jesteśmy tutaj 2?")
@@ -1138,8 +1126,28 @@ export default {
       console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
     }
 
+    function fourthStepHelpFindCondition(missingDigit, numberOfZeros) {
+      counterCondition = 0;
+      if (numberOfZeros == 3) {
+        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
+        arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
+        arrayOfCondition[2] = fourthStepHelp(missingDigit, yThirdCor);
+      } else if (numberOfZeros == 4) {
+        console.log("JESTEM TUTAJ?????")
+        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
+        arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
+        arrayOfCondition[2] = fourthStepHelp(missingDigit, yThirdCor);
+        arrayOfCondition[3] = fourthStepHelp(missingDigit, yFourthCor);
+      } else {
+        console.log("Something wrong in fourthStepHelpFindCondition")
+      }
 
-
+      for (i = 0; i < 3; i++) {
+        if (arrayOfCondition[i]) {
+          counterCondition++;
+        }
+      }
+    }
 
     function fourthStepHelp(missingDigit, yCorrdinate) {
       warunekPom = true;
@@ -1157,7 +1165,14 @@ export default {
                 warunekPom = false;
               }
             }
-          } else if (yCorrdinate == 2) {
+          }
+          /* else if (yCorrdinate == 1) {
+            if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
+              warunekPom = false;
+            }
+          }
+ */
+          else if (yCorrdinate == 2) {
             for (i = 0; i < 6; i++) {
               if (miniMatrixs[6][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
                 warunekPom = false;
@@ -1384,28 +1399,7 @@ export default {
       return warunekPom;
     }
 
-    function fourthStepHelpFindCondition(a, numberOfZeros) {
-      counterCondition = 0;
-      if (numberOfZeros == 3) {
-        arrayOfCondition[0] = fourthStepHelp(a, yCorrdinate);
-        arrayOfCondition[1] = fourthStepHelp(a, ySecondCor);
-        arrayOfCondition[2] = fourthStepHelp(a, yThirdCor);
-      } else if (numberOfZeros == 4) {
-        console.log("JESTEM TUTAJ?????")
-        arrayOfCondition[0] = fourthStepHelp(a, yCorrdinate);
-        arrayOfCondition[1] = fourthStepHelp(a, ySecondCor);
-        arrayOfCondition[2] = fourthStepHelp(a, yThirdCor);
-        arrayOfCondition[3] = fourthStepHelp(a, yFourthCor);
-      } else {
-        console.log("Something wrong in fourthStepHelpFindCondition")
-      }
 
-      for (i = 0; i < 3; i++) {
-        if (arrayOfCondition[i]) {
-          counterCondition++;
-        }
-      }
-    }
 
     //FUNCTIONS FOR THE FIFTH STEP
 
@@ -1419,7 +1413,7 @@ export default {
       fourthStepHelpFindCondition(missingDigit, 4);
 
       if (counterCondition == 1) {
-        console.log("Tablica warunków: " + arrayOfCondition)
+        console.log("arrayOfInputs warunków: " + arrayOfCondition)
         if (arrayOfCondition[0]) {
           yCor = yCorrdinate;
         } else if (arrayOfCondition[1]) {
@@ -1493,7 +1487,7 @@ export default {
 
     // FUNCTIONS FOR THE THREE & FOUR STEP
 
-    function findMiniMatrixWithZeros(a) {
+    function findMiniMatrixWithZeros(numberOfZeros) {
       console.log("findMiniMatrixWithZeros");
       countOfZero = 0;
       arrayOfZero = [];
@@ -1504,7 +1498,7 @@ export default {
             countOfZero++;
           }
         }
-        if (countOfZero == a) {
+        if (countOfZero == numberOfZeros) {
           arrayOfZero[k] = i
           k++;
           countOfZero = 0;
@@ -1514,22 +1508,22 @@ export default {
       }
 
       lengthOfarrayOfZero = arrayOfZero.length;
-      console.log("Tablica z ID macierzy, w których są " + a + " msc. zerowe: " + arrayOfZero)
+      console.log("arrayOfInputs z ID macierzy, w których są " + numberOfZeros + " msc. zerowe: " + arrayOfZero)
       console.log("Length arrayOfZero: " + lengthOfarrayOfZero)
       countOfZero = 0;
       xCorrdinate = arrayOfZero[0];
     }
 
-    function findMissingDigits(a) {
+    function findMissingDigits(numberOfMissingDigit) {
       console.log("findMissingDigits")
-      if (a == 2) {
+      if (numberOfMissingDigit == 2) {
         missingDigit = 99;
         secondMissingDigit = 99;
-      } else if (a == 3) {
+      } else if (numberOfMissingDigit == 3) {
         missingDigit = 99;
         secondMissingDigit = 99;
         thirdMissingDigit = 99;
-      } else if (a == 4) {
+      } else if (numberOfMissingDigit == 4) {
         missingDigit = 99;
         secondMissingDigit = 99;
         thirdMissingDigit = 99;
@@ -1639,14 +1633,12 @@ export default {
         findCorsToFillDigit();
         findMissingDigit();
         fillMissingDigit();
-        conSecondStep = true;
       } else {
         alert(" Wykonaj krok nr 2")
         console.log(" Nie wykonano kroku nr 1")
         conFirstStep = false;
-        conSecondStep = true;
       }
-
+      conSecondStep = true;
     }
 
     function secondStep() {
@@ -1654,14 +1646,12 @@ export default {
       fillBoard();
 
       if (secondStepFindOneMissingDigit() != -1) {
-
         secondStepFindOneMissingID();
         secondStepFindCoor();
         fillMissingDigit();
         conFirstStep = true;
         conSecondStep = false;
       } else {
-        fillBoard();
         alert(" Wykonaj krok nr 3")
         conSecondStep = false;
         conFirstStep = false;
@@ -1792,15 +1782,17 @@ export default {
 
 
     return {
-      drawGame, confirmBoardGame, nextMove, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
+      drawGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
       secondStepFindOneMissingID, secondStepFindCoor, thirdStepFillDigitsInRightPlace, firstStep, secondStep, thirdStep, isZero,
-      gamesLevelEasy, gamesLevelMedium, gamesLevelHard, fourthStepFillDigitsInRightPlace, fourthStep, findMiniMatrixWithZeros, checkMiniMatrixForMissingDigit, findMissingDigits, findCorsToFillDigitExtend, fourthStepFillDigitsInRightPlace5, fifthStep
+      gamesLevelEasy, gamesLevelMedium, gamesLevelHard, fourthStepFillDigitsInRightPlace, fourthStep, findMiniMatrixWithZeros, checkMiniMatrixForMissingDigit, findMissingDigits, findCorsToFillDigitExtend, fourthStepFillDigitsInRightPlace5, fifthStep, newGame, firstStepFindEmptyField,
     }
   }
 }
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Semi+Condensed:wght@600;700&family=Lobster&family=Open+Sans:ital,wght@1,300&family=Oswald&family=Pangolin&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -1820,15 +1812,13 @@ export default {
 
 
   &__title {
-
     height: 6vh;
-
 
     h1 {
       color: #004d46;
-      font-size: 1.5rem;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      font-weight: 600;
+      font-size: 2rem;
+      font-family: 'Anton', sans-serif;
+      letter-spacing: 2px;
       padding: 0 10px;
       text-align: center;
       text-shadow: -6px 6px 6px #f4fffb;
@@ -1843,15 +1833,19 @@ export default {
     height: 90%;
     justify-content: space-around;
     width: 95vw;
-    border: solid 1px red;
 
+    /*   border: solid 1px red;
+ */
     &--container {
 
-      border: dotted 2px green;
+      align-items: flex-start;
+      /* border: dotted 2px green; */
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      width: 60%;
+      height: 100%;
+      justify-content: center;
+      width: 65%;
 
       .containerApp__buttons {
         align-items: center;
@@ -1862,10 +1856,11 @@ export default {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        height: 20%;
+        height: 16%;
         justify-content: center;
-        width: 88%;
-        border: dotted 2px red;
+        margin-top: 4vh;
+        width: 60%;
+        /*         border: dotted 2px red;  */
       }
 
 
@@ -1875,10 +1870,9 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        height: auto;
-        margin-top: 6vh;
-        width: 30%;
-        border: solid 4px white;
+        height: 50%;
+        width: 45%;
+        /*        border: solid 4px white; */
       }
 
       .containerApp__game {
@@ -1887,10 +1881,10 @@ export default {
         color: aqua;
         display: flex;
         flex-direction: column;
-        height: auto;
+        height: 50%;
         justify-content: center;
-        width: 60%;
-        border: dotted 3px yellow;
+        width: 52%;
+        /*       border: dotted 3px yellow; */
 
         .containerApp__game--board {
           align-content: space-around;
@@ -1902,9 +1896,9 @@ export default {
           flex-wrap: wrap;
           justify-content: center;
           padding: 8px;
-          height: 90%;
-          width: 90%;
-          border: dotted 2px red;
+          height: 60%;
+          width: 80%;
+          /*       border: dotted 2px red; */
         }
 
 
@@ -1915,7 +1909,7 @@ export default {
 
 
     .containerApp__screen {
-      align-self: center;
+      align-self: flex-start;
       background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
       /*       background-image: linear-gradient(to left, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
       border-radius: 12px;
@@ -1923,8 +1917,8 @@ export default {
       color: whitesmoke;
       height: auto;
       margin: 4vh auto;
-      width: 35%;
-      border: dotted 2px green;
+      width: 30%;
+      /*     border: dotted 2px green; */
 
     }
 
