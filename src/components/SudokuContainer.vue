@@ -10,16 +10,17 @@
           <ButtonsGame :drawGame="drawGame" :newGame="newGame" :finishGame="finishGame" :fillBoard="fillBoard" />
         </div>
         <div class="containerApp__game--steps">
-          <ButtonsSteps :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix" :findCorsToFillDigit="findCorsToFillDigit"
-            :findMissingDigit="findMissingDigit" :fillMissingDigit="fillMissingDigit" :fillBoard="fillBoard"
-            :secondStepFindOneMissingDigit="secondStepFindOneMissingDigit"
+          <ButtonsSteps :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix"
+            :firstStepFindEmptyField="firstStepFindEmptyField" :findMissingDigit="findMissingDigit"
+            :fillMissingDigit="fillMissingDigit" :secondStepFindOneMissingDigit="secondStepFindOneMissingDigit"
             :secondStepFindOneMissingID="secondStepFindOneMissingID" :secondStepFindCoor="secondStepFindCoor"
-            :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :finishGame="finishGame"
-            :firstStep="firstStep" :secondStep="secondStep" :thirdStep="thirdStep"
-            :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace" :fourthStep="fourthStep"
-            :findMiniMatrixWithZeros="findMiniMatrixWithZeros"
+            :findMiniMatrixWithZeros="findMiniMatrixWithZeros" :findMissingDigits="findMissingDigits"
             :findCorsToFillDigitExtend="findCorsToFillDigitExtend"
-            :fourthStepFillDigitsInRightPlace5="fourthStepFillDigitsInRightPlace5" :fifthStep="fifthStep" :firstStepFindEmptyField="firstStepFindEmptyField"/>
+            :thirdStepFillDigitsInRightPlace="thirdStepFillDigitsInRightPlace" :firstStep="firstStep"
+            :findCorsToFillDigit="findCorsToFillDigit" :secondStep="secondStep" :thirdStep="thirdStep"
+            :fourthStep="fourthStep" :fifthStep="fifthStep"
+            :fourthStepFillDigitsInRightPlace="fourthStepFillDigitsInRightPlace"
+            :fourthStepFillDigitsInRightPlace5="fourthStepFillDigitsInRightPlace5" />
         </div>
         <div class="containerApp__game">
           <div class="containerApp__game--board">
@@ -65,7 +66,7 @@ export default {
 
 
 
- 
+
     let testArr = [1, 2, 3, 4, 5, 6]
     let copyArr = [];
     // for the second help
@@ -84,7 +85,7 @@ export default {
     let arrayOfCondition = [true, true, true]
 
 
- 
+
     let conLoopThirdStep = true;
 
     // new lets ///////////////////////////////////////
@@ -92,7 +93,7 @@ export default {
     let i = 0;
     let j = 0;
     let counterStepstoFinish = 0;
-        let countOfZero = 0;
+    let countOfZero = 0;
 
     // to draw Game
     const gamesLevelEasy = games6x6LevelEasy;
@@ -164,7 +165,7 @@ export default {
           alert("Error during drawing Game")
           break;
       }
-                 fillBoard();
+      fillBoard();
     }
 
     // function, which sholud finish game for one click     // CHECK ONCE AGAIN
@@ -329,7 +330,6 @@ export default {
     // function, which fill right number for right place in BoardGame
     function fillMissingDigit() {
       console.log("fillMissingDigit")
-      findCorsToFillDigit();
       console.log("================ WPISANO [ " + missingDigit + " ] ====== [ " + xCor + " ] oraz [ " + yCor + " ] =======")
 
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].value = missingDigit;
@@ -339,7 +339,7 @@ export default {
     }
 
 
-    
+
     // FUNCTIONS FOR THE FIRST STEP
 
     // function, which find miniMatrix, which has one empty field and return ID.
@@ -1005,7 +1005,6 @@ export default {
       }
     }
 
-
     function checkMiniMatrixForMissingDigit(a, b, i) {
       console.log("checkMiniMatrixForMissingDigit");
       for (j = 0; j < 6; j++) {
@@ -1021,51 +1020,73 @@ export default {
     }
 
 
+    /*******************************************************************************************************************************/
+
+
+
     // FUNCTIONS FOR THE THIRD STEP
 
+    /*     function thirdStepFillDigitsInRightPlace() {
+          console.log("thirdStepFillDigitsInRightPlace")
+          console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
+          console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
+          console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+          missingID = xCorrdinate;
+          counterCondition = 0;
+          counterConditionFinish = 0;
+          helpForCorrectCorrdinates(missingID)
+          if (counterCondition == 2) {
+            console.log("counterCondition = 2. Musimy wykonać dla drugiej cyfry ")
+            counterConditionFinish++;
+            missingDigit = secondMissingDigit;
+            helpForCorrectCorrdinates(missingID)
+          } else {
+            console.log("Musimy wpisać : " + missingDigit)
+            xCor = xCorrdinate;
+            console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
+          }
+          if (counterCondition == 4) {
+            console.log("counterCondition = 4. Musimy wykonać dla innej Macierzy ")
+            counterConditionFinish++;
+          } else {
+            console.log("Musimy wpisać : " + missingDigit)
+            xCor = xCorrdinate;
+            console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
+          }
+          console.log("counterConditionFinish: " + counterConditionFinish)
+          yCorrdinate = yCor;
+        }
+     */
 
-
+    // FUNCTIONS FOR THE FOURTH STEP
 
     function thirdStepFillDigitsInRightPlace() {
-      console.log("thirdStepFillDigitsInRightPlace")
-
-      console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
-      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
-      console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-
-
-      missingID = xCorrdinate;
-
-      counterCondition = 0;
-      counterConditionFinish = 0;
-
-      helpForCorrectCorrdinates(missingID)
-
-      if (counterCondition == 2) {
-        console.log("counterCondition = 2. Musimy wykonać dla drugiej cyfry ")
-        counterConditionFinish++;
-        missingDigit = secondMissingDigit;
-        helpForCorrectCorrdinates(missingID)
+      console.log("***thirdStepFillDigitsInRightPlace---TEST---***")
+      /* Wykonać fourthStepHelpFindCondition */
+      /* Jeśli (counterCondition == 1) to sprawdzamy, który warunek jest true i wstawiamy do yCor prawidłową współrzędną Y miejsca zerowego */
+      /* Jeśli nie to wywołujemy tą samą funkcję tylko dla secondMissingDigit */
+      fourthStepHelpFindCondition(missingDigit, 2);
+      if (counterCondition == 1) {
+        findTrueCondition(arrayOfCondition)
       } else {
-        console.log("Musimy wpisać : " + missingDigit)
-        xCor = xCorrdinate;
-        console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
+        fourthStepHelpFindCondition(secondMissingDigit, 2);
+        if (counterCondition == 1) {
+          findTrueCondition(arrayOfCondition)
+        } else {
+          fourthStepHelpFindCondition(thirdMissingDigit, 2);
+          if (counterCondition == 1) {
+            findTrueCondition(arrayOfCondition)
+          } else {
+            console.log("Musimy wykonać dla innej macierzy")
+            counterCondition = 4;
+          }
+        }
       }
-
-      if (counterCondition == 4) {
-        console.log("counterCondition = 4. Musimy wykonać dla innej Macierzy ")
-        counterConditionFinish++;
-      } else {
-        console.log("Musimy wpisać : " + missingDigit)
-        xCor = xCorrdinate;
-        console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
-      }
-      console.log("counterConditionFinish: " + counterConditionFinish)
-      yCorrdinate = yCor;
+      xCor = xCorrdinate;
+      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
     }
 
 
-    // FUNCTIONS FOR THE FOURTH STEP
 
 
     function fourthStepFillDigitsInRightPlace() {
@@ -1073,49 +1094,17 @@ export default {
       /* Wykonać fourthStepHelpFindCondition */
       /* Jeśli (counterCondition == 1) to sprawdzamy, który warunek jest true i wstawiamy do yCor prawidłową współrzędną Y miejsca zerowego */
       /* Jeśli nie to wywołujemy tą samą funkcję tylko dla secondMissingDigit */
-
-
-
       fourthStepHelpFindCondition(missingDigit, 3);
-
       if (counterCondition == 1) {
-        if (arrayOfCondition[0]) {
-          yCor = yCorrdinate;
-        } else if (arrayOfCondition[1]) {
-          yCor = ySecondCor
-        } else {
-          yCor = yThirdCor
-        }
+        findTrueCondition(arrayOfCondition)
       } else {
         fourthStepHelpFindCondition(secondMissingDigit, 3);
         if (counterCondition == 1) {
-          if (arrayOfCondition[0]) {
-            missingDigit = secondMissingDigit;
-            yCor = yCorrdinate;
-          } else if (arrayOfCondition[1]) {
-            missingDigit = secondMissingDigit;
-            yCor = ySecondCor
-          } else {
-            missingDigit = secondMissingDigit;
-            yCor = yThirdCor
-          }
+          findTrueCondition(arrayOfCondition)
         } else {
           fourthStepHelpFindCondition(thirdMissingDigit, 3);
-          console.log(" Jesteśmy tutaj?")
-          console.log(" arrayOfInputs warunków?" + arrayOfCondition)
-          console.log(" Countercondition?" + counterCondition)
           if (counterCondition == 1) {
-            console.log(" Jesteśmy tutaj 2?")
-            if (arrayOfCondition[0]) {
-              missingDigit = thirdMissingDigit;
-              yCor = yCorrdinate;
-            } else if (arrayOfCondition[1]) {
-              missingDigit = thirdMissingDigit;
-              yCor = ySecondCor
-            } else {
-              missingDigit = thirdMissingDigit;
-              yCor = yThirdCor
-            }
+            findTrueCondition(arrayOfCondition)
           } else {
             console.log("Musimy wykonać dla innej macierzy")
             counterCondition = 4;
@@ -1128,7 +1117,10 @@ export default {
 
     function fourthStepHelpFindCondition(missingDigit, numberOfZeros) {
       counterCondition = 0;
-      if (numberOfZeros == 3) {
+      if (numberOfZeros == 2) {
+        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
+        arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
+      } else if (numberOfZeros == 3) {
         arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
         arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
         arrayOfCondition[2] = fourthStepHelp(missingDigit, yThirdCor);
@@ -1413,65 +1405,19 @@ export default {
       fourthStepHelpFindCondition(missingDigit, 4);
 
       if (counterCondition == 1) {
-        console.log("arrayOfInputs warunków: " + arrayOfCondition)
-        if (arrayOfCondition[0]) {
-          yCor = yCorrdinate;
-        } else if (arrayOfCondition[1]) {
-          yCor = ySecondCor
-        } else if (arrayOfCondition[2]) {
-          yCor = yThirdCor
-        } else {
-          yCor = yFourthCor;
-        }
+        findTrueCondition(arrayOfCondition)
       } else {
         fourthStepHelpFindCondition(secondMissingDigit, 4);
         if (counterCondition == 1) {
-          if (arrayOfCondition[0]) {
-            missingDigit = secondMissingDigit;
-            yCor = yCorrdinate;
-          } else if (arrayOfCondition[1]) {
-            missingDigit = secondMissingDigit;
-            yCor = ySecondCor
-          } else if (arrayOfCondition[2]) {
-            missingDigit = secondMissingDigit;
-            yCor = yThirdCor
-          } else {
-            missingDigit = secondMissingDigit;
-            yCor = yFourthCor;
-          }
+          findTrueCondition(arrayOfCondition)
         } else {
           fourthStepHelpFindCondition(thirdMissingDigit);
           if (counterCondition == 1) {
-            console.log(" Jesteśmy tutaj 2?")
-            if (arrayOfCondition[0]) {
-              missingDigit = thirdMissingDigit;
-              yCor = yCorrdinate;
-            } else if (arrayOfCondition[1]) {
-              missingDigit = thirdMissingDigit;
-              yCor = ySecondCor
-            } else if (arrayOfCondition[2]) {
-              missingDigit = thirdMissingDigit;
-              yCor = yThirdCor
-            } else {
-              missingDigit = thirdMissingDigit;
-              yCor = yFourthCor;
-            }
+            findTrueCondition(arrayOfCondition)
           } else {
             fourthStepHelpFindCondition(fourthMissingDigit);
             if (counterCondition == 1) {
-              if (arrayOfCondition[0]) {
-                missingDigit = fourthMissingDigit;
-                yCor = yCorrdinate;
-              } else if (arrayOfCondition[1]) {
-                missingDigit = fourthMissingDigit;
-                yCor = ySecondCor
-              } else if (arrayOfCondition[2]) {
-                missingDigit = fourthMissingDigit;
-                yCor = yThirdCor
-              } else {
-                missingDigit = fourthMissingDigit;
-                yCor = yFourthCor;
-              }
+              findTrueCondition(arrayOfCondition)
             } else {
               console.log("Musimy wykonać dla innej macierzy")
               counterCondition = 4;
@@ -1622,13 +1568,57 @@ export default {
     }
 
 
+    //PRÓBUJĘ STWORZYĆ NOWĄ FUNKCJĘ
+
+
+    /*     function fourthStepFillDigitsInRightPlaceAll(numberOfMissingDigit, numberOfZeroPlaces) {
+          console.log("***fourthStepFillDigitsInRightPlaceAll-***")
+          fourthStepHelpFindCondition(missingDigit, 4);
+          if (counterCondition == 1) {
+            console.log("arrayOfInputs warunków: " + arrayOfCondition)
+            findTrueCondition(arrayOfCondition)
+          } else {
+            fourthStepHelpFindCondition(secondMissingDigit, 4);
+            if (counterCondition == 1) {
+              findTrueCondition(arrayOfCondition)
+            } else {
+              fourthStepHelpFindCondition(thirdMissingDigit);
+              if (counterCondition == 1) {
+                findTrueCondition(arrayOfCondition)
+              } else {
+                fourthStepHelpFindCondition(fourthMissingDigit);
+                if (counterCondition == 1) {
+                  findTrueCondition(arrayOfCondition)
+                } else {
+                  console.log("Musimy wykonać dla innej macierzy")
+                  counterCondition = 4;
+                }
+              }
+            }
+    
+          }
+          xCor = xCorrdinate;
+          console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
+        } */
+
+    function findTrueCondition(arrayOfCondition) {
+      if (arrayOfCondition[0]) {
+        yCor = yCorrdinate;
+      } else if (arrayOfCondition[1]) {
+        yCor = ySecondCor
+      } else if (arrayOfCondition[2]) {
+        yCor = yThirdCor
+      } else {
+        yCor = yFourthCor;
+      }
+    }
 
     // FINALLY STEPS
 
     function firstStep() {
       fillBoard();
+      console.log("********** KROK NR 1 **********")
       if (findEmptyFieldsInMatrix() != -1) {
-        console.log("********** KROK NR 1 **********")
         firstStepFindEmptyField();
         findCorsToFillDigit();
         findMissingDigit();
@@ -1642,9 +1632,8 @@ export default {
     }
 
     function secondStep() {
-      console.log("****** KROK NR 2 *******")
       fillBoard();
-
+      console.log("****** KROK NR 2 *******")
       if (secondStepFindOneMissingDigit() != -1) {
         secondStepFindOneMissingID();
         secondStepFindCoor();
@@ -1659,15 +1648,12 @@ export default {
       }
     }
 
-
     function thirdStep() {
       console.log("******** KROK NR 3 ******")
       fillBoard();
       findMiniMatrixWithZeros(2);
-
       counterThirdStep = 0;
       conThirdStep = true;
-
       if (lengthOfarrayOfZero == 0) {
         console.log("WYKONAJ KROK NR 4")
       } else {
@@ -1713,17 +1699,11 @@ export default {
       }
     }
 
-
     function fourthStep() {
       console.log("******** KROK NR 4 ******")
       findMiniMatrixWithZeros(3);
-      findMissingDigits(3);
-      findCorsToFillDigitExtend(3);
-      fourthStepFillDigitsInRightPlace();
-
       counterThirdStep = 0;
       conThirdStep = true;
-
       if (lengthOfarrayOfZero == 0) {
         console.log("Nie ma macierzy z 3 wolnymi polami")
       } else {
@@ -1767,9 +1747,6 @@ export default {
         k = 0;
         conLoopThirdStep = true;
       }
-
-
-
     }
 
     function fifthStep() {
@@ -1858,9 +1835,9 @@ export default {
         flex-wrap: wrap;
         height: 16%;
         justify-content: center;
-        margin-top: 4vh;
-        width: 60%;
-        /*         border: dotted 2px red;  */
+        margin: 4vh 0;
+        width: auto;
+        /*   border: dotted 2px red; */
       }
 
 
@@ -1870,9 +1847,9 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        height: 50%;
-        width: 45%;
-        /*        border: solid 4px white; */
+        height: auto;
+        width: 52%;
+        /*       border: solid 4px white; */
       }
 
       .containerApp__game {
@@ -1883,8 +1860,8 @@ export default {
         flex-direction: column;
         height: 50%;
         justify-content: center;
-        width: 52%;
-        /*       border: dotted 3px yellow; */
+        width: 45%;
+        /*      border: dotted 3px yellow; */
 
         .containerApp__game--board {
           align-content: space-around;

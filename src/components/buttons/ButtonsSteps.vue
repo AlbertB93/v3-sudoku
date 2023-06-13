@@ -1,50 +1,56 @@
 <template>
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
-            <button class="singleButtonNew" @click="secondStepFindOneMissingDigit"> Step 1</button>
+            <button class="singleButtonNew"> Step 1</button>
             <button class="singleButtonNew2" @click="displayDescription(0)"> Description</button>
             <button class="singleButtonNew2" @click="firstStep"> Execute</button>
         </div>
-        <div class="stepDescription"> <button @click="findEmptyFieldsInMatrix">1</button> Find miniMatrix ( 2 x 3 ) or single row or single column, which has one "zero" <br>
+        <div class="stepDescription"> <button @click="findEmptyFieldsInMatrix">1</button> Find miniMatrix ( 2 x 3 ) or
+            single row or single column, which has one "zero" <br>
             <img src="../../../miniMatrix.png" alt="matrix" class="stepDescription__image">
             <br>
             <button @click="firstStepFindEmptyField">2</button> Find correct coordinates ( which has "0 in field") <br>
-            <button @click="findMissingDigit">3</button>  Find missing digit<br>
-             <button @click="fillMissingDigit"> 4</button> Fill missing digit
+            <button @click="findMissingDigit">3</button> Find missing digit<br>
+            <button @click="fillMissingDigit"> 4</button> Fill missing digit
         </div>
     </div>
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
-            <button class="singleButtonNew" @click="secondStepFindOneMissingDigit"> Step 2</button>
+            <button class="singleButtonNew"> Step 2</button>
             <button class="singleButtonNew2" @click="displayDescription(1)"> Description</button>
             <button class="singleButtonNew2" @click="secondStep"> Execute</button>
         </div>
-        <div class="stepDescription">1. Find digit, which occurs in the game n-1 times. <br>
-            2. Find miniMatrx, which doesn't have this digit. <br>
-            3. Find the right place ( corrdinates ) in this miniMatrix <br>
-            4. Fill the missing digit in the right place.
+        <div class="stepDescription">
+            <button @click="secondStepFindOneMissingDigit">1</button> Find digit, which occurs in the game n-1 times. <br>
+            <button @click="secondStepFindOneMissingID">2</button> Find miniMatrx, which doesn't have this digit. <br>
+            <button @click="secondStepFindCoor">3</button> Find the right place ( corrdinates ) in this miniMatrix <br>
+            <button @click="fillMissingDigit">4</button> Fill the missing digit in the right place.
         </div>
     </div>
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
-            <button class="singleButtonNew" @click="secondStepFindOneMissingDigit"> Step 3</button>
+            <button class="singleButtonNew"> Step 3</button>
             <button class="singleButtonNew2" @click="displayDescription(2)"> Description</button>
             <button class="singleButtonNew2" @click="thirdStep"> Execute</button>
         </div>
-        <div class="stepDescription"> 1. Find one miniMatrix / row / column, which has two zero places.<br>
-            2. Find two missing digits in it. <br>
-            3. Find coordinates for zero places. <br>
-            4. Try to fill one of two missing digit in the right place. <br>
-            5. If it's impossible and you found more than one miniMatrix / row / column, which has two zeros, try to another
+        <div class="stepDescription">
+            <button @click="findMiniMatrixWithZeros(2)">1</button> Find one miniMatrix / row / column, which has two zero
+            places.<br>
+            <button @click="findMissingDigits(2)">2</button> Find two missing digits in it. <br>
+            <button @click="findCorsToFillDigitExtend(2)">3</button> Find coordinates for zero places. <br>
+            <button @click="thirdStepFillDigitsInRightPlace">4</button> Try to fill one of two missing digit in the right
+            place. <br>
+            <button @click="fillMissingDigit">5</button> If it's impossible and you found more than one miniMatrix / row /
+            column, which has two zeros, try to another
             miniMatrix / row / column. <br>
             If you found only one you have to go to step 4.
         </div>
     </div>
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
-            <button class="singleButtonNew" @click="secondStepFindOneMissingDigit"> Step 4</button>
+            <button class="singleButtonNew"> Step 4</button>
             <button class="singleButtonNew2" @click="displayDescription(3)"> Description</button>
-            <button class="singleButtonNew2" @click="firstStep"> Execute</button>
+            <button class="singleButtonNew2" @click="fourthStep"> Execute</button>
         </div>
         <div class="stepDescription"> 1. Find one miniMatrix / row / column, which has three zero places.<br>
             2. Find three missing digits in it. <br>
@@ -57,9 +63,9 @@
     </div>
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
-            <button class="singleButtonNew" @click="secondStepFindOneMissingDigit"> Step 5</button>
+            <button class="singleButtonNew"> Step 5</button>
             <button class="singleButtonNew2" @click="displayDescription(4)"> Description</button>
-            <button class="singleButtonNew2" @click="firstStep"> Execute</button>
+            <button class="singleButtonNew2" @click="fifthStep"> Execute</button>
         </div>
         <div class="stepDescription"> 1. Find one miniMatrix / row / column, which has four zero places.<br>
             2. Find four missing digits in it. <br>
@@ -80,8 +86,13 @@
 export default {
     name: 'ButtonsSingleGame',
 
-    props: ['findEmptyFieldsInMatrix', 'findCorsToFillDigit', 'findMissingDigit', 'fillMissingDigit', 'fillBoard', 'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor', 'thirdStepFindCorsToFillDigit', 'thirdStepFillDigitsInRightPlace', 'finishGame', 'firstStep', 'secondStep', 'thirdStep', 'drawGame', 
-        'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStep', 'findMiniMatrixWithZeros', 'findMissingDigits', 'findCorsToFillDigitExtend', 'fourthStepFillDigitsInRightPlace5', 'fifthStep', 'firstStepFindEmptyField',
+    props: ['findEmptyFieldsInMatrix', 'firstStepFindEmptyField', 'findMissingDigit', 'fillMissingDigit',
+        'secondStepFindOneMissingDigit', 'secondStepFindOneMissingID', 'secondStepFindCoor',
+        'findMiniMatrixWithZeros', 'findMissingDigits', 'findCorsToFillDigitExtend', 'thirdStepFillDigitsInRightPlace',
+
+        'thirdStepFindCorsToFillDigit', 'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStepFillDigitsInRightPlace5', 'findCorsToFillDigit',
+
+        'firstStep', 'secondStep', 'thirdStep', 'fourthStep', 'fifthStep',
     ],
     setup() {
         function displayDescription(descriptionNumber) {
@@ -112,9 +123,9 @@ export default {
     flex-wrap: nowrap;
     justify-content: space-around;
     height: auto;
-    margin-top: 20px;
-    width: 80%;
-    /*     border: solid 2px red;  */
+    margin: 6px 0px;
+    width: 90%;
+    /*     border: solid 2px red; */
 
     .singleStep--box {
         display: flex;
