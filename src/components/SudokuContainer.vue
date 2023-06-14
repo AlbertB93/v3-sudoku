@@ -149,7 +149,7 @@ export default {
         case 'medium':
           {
             for (let i = 0; i < arrayOfInputs.length; i++) {
-              arrayOfInputs[i].value = gamesLevelMedium[numberOfGame][i];
+              arrayOfInputs[i].value = gamesLevelMedium[2][i];
             }
           }
 
@@ -1026,49 +1026,21 @@ export default {
 
     // FUNCTIONS FOR THE THIRD STEP
 
-    /*     function thirdStepFillDigitsInRightPlace() {
-          console.log("thirdStepFillDigitsInRightPlace")
-          console.log("Brakuje cyfr: " + missingDigit + " oraz " + secondMissingDigit);
-          console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
-          console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-          missingID = xCorrdinate;
-          counterCondition = 0;
-          counterConditionFinish = 0;
-          helpForCorrectCorrdinates(missingID)
-          if (counterCondition == 2) {
-            console.log("counterCondition = 2. Musimy wykonać dla drugiej cyfry ")
-            counterConditionFinish++;
-            missingDigit = secondMissingDigit;
-            helpForCorrectCorrdinates(missingID)
-          } else {
-            console.log("Musimy wpisać : " + missingDigit)
-            xCor = xCorrdinate;
-            console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
-          }
-          if (counterCondition == 4) {
-            console.log("counterCondition = 4. Musimy wykonać dla innej Macierzy ")
-            counterConditionFinish++;
-          } else {
-            console.log("Musimy wpisać : " + missingDigit)
-            xCor = xCorrdinate;
-            console.log("Prawidłowe współrzędne do wpisania: " + xCor + " oraz " + yCor)
-          }
-          console.log("counterConditionFinish: " + counterConditionFinish)
-          yCorrdinate = yCor;
-        }
-     */
 
-    // FUNCTIONS FOR THE FOURTH STEP
 
     function thirdStepFillDigitsInRightPlace() {
       console.log("***thirdStepFillDigitsInRightPlace---TEST---***")
+      counterCondition=0;
       /* Wykonać fourthStepHelpFindCondition */
       /* Jeśli (counterCondition == 1) to sprawdzamy, który warunek jest true i wstawiamy do yCor prawidłową współrzędną Y miejsca zerowego */
       /* Jeśli nie to wywołujemy tą samą funkcję tylko dla secondMissingDigit */
+            console.log("counterCondition przed" + counterCondition)
       fourthStepHelpFindCondition(missingDigit, 2);
+      console.log("counterCondition po" + counterCondition)
       if (counterCondition == 1) {
         findTrueCondition(arrayOfCondition)
       } else {
+        console.log(" a tU ?")
         fourthStepHelpFindCondition(secondMissingDigit, 2);
         if (counterCondition == 1) {
           findTrueCondition(arrayOfCondition)
@@ -1079,6 +1051,7 @@ export default {
           } else {
             console.log("Musimy wykonać dla innej macierzy")
             counterCondition = 4;
+            xCorrdinate=arrayOfZero[1]
           }
         }
       }
@@ -1086,7 +1059,7 @@ export default {
       console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
     }
 
-
+    // FUNCTIONS FOR THE FOURTH STEP
 
 
     function fourthStepFillDigitsInRightPlace() {
@@ -1116,16 +1089,22 @@ export default {
     }
 
     function fourthStepHelpFindCondition(missingDigit, numberOfZeros) {
-      counterCondition = 0;
+
+/*              console.log("Xcorrdinate: " + xCorrdinate)
+      console.log("Pierwsze wsp. Y: " + yCorrdinate) 
+      console.log("Druga wsp. Y: " + ySecondCor)
+            console.log("Missing Digit: " + missingDigit)  */
       if (numberOfZeros == 2) {
         arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
         arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
+/*         console.log("Warunek 1: " + arrayOfCondition[0])
+                console.log("Warunek 2: " + arrayOfCondition[1])
+                      console.log("counterCondition w fourth" + counterCondition) */
       } else if (numberOfZeros == 3) {
         arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
         arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
         arrayOfCondition[2] = fourthStepHelp(missingDigit, yThirdCor);
       } else if (numberOfZeros == 4) {
-        console.log("JESTEM TUTAJ?????")
         arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
         arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
         arrayOfCondition[2] = fourthStepHelp(missingDigit, yThirdCor);
@@ -1134,7 +1113,7 @@ export default {
         console.log("Something wrong in fourthStepHelpFindCondition")
       }
 
-      for (i = 0; i < 3; i++) {
+      for (i = 0; i < numberOfZeros; i++) {
         if (arrayOfCondition[i]) {
           counterCondition++;
         }
@@ -1385,7 +1364,6 @@ export default {
             }
           }
           break;
-
       }
 
       return warunekPom;

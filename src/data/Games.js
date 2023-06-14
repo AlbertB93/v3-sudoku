@@ -118,3 +118,6 @@ export const games6x6LevelHard = [
     0, 0, 3, 4, 0, 3, 0, 0, 0, 5, 1,
   ],
 ];
+
+
+
