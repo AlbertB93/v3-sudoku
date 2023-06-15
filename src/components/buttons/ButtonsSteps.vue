@@ -38,7 +38,8 @@
             places.<br>
             <button @click="findMissingDigits(2)">2</button> Find two missing digits in it. <br>
             <button @click="findCorsToFillDigitExtend(2)">3</button> Find coordinates for zero places. <br>
-            <button @click="thirdStepFillDigitsInRightPlace">4</button> Try to fill one of two missing digit in the right
+            <button @click="thirdStepFillDigitsInRightPlace(2, 2)">4</button> Try to fill one of two missing digit in the
+            right
             place. <br>
             <button @click="fillMissingDigit">5</button> If it's impossible and you found more than one miniMatrix / row /
             column, which has two zeros, try to another

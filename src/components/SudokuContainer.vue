@@ -61,12 +61,6 @@ export default {
     let counterCondition = 0;
     let counterConditionFinish = 0;
 
-
-
-
-
-
-
     let testArr = [1, 2, 3, 4, 5, 6]
     let copyArr = [];
     // for the second help
@@ -74,7 +68,7 @@ export default {
     // for the third help
     let ySecondCor = 9;
     let secondMissingDigit = 99;
-    let arrayOfZero = [];
+
     let lengthOfarrayOfZero = 0;
     // for the fourth / fifth help
     let thirdMissingDigit = 99;
@@ -120,6 +114,8 @@ export default {
     let miniMatrixs = [];
     let rows = [];
     let columns = [];
+    let arrayOfZero = [];
+    let arrayOfMissingDigits = [];
 
     // function, which removes style from board and fill "0" to all fields. // ALREADY CHECK
     function newGame() {
@@ -1023,94 +1019,210 @@ export default {
     /*******************************************************************************************************************************/
 
 
-
-    // FUNCTIONS FOR THE THIRD STEP
-
-
-
-    function thirdStepFillDigitsInRightPlace() {
-      console.log("***thirdStepFillDigitsInRightPlace---TEST---***")
-      counterCondition=0;
-      /* Wykonać fourthStepHelpFindCondition */
-      /* Jeśli (counterCondition == 1) to sprawdzamy, który warunek jest true i wstawiamy do yCor prawidłową współrzędną Y miejsca zerowego */
-      /* Jeśli nie to wywołujemy tą samą funkcję tylko dla secondMissingDigit */
-            console.log("counterCondition przed" + counterCondition)
-      fourthStepHelpFindCondition(missingDigit, 2);
-      console.log("counterCondition po" + counterCondition)
-      if (counterCondition == 1) {
-        findTrueCondition(arrayOfCondition)
-      } else {
-        console.log(" a tU ?")
-        fourthStepHelpFindCondition(secondMissingDigit, 2);
-        if (counterCondition == 1) {
-          findTrueCondition(arrayOfCondition)
+    // FUNCTIONS FOR THE THREE & FOUR STEP & FIFTH STEP
+    function findMiniMatrixWithZeros(numberOfZeros) {
+      console.log("findMiniMatrixWithZeros");
+      countOfZero = 0;
+      arrayOfZero = [];
+      k = 0;
+      for (i = 0; i < miniMatrixs.length; i++) {
+        for (j = 0; j < 6; j++) {
+          if (miniMatrixs[i][j] == 0) {
+            countOfZero++;
+          }
+        }
+        if (countOfZero == numberOfZeros) {
+          arrayOfZero[k] = i
+          k++;
+          countOfZero = 0;
         } else {
-          fourthStepHelpFindCondition(thirdMissingDigit, 2);
-          if (counterCondition == 1) {
-            findTrueCondition(arrayOfCondition)
+          countOfZero = 0;
+        }
+      }
+
+      lengthOfarrayOfZero = arrayOfZero.length;
+      console.log("arrayOfInputs z ID macierzy, w których są " + numberOfZeros + " msc. zerowe: " + arrayOfZero)
+      console.log("Length arrayOfZero: " + lengthOfarrayOfZero)
+      countOfZero = 0;
+      xCorrdinate = arrayOfZero[0];
+    }
+
+
+    function findMissingDigits(numberOfMissingDigit) {
+      console.log("findMissingDigits")
+      arrayOfMissingDigits = [];
+
+
+      console.log("arrayOfMissingDigits LENGTH po wyzerowaniu" + arrayOfMissingDigits.length)
+      if (numberOfMissingDigit == 2) {
+        /*         missingDigit = 99;
+                secondMissingDigit = 99; */
+        arrayOfMissingDigits = [99, 99];
+      } else if (numberOfMissingDigit == 3) {
+        /*         missingDigit = 99;
+                secondMissingDigit = 99;
+                thirdMissingDigit = 99; */
+        arrayOfMissingDigits = [99, 99, 99];
+      } else if (numberOfMissingDigit == 4) {
+        /*         missingDigit = 99;
+                secondMissingDigit = 99;
+                thirdMissingDigit = 99;
+                fourthMissingDigit = 99; */
+        arrayOfMissingDigits = [99, 99, 99, 99];
+      } else {
+        alert("Błąd w findMissingDigit")
+      }
+      console.log("macierz szukana: " + miniMatrixs[xCorrdinate])
+      console.log("arrayOfMissingDigits LENGTH po wyzerowaniu" + arrayOfMissingDigits.length)
+
+      for (i = 1; i < 7; i++) {
+        if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
+          if (arrayOfMissingDigits[0] == 99) {
+            arrayOfMissingDigits[0] = i;
+          } else if (arrayOfMissingDigits[1] == 99) {
+            arrayOfMissingDigits[1] = i;
+          } else if (arrayOfMissingDigits[2] == 99) {
+            arrayOfMissingDigits[2] = i;
           } else {
-            console.log("Musimy wykonać dla innej macierzy")
-            counterCondition = 4;
-            xCorrdinate=arrayOfZero[1]
+            arrayOfMissingDigits[3] = i;
           }
         }
       }
-      xCor = xCorrdinate;
-      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
-    }
 
-    // FUNCTIONS FOR THE FOURTH STEP
+      /* 
+            for (i = 1; i < 7; i++) {
+              if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
+                if (missingDigit == 99) {
+                  missingDigit = i;
+                  arrayOfMissingDigits[0] = i;
+                } else if (secondMissingDigit == 99) {
+                  secondMissingDigit = i;
+                  arrayOfMissingDigits[1] = i;
+                } else if (thirdMissingDigit == 99) {
+                  thirdMissingDigit = i;
+                  arrayOfMissingDigits[2] = i;
+                } else {
+                  fourthMissingDigit = i;
+                  arrayOfMissingDigits[3] = i;
+                }
+              }
+            }
+      
+       */
+      /*       if (missingDigit != 99) {
+              console.log("Brakuje cyfry: " + missingDigit);
+            }
+            if (secondMissingDigit != 99) {
+              console.log("Brakuje cyfry: " + secondMissingDigit);
+            }
+            if (thirdMissingDigit != 99) {
+              console.log("Brakuje cyfry: " + thirdMissingDigit);
+            }
+            if (fourthMissingDigit != 99) {
+              console.log("Brakuje cyfry: " + fourthMissingDigit);
+            }
+       */
 
-
-    function fourthStepFillDigitsInRightPlace() {
-      console.log("***fourthStepFillDigitsInRightPlace-2-***")
-      /* Wykonać fourthStepHelpFindCondition */
-      /* Jeśli (counterCondition == 1) to sprawdzamy, który warunek jest true i wstawiamy do yCor prawidłową współrzędną Y miejsca zerowego */
-      /* Jeśli nie to wywołujemy tą samą funkcję tylko dla secondMissingDigit */
-      fourthStepHelpFindCondition(missingDigit, 3);
-      if (counterCondition == 1) {
-        findTrueCondition(arrayOfCondition)
-      } else {
-        fourthStepHelpFindCondition(secondMissingDigit, 3);
-        if (counterCondition == 1) {
-          findTrueCondition(arrayOfCondition)
-        } else {
-          fourthStepHelpFindCondition(thirdMissingDigit, 3);
-          if (counterCondition == 1) {
-            findTrueCondition(arrayOfCondition)
-          } else {
-            console.log("Musimy wykonać dla innej macierzy")
-            counterCondition = 4;
-          }
-        }
+      if (arrayOfMissingDigits[0] != 99) {
+        console.log("Brakuje cyfry: " + arrayOfMissingDigits[0]);
       }
-      xCor = xCorrdinate;
-      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
+      if (arrayOfMissingDigits[1] != 99) {
+        console.log("Brakuje cyfry: " + arrayOfMissingDigits[1]);
+      }
+      if (arrayOfMissingDigits[2] != 99) {
+        console.log("Brakuje cyfry: " + arrayOfMissingDigits[2]);
+      }
+      if (arrayOfMissingDigits[3] != 99) {
+        console.log("Brakuje cyfry: " + arrayOfMissingDigits[3]);
+      }
+
+      console.log("arrayOfMissingDigits LENGTH" + arrayOfMissingDigits.length)
+
     }
 
-    function fourthStepHelpFindCondition(missingDigit, numberOfZeros) {
+    function findCorsToFillDigitExtend(a) {
 
-/*              console.log("Xcorrdinate: " + xCorrdinate)
-      console.log("Pierwsze wsp. Y: " + yCorrdinate) 
-      console.log("Druga wsp. Y: " + ySecondCor)
-            console.log("Missing Digit: " + missingDigit)  */
+      // sprawdzenie jakiej cyfry brakuje w macierzy
+      console.log("thirdStepFindCorsToFillDigitExtend");
+
+      yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
+      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
+
+      if (a == 2) {
+        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+          copyArr[i] = miniMatrixs[xCorrdinate][i];
+        }
+        copyArr[yCorrdinate] = 9;
+        ySecondCor = copyArr.indexOf('0');
+        console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+      } else if (a == 3) {
+
+        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+          copyArr[i] = miniMatrixs[xCorrdinate][i];
+        }
+        copyArr[yCorrdinate] = 9;
+        ySecondCor = copyArr.indexOf('0');
+        console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+
+        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+          copyArr[i] = miniMatrixs[xCorrdinate][i];
+        }
+        copyArr[yCorrdinate] = 9;
+        copyArr[ySecondCor] = 9;
+        yThirdCor = copyArr.indexOf('0');
+        console.log("współrzędne 3 punktu: " + xCorrdinate + " i " + yThirdCor);
+      } else if (a == 4) {
+
+        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+          copyArr[i] = miniMatrixs[xCorrdinate][i];
+        }
+        copyArr[yCorrdinate] = 9;
+        ySecondCor = copyArr.indexOf('0');
+        console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
+
+        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+          copyArr[i] = miniMatrixs[xCorrdinate][i];
+        }
+        copyArr[yCorrdinate] = 9;
+        copyArr[ySecondCor] = 9;
+        yThirdCor = copyArr.indexOf('0');
+        console.log("współrzędne 3 punktu: " + xCorrdinate + " i " + yThirdCor);
+
+        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
+          copyArr[i] = miniMatrixs[xCorrdinate][i];
+        }
+        copyArr[yCorrdinate] = 9;
+        copyArr[ySecondCor] = 9;
+        copyArr[yThirdCor] = 9;
+        yFourthCor = copyArr.indexOf('0');
+        console.log("współrzędne 4 punktu: " + xCorrdinate + " i " + yFourthCor);
+      }
+    }
+
+
+    function findRightPlaceToFill(missingDigit, numberOfZeros) {
+      /*              console.log("Xcorrdinate: " + xCorrdinate)
+            console.log("Pierwsze wsp. Y: " + yCorrdinate) 
+            console.log("Druga wsp. Y: " + ySecondCor)
+                  console.log("Missing Digit: " + missingDigit)  */
+      console.log("TUTAJ")
       if (numberOfZeros == 2) {
-        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
-        arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
-/*         console.log("Warunek 1: " + arrayOfCondition[0])
-                console.log("Warunek 2: " + arrayOfCondition[1])
-                      console.log("counterCondition w fourth" + counterCondition) */
+        arrayOfCondition[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
+        arrayOfCondition[1] = checkMissingDigitInNearbyMatrix(missingDigit, ySecondCor);
+        /*         console.log("Warunek 1: " + arrayOfCondition[0])
+                        console.log("Warunek 2: " + arrayOfCondition[1])
+                              console.log("counterCondition w fourth" + counterCondition) */
       } else if (numberOfZeros == 3) {
-        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
-        arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
-        arrayOfCondition[2] = fourthStepHelp(missingDigit, yThirdCor);
+        arrayOfCondition[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
+        arrayOfCondition[1] = checkMissingDigitInNearbyMatrix(missingDigit, ySecondCor);
+        arrayOfCondition[2] = checkMissingDigitInNearbyMatrix(missingDigit, yThirdCor);
       } else if (numberOfZeros == 4) {
-        arrayOfCondition[0] = fourthStepHelp(missingDigit, yCorrdinate);
-        arrayOfCondition[1] = fourthStepHelp(missingDigit, ySecondCor);
-        arrayOfCondition[2] = fourthStepHelp(missingDigit, yThirdCor);
-        arrayOfCondition[3] = fourthStepHelp(missingDigit, yFourthCor);
+        arrayOfCondition[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
+        arrayOfCondition[1] = checkMissingDigitInNearbyMatrix(missingDigit, ySecondCor);
+        arrayOfCondition[2] = checkMissingDigitInNearbyMatrix(missingDigit, yThirdCor);
+        arrayOfCondition[3] = checkMissingDigitInNearbyMatrix(missingDigit, yFourthCor);
       } else {
-        console.log("Something wrong in fourthStepHelpFindCondition")
+        console.log("Something wrong in findRightPlaceToFill")
       }
 
       for (i = 0; i < numberOfZeros; i++) {
@@ -1120,7 +1232,8 @@ export default {
       }
     }
 
-    function fourthStepHelp(missingDigit, yCorrdinate) {
+    function checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate) {
+      console.log("checkMissingDigitInNearbyMatrix")
       warunekPom = true;
       switch (xCorrdinate) {
         case 0:
@@ -1137,12 +1250,6 @@ export default {
               }
             }
           }
-          /* else if (yCorrdinate == 1) {
-            if ((miniMatrixs[6].some(item => item == missingDigit)) || (miniMatrixs[13].some(item => item == missingDigit))) {
-              warunekPom = false;
-            }
-          }
- */
           else if (yCorrdinate == 2) {
             for (i = 0; i < 6; i++) {
               if (miniMatrixs[6][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
@@ -1369,216 +1476,6 @@ export default {
       return warunekPom;
     }
 
-
-
-    //FUNCTIONS FOR THE FIFTH STEP
-
-
-    function fourthStepFillDigitsInRightPlace5() {
-      console.log("***fourthStepFillDigitsInRightPlace5555-***")
-      /* Wykonać fourthStepHelpFindCondition */
-      /* Jeśli (counterCondition == 1) to sprawdzamy, który warunek jest true i wstawiamy do yCor prawidłową współrzędną Y miejsca zerowego */
-      /* Jeśli nie to wywołujemy tą samą funkcję tylko dla secondMissingDigit */
-
-      fourthStepHelpFindCondition(missingDigit, 4);
-
-      if (counterCondition == 1) {
-        findTrueCondition(arrayOfCondition)
-      } else {
-        fourthStepHelpFindCondition(secondMissingDigit, 4);
-        if (counterCondition == 1) {
-          findTrueCondition(arrayOfCondition)
-        } else {
-          fourthStepHelpFindCondition(thirdMissingDigit);
-          if (counterCondition == 1) {
-            findTrueCondition(arrayOfCondition)
-          } else {
-            fourthStepHelpFindCondition(fourthMissingDigit);
-            if (counterCondition == 1) {
-              findTrueCondition(arrayOfCondition)
-            } else {
-              console.log("Musimy wykonać dla innej macierzy")
-              counterCondition = 4;
-            }
-          }
-        }
-
-      }
-      xCor = xCorrdinate;
-      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
-    }
-
-
-    // FUNCTIONS FOR THE THREE & FOUR STEP
-
-    function findMiniMatrixWithZeros(numberOfZeros) {
-      console.log("findMiniMatrixWithZeros");
-      countOfZero = 0;
-      arrayOfZero = [];
-      k = 0;
-      for (i = 0; i < miniMatrixs.length; i++) {
-        for (j = 0; j < 6; j++) {
-          if (miniMatrixs[i][j] == 0) {
-            countOfZero++;
-          }
-        }
-        if (countOfZero == numberOfZeros) {
-          arrayOfZero[k] = i
-          k++;
-          countOfZero = 0;
-        } else {
-          countOfZero = 0;
-        }
-      }
-
-      lengthOfarrayOfZero = arrayOfZero.length;
-      console.log("arrayOfInputs z ID macierzy, w których są " + numberOfZeros + " msc. zerowe: " + arrayOfZero)
-      console.log("Length arrayOfZero: " + lengthOfarrayOfZero)
-      countOfZero = 0;
-      xCorrdinate = arrayOfZero[0];
-    }
-
-    function findMissingDigits(numberOfMissingDigit) {
-      console.log("findMissingDigits")
-      if (numberOfMissingDigit == 2) {
-        missingDigit = 99;
-        secondMissingDigit = 99;
-      } else if (numberOfMissingDigit == 3) {
-        missingDigit = 99;
-        secondMissingDigit = 99;
-        thirdMissingDigit = 99;
-      } else if (numberOfMissingDigit == 4) {
-        missingDigit = 99;
-        secondMissingDigit = 99;
-        thirdMissingDigit = 99;
-        fourthMissingDigit = 99;
-      } else {
-        alert("Błąd w findMissingDigit")
-      }
-      console.log("macierz szukana: " + miniMatrixs[xCorrdinate])
-
-      for (i = 1; i < 7; i++) {
-        if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
-          if (missingDigit == 99) {
-            missingDigit = i;
-          } else if (secondMissingDigit == 99) {
-            secondMissingDigit = i;
-          } else if (thirdMissingDigit == 99) {
-            thirdMissingDigit = i;
-          } else {
-            fourthMissingDigit = i;
-          }
-        }
-      }
-      if (missingDigit != 99) {
-        console.log("Brakuje cyfry: " + missingDigit);
-      }
-      if (secondMissingDigit != 99) {
-        console.log("Brakuje cyfry: " + secondMissingDigit);
-      }
-      if (thirdMissingDigit != 99) {
-        console.log("Brakuje cyfry: " + thirdMissingDigit);
-      }
-      if (fourthMissingDigit != 99) {
-        console.log("Brakuje cyfry: " + fourthMissingDigit);
-      }
-
-    }
-
-    function findCorsToFillDigitExtend(a) {
-
-      // sprawdzenie jakiej cyfry brakuje w macierzy
-      console.log("thirdStepFindCorsToFillDigitExtend");
-
-      yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
-      console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
-
-      if (a == 2) {
-        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-          copyArr[i] = miniMatrixs[xCorrdinate][i];
-        }
-        copyArr[yCorrdinate] = 9;
-        ySecondCor = copyArr.indexOf('0');
-        console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-      } else if (a == 3) {
-
-        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-          copyArr[i] = miniMatrixs[xCorrdinate][i];
-        }
-        copyArr[yCorrdinate] = 9;
-        ySecondCor = copyArr.indexOf('0');
-        console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-
-        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-          copyArr[i] = miniMatrixs[xCorrdinate][i];
-        }
-        copyArr[yCorrdinate] = 9;
-        copyArr[ySecondCor] = 9;
-        yThirdCor = copyArr.indexOf('0');
-        console.log("współrzędne 3 punktu: " + xCorrdinate + " i " + yThirdCor);
-      } else if (a == 4) {
-
-        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-          copyArr[i] = miniMatrixs[xCorrdinate][i];
-        }
-        copyArr[yCorrdinate] = 9;
-        ySecondCor = copyArr.indexOf('0');
-        console.log("współrzędne 2 punktu: " + xCorrdinate + " i " + ySecondCor);
-
-        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-          copyArr[i] = miniMatrixs[xCorrdinate][i];
-        }
-        copyArr[yCorrdinate] = 9;
-        copyArr[ySecondCor] = 9;
-        yThirdCor = copyArr.indexOf('0');
-        console.log("współrzędne 3 punktu: " + xCorrdinate + " i " + yThirdCor);
-
-        for (i = 0; i < miniMatrixs[xCorrdinate].length; i++) {
-          copyArr[i] = miniMatrixs[xCorrdinate][i];
-        }
-        copyArr[yCorrdinate] = 9;
-        copyArr[ySecondCor] = 9;
-        copyArr[yThirdCor] = 9;
-        yFourthCor = copyArr.indexOf('0');
-        console.log("współrzędne 4 punktu: " + xCorrdinate + " i " + yFourthCor);
-      }
-
-    }
-
-
-    //PRÓBUJĘ STWORZYĆ NOWĄ FUNKCJĘ
-
-
-    /*     function fourthStepFillDigitsInRightPlaceAll(numberOfMissingDigit, numberOfZeroPlaces) {
-          console.log("***fourthStepFillDigitsInRightPlaceAll-***")
-          fourthStepHelpFindCondition(missingDigit, 4);
-          if (counterCondition == 1) {
-            console.log("arrayOfInputs warunków: " + arrayOfCondition)
-            findTrueCondition(arrayOfCondition)
-          } else {
-            fourthStepHelpFindCondition(secondMissingDigit, 4);
-            if (counterCondition == 1) {
-              findTrueCondition(arrayOfCondition)
-            } else {
-              fourthStepHelpFindCondition(thirdMissingDigit);
-              if (counterCondition == 1) {
-                findTrueCondition(arrayOfCondition)
-              } else {
-                fourthStepHelpFindCondition(fourthMissingDigit);
-                if (counterCondition == 1) {
-                  findTrueCondition(arrayOfCondition)
-                } else {
-                  console.log("Musimy wykonać dla innej macierzy")
-                  counterCondition = 4;
-                }
-              }
-            }
-    
-          }
-          xCor = xCorrdinate;
-          console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
-        } */
-
     function findTrueCondition(arrayOfCondition) {
       if (arrayOfCondition[0]) {
         yCor = yCorrdinate;
@@ -1590,6 +1487,138 @@ export default {
         yCor = yFourthCor;
       }
     }
+
+
+    // FUNCTIONS FOR THE THIRD STEP
+    /*     function thirdStepFillDigitsInRightPlace() {
+          console.log("***thirdStepFillDigitsInRightPlace---TEST---***")
+          counterCondition = 0;
+          console.log("counterCondition przed" + counterCondition)
+          findRightPlaceToFill(missingDigit, 2);
+          console.log("counterCondition po" + counterCondition)
+          if (counterCondition == 1) {
+            findTrueCondition(arrayOfCondition)
+          }
+          else {
+            console.log(" a tU ?")
+            findRightPlaceToFill(secondMissingDigit, 2);
+            if (counterCondition == 1) {
+              findTrueCondition(arrayOfCondition)
+            }
+            else {
+              console.log("Musimy wykonać dla innej macierzy")
+              counterCondition = 4;
+              xCorrdinate = arrayOfZero[1]
+            }
+          }
+          xCor = xCorrdinate;
+          console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
+        }
+     */
+    // FUNCTIONS FOR THE FOURTH STEP
+    function fourthStepFillDigitsInRightPlace() {
+      console.log("***fourthStepFillDigitsInRightPlace-2-***")
+      /* Wykonać findRightPlaceToFill */
+      /* Jeśli (counterCondition == 1) to sprawdzamy, który warunek jest true i wstawiamy do yCor prawidłową współrzędną Y miejsca zerowego */
+      /* Jeśli nie to wywołujemy tą samą funkcję tylko dla secondMissingDigit */
+      findRightPlaceToFill(missingDigit, 3);
+      if (counterCondition == 1) {
+        findTrueCondition(arrayOfCondition)
+      } else {
+        findRightPlaceToFill(secondMissingDigit, 3);
+        if (counterCondition == 1) {
+          findTrueCondition(arrayOfCondition)
+        } else {
+          findRightPlaceToFill(thirdMissingDigit, 3);
+          if (counterCondition == 1) {
+            findTrueCondition(arrayOfCondition)
+          } else {
+            console.log("Musimy wykonać dla innej macierzy")
+            counterCondition = 4;
+          }
+        }
+      }
+      xCor = xCorrdinate;
+      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
+    }
+
+    //FUNCTIONS FOR THE FIFTH STEP
+    function fourthStepFillDigitsInRightPlace5() {
+      console.log("***fourthStepFillDigitsInRightPlace5555-***")
+      /* Wykonać findRightPlaceToFill */
+      /* Jeśli (counterCondition == 1) to sprawdzamy, który warunek jest true i wstawiamy do yCor prawidłową współrzędną Y miejsca zerowego */
+      /* Jeśli nie to wywołujemy tą samą funkcję tylko dla secondMissingDigit */
+      findRightPlaceToFill(missingDigit, 4);
+      if (counterCondition == 1) {
+        findTrueCondition(arrayOfCondition)
+      } else {
+        findRightPlaceToFill(secondMissingDigit, 4);
+        if (counterCondition == 1) {
+          findTrueCondition(arrayOfCondition)
+        } else {
+          findRightPlaceToFill(thirdMissingDigit);
+          if (counterCondition == 1) {
+            findTrueCondition(arrayOfCondition)
+          } else {
+            findRightPlaceToFill(fourthMissingDigit);
+            if (counterCondition == 1) {
+              findTrueCondition(arrayOfCondition)
+            } else {
+              console.log("Musimy wykonać dla innej macierzy")
+              counterCondition = 4;
+            }
+          }
+        }
+      }
+      xCor = xCorrdinate;
+      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
+    }
+
+    //PRÓBUJĘ STWORZYĆ NOWĄ FUNKCJĘ
+
+
+    function thirdStepFillDigitsInRightPlace(numberOfMissingDigits, numberOfZeroPlaces) {
+      console.log("TESTUJEMY thirdStepFillDigitsInRightPlace")
+      let helpCounter = 0;
+      let digit = arrayOfMissingDigits[helpCounter];
+
+      counterCondition = 0;
+
+
+
+      while (numberOfMissingDigits > 0) {
+        findRightPlaceToFill(digit, numberOfZeroPlaces);
+        if (counterCondition == 1) {
+          console.log("counterCondition == 1")
+          findTrueCondition(arrayOfCondition)
+          break;
+        } else {
+          /*           console.log("numberOfMissingDigits" + numberOfMissingDigits)
+                    console.log("helpCounter" + helpCounter)
+                    console.log("arrayOfMissingDigits.length" + arrayOfMissingDigits.length) */
+
+          if (helpCounter < arrayOfMissingDigits.length) {
+            helpCounter++;
+            digit = arrayOfMissingDigits[helpCounter];
+          }
+
+          numberOfMissingDigits--;
+          console.log("numberOfMissingDigits" + numberOfMissingDigits)
+          /*           console.log("findRightPlaceToFill wartość " + digit + " " + numberOfZeroPlaces)
+                    console.log("Digit - po" + digit)
+                    console.log("numberOfMissingDigits - po" + numberOfMissingDigits)
+                    console.log("helpCounter - po " + helpCounter) */
+        }
+      }
+
+
+
+      xCor = xCorrdinate;
+      console.log("counterCondition na końcu" + counterCondition)
+      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
+    }
+
+
 
     // FINALLY STEPS
 
@@ -1633,13 +1662,14 @@ export default {
       counterThirdStep = 0;
       conThirdStep = true;
       if (lengthOfarrayOfZero == 0) {
-        console.log("WYKONAJ KROK NR 4")
+        console.log("WYKONAJ KROK NR 4 brak macierzy z 2 msc 0")
       } else {
         while (conLoopThirdStep) {
           if (counterThirdStep <= lengthOfarrayOfZero) {
             findMissingDigits(2);
             findCorsToFillDigitExtend(2);
-            thirdStepFillDigitsInRightPlace();
+            thirdStepFillDigitsInRightPlace(2, 2);
+            console.log("counterCondition STEP3" + counterCondition)
             while (counterCondition == 4 && counterThirdStep < lengthOfarrayOfZero - 1) {
               console.log("*******JESTEŚMY TUTAJ counterCondition == 4 **********")
               counterThirdStep++;
@@ -1648,7 +1678,7 @@ export default {
               console.log(" LENGTH OF ARRAY == " + lengthOfarrayOfZero)
               findMissingDigits(2);
               findCorsToFillDigitExtend(2);
-              thirdStepFillDigitsInRightPlace();
+              thirdStepFillDigitsInRightPlace(2, 2);
             }
             if (counterCondition == 1 || counterConditionFinish == 1) {
               console.log("*******counterCondition jest różny od 4 *********")
