@@ -88,6 +88,7 @@ export default {
     let j = 0;
     let counterStepstoFinish = 0;
     let countOfZero = 0;
+    let localCounterCondition = 0;
 
     // to draw Game
     const gamesLevelEasy = games6x6LevelEasy;
@@ -1205,6 +1206,7 @@ export default {
             console.log("Pierwsze wsp. Y: " + yCorrdinate) 
             console.log("Druga wsp. Y: " + ySecondCor)
                   console.log("Missing Digit: " + missingDigit)  */
+                  localCounterCondition = 0;
       console.log("TUTAJ")
       if (numberOfZeros == 2) {
         arrayOfCondition[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
@@ -1228,6 +1230,7 @@ export default {
       for (i = 0; i < numberOfZeros; i++) {
         if (arrayOfCondition[i]) {
           counterCondition++;
+          localCounterCondition++;
         }
       }
     }
@@ -1581,14 +1584,14 @@ export default {
       console.log("TESTUJEMY thirdStepFillDigitsInRightPlace")
       let helpCounter = 0;
       let digit = arrayOfMissingDigits[helpCounter];
-
       counterCondition = 0;
-
 
 
       while (numberOfMissingDigits > 0) {
         findRightPlaceToFill(digit, numberOfZeroPlaces);
-        if (counterCondition == 1) {
+        console.log("Ile localCounterCondition  po funkcji? " + localCounterCondition)
+
+        if (localCounterCondition == 1) {
           console.log("counterCondition == 1")
           findTrueCondition(arrayOfCondition)
           break;
@@ -1601,9 +1604,9 @@ export default {
             helpCounter++;
             digit = arrayOfMissingDigits[helpCounter];
           }
-
           numberOfMissingDigits--;
           console.log("numberOfMissingDigits" + numberOfMissingDigits)
+          
           /*           console.log("findRightPlaceToFill wartość " + digit + " " + numberOfZeroPlaces)
                     console.log("Digit - po" + digit)
                     console.log("numberOfMissingDigits - po" + numberOfMissingDigits)
@@ -1615,7 +1618,7 @@ export default {
 
       xCor = xCorrdinate;
       console.log("counterCondition na końcu" + counterCondition)
-      console.log("Musimy wpisać cyfrę: " + missingDigit + " , we współrzędne: " + xCor + " i " + yCor)
+      console.log("Musimy wpisać cyfrę: " + arrayOfMissingDigits[helpCounter] + " , we współrzędne: " + xCor + " i " + yCor)
     }
 
 
