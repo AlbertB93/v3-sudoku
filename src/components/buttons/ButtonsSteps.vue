@@ -31,7 +31,7 @@
         <div class="singleStep--box">
             <button class="singleButtonNew"> Step 3</button>
             <button class="singleButtonNew2" @click="displayDescription(2)"> Description</button>
-            <button class="singleButtonNew2" @click="thirdStep"> Execute</button>
+            <button class="singleButtonNew2" @click="anotherStep(2)"> Execute</button>
         </div>
         <div class="stepDescription">
             <button @click="findMiniMatrixWithZeros(2)">1</button> Find one miniMatrix / row / column, which has two zero
@@ -51,7 +51,7 @@
         <div class="singleStep--box">
             <button class="singleButtonNew"> Step 4</button>
             <button class="singleButtonNew2" @click="displayDescription(3)"> Description</button>
-            <button class="singleButtonNew2" @click="fourthStep"> Execute</button>
+            <button class="singleButtonNew2" @click="anotherStep(3)"> Execute</button>
         </div>
         <div class="stepDescription"> 1. Find one miniMatrix / row / column, which has three zero places.<br>
             2. Find three missing digits in it. <br>
@@ -66,7 +66,7 @@
         <div class="singleStep--box">
             <button class="singleButtonNew"> Step 5</button>
             <button class="singleButtonNew2" @click="displayDescription(4)"> Description</button>
-            <button class="singleButtonNew2" @click="fifthStep"> Execute</button>
+            <button class="singleButtonNew2" @click="anotherStep(4)"> Execute</button>
         </div>
         <div class="stepDescription"> 1. Find one miniMatrix / row / column, which has four zero places.<br>
             2. Find four missing digits in it. <br>
@@ -93,7 +93,7 @@ export default {
 
         'thirdStepFindCorsToFillDigit', 'fourthStepFindCorsToFillDigit', 'fourthStepFillDigitsInRightPlace', 'fourthStepFillDigitsInRightPlace5', 'findCorsToFillDigit',
 
-        'firstStep', 'secondStep', 'thirdStep', 'fourthStep', 'fifthStep',
+        'firstStep', 'secondStep', 'anotherStep',
     ],
     setup() {
         function displayDescription(descriptionNumber) {
