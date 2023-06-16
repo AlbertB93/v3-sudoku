@@ -8,6 +8,36 @@
     <button class="button__draw" @click="drawGame('easy')">
         EASY
     </button>
+    <button class="button__draw" @click="drawGame('medium', 0)">
+        1
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 1)">
+        2
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 2)">
+        3
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 3)">
+        4
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 4)">
+        5
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 5)">
+        6
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 6)">
+        7
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 7)">
+        8
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 8)">
+        9
+    </button>
+    <button class="button__draw" @click="drawGame('medium', 9)">
+        10
+    </button>
     <button class="button__draw" @click="drawGame('medium')">
         MEDIUM
     </button>
@@ -22,7 +52,7 @@
 <script>
 export default {
     name: 'ButtonsGame',
-    props: [ 'drawGame', 'newGame','finishGame',],
+    props: ['drawGame', 'newGame', 'finishGame',],
 };
 
 </script>

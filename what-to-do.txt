@@ -1,11 +1,7 @@
-1. Po kliknięciu new game musimy w planszy zrobić wszystkie białe pola.
+1. 
 Może żeby wrócić do gry o id tej, która była ostatnio.
 Coś w stylu od nowa
-
-
-
 4. Przycisk zatwierdź ruch wtedy zatwierdza się coś co wpisał użytkownik, zmienia się kolor ?
-
 
 
 * Zrobić coś takiego dla podkroków jak:
@@ -15,4 +11,5 @@ Np. dla pierwszego podkroku, znajdź macierz, która ma jedno zero to ją obramo
 - Podzielić kroki na komponenty? Spróbować na razie zrobić to z pierwszym krokiem. 
 - w głównym komponencie zostawić główne funckję jak losowanie , nowa gra, fillBoard itp.
 
-w funkcji findTrueCondition dodać argument z długością sprawdzanej tablicy
+* PRZYCISKI Z NUMERAMI GRY, ZAZNACZONE ŻE SIĘ ROZWIĄZAŁO ?
+* przycisk do tłumaczenia z ang na pol

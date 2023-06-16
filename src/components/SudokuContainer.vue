@@ -67,9 +67,6 @@ export default {
     let numberOfGame = 0;
 
     //conditions
-    let conFirstStep = true;
-    let conSecondStep = true;
-    let conThirdStep = true;
     let conFinishGame = false;
     let endCondition = true;
     let conIsAvaiable = true;
@@ -85,6 +82,7 @@ export default {
     let yFourthCor = 9;
     let yCorrdinate = 0;
     let xCorrdinate = 0;
+    let numberStepDecrease = 0;
 
     // arrays
     let miniMatrixs = [];
@@ -95,7 +93,8 @@ export default {
     let arrayDefault = [1, 2, 3, 4, 5, 6]
     let arrayForHelp = [];
     let arrayOfConditions = [true, true, true]
-    let arrayOfStepsEnding = [true, true]
+    let arrayOfStepsEnding = [true, true, true, true, true]
+
 
     // function, which removes style from board and fill "0" to all fields. // ALREADY CHECK
     function newGame() {
@@ -110,7 +109,41 @@ export default {
     }
 
     //function, which draw game. One of three levels and one of ten examples. // ALREADY CHECK
-    function drawGame(levelOfGame) {
+    /*     function drawGame(levelOfGame) {
+          console.log("drawGame");
+          arrayOfInputs = document.getElementsByClassName('inputField');
+          numberOfGame = Math.floor(Math.random() * 10 + 1);
+          switch (levelOfGame) {
+            case 'easy':
+              {
+                for (let i = 0; i < arrayOfInputs.length; i++) {
+                  arrayOfInputs[i].value = gamesLevelEasy[numberOfGame][i];
+                }
+              }
+              break;
+            case 'medium':
+              {
+                for (let i = 0; i < arrayOfInputs.length; i++) {
+                  arrayOfInputs[i].value = gamesLevelMedium[numberOfGame][i];
+                }
+              }
+    
+              break;
+            case 'hard':
+              {
+                for (let i = 0; i < arrayOfInputs.length; i++) {
+                  arrayOfInputs[i].value = gamesLevelHard[numberOfGame][i];
+                }
+              }
+              break;
+            default:
+              alert("Error during drawing Game")
+              break;
+          }
+          fillBoard();
+        }
+     */
+    function drawGame(levelOfGame, numberGame) {
       console.log("drawGame");
       arrayOfInputs = document.getElementsByClassName('inputField');
       numberOfGame = Math.floor(Math.random() * 10 + 1);
@@ -125,7 +158,7 @@ export default {
         case 'medium':
           {
             for (let i = 0; i < arrayOfInputs.length; i++) {
-              arrayOfInputs[i].value = gamesLevelMedium[2][i];
+              arrayOfInputs[i].value = gamesLevelMedium[numberGame][i];
             }
           }
 
@@ -133,7 +166,7 @@ export default {
         case 'hard':
           {
             for (let i = 0; i < arrayOfInputs.length; i++) {
-              arrayOfInputs[i].value = gamesLevelHard[numberOfGame][i];
+              arrayOfInputs[i].value = gamesLevelHard[numberGame][i];
             }
           }
           break;
@@ -148,7 +181,6 @@ export default {
     function finishGame() {
       console.log("finishGame");
       fillBoard();
-      console.log("conThirdStep" + conThirdStep)
       ety: while (!conFinishGame) {
         while (arrayOfStepsEnding[0]) {
           console.log("***************** KROK 1 ************************")
@@ -169,35 +201,39 @@ export default {
             break ety;
           } else {
             secondStep();
-            /*             conThirdStep = true; */
           }
         }
-        /*         if (conFirstStep == false && conSecondStep == false && conThirdStep == true) {
-                  console.log("***************** KROK 3 ************************")
-                  if (isZero() == -1) {
-                    conFinishGame = true;
-                    alert("Gratulacje! Rozwiązano Sudoku!")
-                    break;
-                  } else {
-                    conFirstStep = true;
-                    conSecondStep = true;
-                    anotherStep(2);
-                  }
-                }
-                if (conThirdStep == false) {
-                  console.log("***************** KROK 4 ************************")
-                  if (isZero() == -1) {
-                    conFinishGame = true;
-                    alert("Gratulacje! Rozwiązano Sudoku!")
-                    break;
-                  } else {
-                    conFirstStep = true;
-                    conSecondStep = true;
-                    conThirdStep = true;
-                    anotherStep(3);
-                  }
-        
-                } */
+        while (arrayOfStepsEnding[2]) {
+          console.log("**numberStepDecrease**" + numberStepDecrease)
+          if (isZero() == -1) {
+            conFinishGame = true;
+            alert("Gratulacje! Rozwiązano Sudoku!")
+            break ety;
+          } else {
+            anotherStep(2);
+          }
+        }
+        while (arrayOfStepsEnding[3]) {
+          console.log("**numberStepDecrease**" + numberStepDecrease)
+          if (isZero() == -1) {
+            conFinishGame = true;
+            alert("Gratulacje! Rozwiązano Sudoku!")
+            break ety;
+          } else {
+            anotherStep(3);
+          }
+        }
+        while (arrayOfStepsEnding[4]) {
+          console.log("**numberStepDecrease**" + numberStepDecrease)
+          if (isZero() == -1) {
+            conFinishGame = true;
+            alert("Gratulacje! Rozwiązano Sudoku!")
+            break ety;
+          } else {
+            anotherStep(4);
+          }
+        }
+
       }
     }
 
@@ -211,7 +247,9 @@ export default {
           }
         }
       }
-      conFirstStep, conSecondStep, conThirdStep = false;
+      for (i = 0; i < arrayOfStepsEnding.length; i++) {
+        arrayOfStepsEnding[i] = false;
+      }
       conFinishGame = true;
       return -1;
     }
@@ -1538,9 +1576,11 @@ export default {
       fillBoard();
       findMiniMatrixWithZeros(numberStepDecrease);
       counterExecutedTimes = 0;
-      conThirdStep = true;
       if (arrayOfZero.length == 0) {
         console.log("Execute next Step. No matrix with " + numberStepDecrease + " zero places.")
+        arrayOfStepsEnding[0] = true;
+        arrayOfStepsEnding[1] = true;
+        arrayOfStepsEnding[numberStepDecrease] = false;
       } else {
         while (conOfLoop) {
           if (counterExecutedTimes <= arrayOfZero.length) {
@@ -1556,8 +1596,8 @@ export default {
               fillDigitInRightPlace(numberStepDecrease, numberStepDecrease);
             }
             if (counterCondition == 1) {
-              conFirstStep = true;
-              conSecondStep = true;
+              arrayOfStepsEnding[0] = true;
+              arrayOfStepsEnding[1] = true;
               if (xCor > 5) {
                 findCorsToFillDigit();
               }
@@ -1566,13 +1606,23 @@ export default {
             }
             else {
               conOfLoop = false;
-              alert(" Execute next step: " + (numberStepDecrease + 2))
-              conThirdStep = false;
+              if (numberStepDecrease == 4) {
+                alert(" You have to start again from step: 1")
+                arrayOfStepsEnding[numberStepDecrease] = false;
+              } else {
+                alert(" Execute next step: " + (numberStepDecrease + 2))
+                arrayOfStepsEnding[numberStepDecrease] = false;
+              }
             }
           } else {
             conOfLoop = false;
-            alert(" Execute next step: " + (numberStepDecrease + 2))
-            conThirdStep = false;
+            if (numberStepDecrease == 4) {
+              alert(" You have to start again from step: 1")
+              arrayOfStepsEnding[numberStepDecrease] = false;
+            } else {
+              alert(" Execute next step: " + (numberStepDecrease + 2))
+              arrayOfStepsEnding[numberStepDecrease] = false;
+            }
           }
         }
         conOfLoop = true;
