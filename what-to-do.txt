@@ -13,3 +13,13 @@ Np. dla pierwszego podkroku, znajdź macierz, która ma jedno zero to ją obramo
 
 * PRZYCISKI Z NUMERAMI GRY, ZAZNACZONE ŻE SIĘ ROZWIĄZAŁO ?
 * przycisk do tłumaczenia z ang na pol
+
+HARD 5,8,10
+
+Dla 5 przykładu zrobić Step2 wtedy jak są cyfrny n-2.
+
+
+Dla 8 przykładu poprawić krok 3 bo w przypadku, gdy mamy w 10 miniMacieerzy 2 msc to teoretycznie możemy 4 w 10 4, a praktycznie nie możemy.
+W funkcji checkMissingDigitInNearbyMatrix mamy sprawdzenie tylko dla miniMacieerzy 0-5, a musimy dla 0-17
+
+Dla 10 przykładu j.w tylko dla 4 kroku. 

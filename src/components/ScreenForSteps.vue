@@ -53,6 +53,21 @@
         <div class="rowOfStep" id="rowOfStep16">
 
         </div>
+        <div class="rowOfStep" id="rowOfStep17">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep18">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep19">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep20">
+
+        </div>
+        <div class="rowOfStep" id="rowOfStep21">
+
+        </div>
     </div>
 </template>
 
@@ -65,23 +80,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;300&display=swap');
+
 .containerApp__screen {
 
-    h3{
-    font-family: 'Raleway', sans-serif;
-    margin-top: 10px;
+    h3 {
+        font-family: 'Raleway', sans-serif;
+        margin-top: 10px;
     }
-   
-       
+
+
     .rowOfStep {
         /*         border: solid 1px orange;*/
-       font-family: 'Raleway', sans-serif;
+        font-family: 'Raleway', sans-serif;
 
         margin: 10px auto;
         padding: 2px;
-   
+
     }
 
 

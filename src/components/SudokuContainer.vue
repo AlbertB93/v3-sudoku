@@ -190,7 +190,6 @@ export default {
             break ety;
           } else {
             firstStep();
-            /*             conThirdStep = true; */
           }
         }
         while (arrayOfStepsEnding[1]) {
@@ -345,9 +344,10 @@ export default {
     function fillMissingDigit() {
       console.log("fillMissingDigit")
       console.log("================ WPISANO [ " + missingDigit + " ] ====== [ " + xCor + " ] oraz [ " + yCor + " ] =======")
-
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].value = missingDigit;
+
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
+
       document.getElementById('rowOfStep' + counterStepstoFinish).innerHTML = (counterStepstoFinish + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
       counterStepstoFinish++;
     }
@@ -605,7 +605,6 @@ export default {
     function secondStepFindCoor() {
       console.log("secondStepFindCoor")
       xCor = missingID;
-
       helpForCorrectCorrdinates(missingID)
       console.log("Szukane współrzędne: " + xCor + " - " + yCor)
 
@@ -1057,8 +1056,6 @@ export default {
           countOfZero = 0;
         }
       }
-
-
       console.log("arrayOfInputs z ID macierzy, w których są " + numberOfZeros + " msc. zerowe: " + arrayOfZero)
       console.log("Length arrayOfZero: " + arrayOfZero.length)
       countOfZero = 0;
@@ -1068,23 +1065,12 @@ export default {
     function findMissingDigits(numberOfMissingDigit) {
       console.log("findMissingDigits")
       arrayOfMissingDigits = [];
-
-
       console.log("arrayOfMissingDigits LENGTH po wyzerowaniu" + arrayOfMissingDigits.length)
       if (numberOfMissingDigit == 2) {
-        /*         missingDigit = 99;
-                secondMissingDigit = 99; */
         arrayOfMissingDigits = [99, 99];
       } else if (numberOfMissingDigit == 3) {
-        /*         missingDigit = 99;
-                secondMissingDigit = 99;
-                thirdMissingDigit = 99; */
         arrayOfMissingDigits = [99, 99, 99];
       } else if (numberOfMissingDigit == 4) {
-        /*         missingDigit = 99;
-                secondMissingDigit = 99;
-                thirdMissingDigit = 99;
-                fourthMissingDigit = 99; */
         arrayOfMissingDigits = [99, 99, 99, 99];
       } else {
         alert("Błąd w findMissingDigit")
@@ -1105,41 +1091,6 @@ export default {
           }
         }
       }
-
-      /* 
-            for (i = 1; i < 7; i++) {
-              if (miniMatrixs[xCorrdinate].some(item => item == i) == false) {
-                if (missingDigit == 99) {
-                  missingDigit = i;
-                  arrayOfMissingDigits[0] = i;
-                } else if (secondMissingDigit == 99) {
-                  secondMissingDigit = i;
-                  arrayOfMissingDigits[1] = i;
-                } else if (thirdMissingDigit == 99) {
-                  thirdMissingDigit = i;
-                  arrayOfMissingDigits[2] = i;
-                } else {
-                  fourthMissingDigit = i;
-                  arrayOfMissingDigits[3] = i;
-                }
-              }
-            }
-      
-       */
-      /*       if (missingDigit != 99) {
-              console.log("Brakuje cyfry: " + missingDigit);
-            }
-            if (secondMissingDigit != 99) {
-              console.log("Brakuje cyfry: " + secondMissingDigit);
-            }
-            if (thirdMissingDigit != 99) {
-              console.log("Brakuje cyfry: " + thirdMissingDigit);
-            }
-            if (fourthMissingDigit != 99) {
-              console.log("Brakuje cyfry: " + fourthMissingDigit);
-            }
-       */
-
       if (arrayOfMissingDigits[0] != 99) {
         console.log("Brakuje cyfry: " + arrayOfMissingDigits[0]);
       }
@@ -1158,10 +1109,7 @@ export default {
     }
 
     function findCorsToFillDigitExtend(a) {
-
-      // sprawdzenie jakiej cyfry brakuje w macierzy
       console.log("thirdStepFindCorsToFillDigitExtend");
-
       yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
       console.log("współrzędne 1 punktu: " + xCorrdinate + " i " + yCorrdinate);
 
@@ -1218,18 +1166,11 @@ export default {
 
 
     function findRightPlaceToFill(missingDigit, numberOfZeros) {
-      /*              console.log("Xcorrdinate: " + xCorrdinate)
-            console.log("Pierwsze wsp. Y: " + yCorrdinate) 
-            console.log("Druga wsp. Y: " + ySecondCor)
-                  console.log("Missing Digit: " + missingDigit)  */
       localCounterCondition = 0;
       console.log("TUTAJ")
       if (numberOfZeros == 2) {
         arrayOfConditions[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
         arrayOfConditions[1] = checkMissingDigitInNearbyMatrix(missingDigit, ySecondCor);
-        /*         console.log("Warunek 1: " + arrayOfConditions[0])
-                        console.log("Warunek 2: " + arrayOfConditions[1])
-                              console.log("counterCondition w fourth" + counterCondition) */
       } else if (numberOfZeros == 3) {
         arrayOfConditions[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
         arrayOfConditions[1] = checkMissingDigitInNearbyMatrix(missingDigit, ySecondCor);
@@ -1490,6 +1431,45 @@ export default {
             }
           }
           break;
+        case 10:
+          if (yCorrdinate == 0) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
+                conIsAvaiable = false;
+              }
+            }
+          } else if (yCorrdinate == 1) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
+                conIsAvaiable = false;
+              }
+            }
+          } else if (yCorrdinate == 2) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
+                conIsAvaiable = false;
+              }
+            }
+          } else if (yCorrdinate == 3) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
+                conIsAvaiable = false;
+              }
+            }
+          } else if (yCorrdinate == 4) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
+                conIsAvaiable = false;
+              }
+            }
+          } else if (yCorrdinate == 5) {
+            for (i = 0; i < 6; i++) {
+              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
+                conIsAvaiable = false;
+              }
+            }
+          }
+          break;
       }
 
       return conIsAvaiable;
@@ -1567,6 +1547,7 @@ export default {
         alert(" Wykonaj krok nr 3")
         arrayOfStepsEnding[0] = false;
         arrayOfStepsEnding[1] = false;
+        arrayOfStepsEnding[2] = true;
         console.log(" Nie wykonano kroku nr 2")
       }
     }
@@ -1577,7 +1558,7 @@ export default {
       findMiniMatrixWithZeros(numberStepDecrease);
       counterExecutedTimes = 0;
       if (arrayOfZero.length == 0) {
-        console.log("Execute next Step. No matrix with " + numberStepDecrease + " zero places.")
+        alert("Execute next Step. No matrix with " + numberStepDecrease + " zero places.")
         arrayOfStepsEnding[0] = true;
         arrayOfStepsEnding[1] = true;
         arrayOfStepsEnding[numberStepDecrease] = false;
@@ -1608,9 +1589,18 @@ export default {
               conOfLoop = false;
               if (numberStepDecrease == 4) {
                 alert(" You have to start again from step: 1")
+                arrayOfStepsEnding[0] = true;
+                arrayOfStepsEnding[1] = true;
+                arrayOfStepsEnding[2] = true;
+                arrayOfStepsEnding[3] = true;
                 arrayOfStepsEnding[numberStepDecrease] = false;
               } else {
                 alert(" Execute next step: " + (numberStepDecrease + 2))
+                arrayOfStepsEnding[0] = true;
+                arrayOfStepsEnding[1] = true;
+                arrayOfStepsEnding[2] = true;
+                arrayOfStepsEnding[3] = true;
+                arrayOfStepsEnding[4] = true;
                 arrayOfStepsEnding[numberStepDecrease] = false;
               }
             }

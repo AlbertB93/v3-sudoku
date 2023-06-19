@@ -2,42 +2,42 @@
     <button class="button__game" @click="newGame()">
         NEW GAME
     </button>
-    <!--     <div class="gameButtons--title">
-        <p> Draw Game</p>
-    </div> -->
-    <button class="button__draw" @click="drawGame('easy')">
+<!--     <button class="button__draw" @click="drawGame('easy')">
         EASY
     </button>
-    <button class="button__draw" @click="drawGame('medium', 0)">
+    <button class="button__draw" @click="drawGame('hard', 0)">
         1
     </button>
-    <button class="button__draw" @click="drawGame('medium', 1)">
+    <button class="button__draw" @click="drawGame('hard', 1)">
         2
     </button>
-    <button class="button__draw" @click="drawGame('medium', 2)">
+    <button class="button__draw" @click="drawGame('hard', 2)">
         3
     </button>
-    <button class="button__draw" @click="drawGame('medium', 3)">
+    <button class="button__draw" @click="drawGame('hard', 3)">
         4
-    </button>
-    <button class="button__draw" @click="drawGame('medium', 4)">
+    </button> -->
+    <button class="button__draw" @click="drawGame('hard', 4)">
         5
     </button>
-    <button class="button__draw" @click="drawGame('medium', 5)">
+    <button class="button__draw" @click="drawGame('hard', 5)">
         6
     </button>
-    <button class="button__draw" @click="drawGame('medium', 6)">
+    <button class="button__draw" @click="drawGame('hard', 6)">
         7
     </button>
-    <button class="button__draw" @click="drawGame('medium', 7)">
+    <button class="button__draw" @click="drawGame('hard', 7)">
         8
     </button>
-    <button class="button__draw" @click="drawGame('medium', 8)">
+    <button class="button__draw" @click="drawGame('hard', 8)">
         9
     </button>
-    <button class="button__draw" @click="drawGame('medium', 9)">
+    <button class="button__draw" @click="drawGame('hard', 9)">
         10
     </button>
+        <button class="button__draw" @click="drawGame('hard', 10)">
+            Err 5
+        </button>
     <button class="button__draw" @click="drawGame('medium')">
         MEDIUM
     </button>
