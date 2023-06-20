@@ -1022,11 +1022,24 @@ export default {
       console.log("checkMiniMatrixForMissingDigit");
       for (j = 0; j < 6; j++) {
         if ((miniMatrixs[a].some(item => item == missingDigit)) || (miniMatrixs[b].some(item => item == missingDigit))) {
+          conIsAvaiable = false;
           break;
         } else {
           console.log("Nie zawiera szukanej cyfry - zwiększ counterCondition");
           yCor = i;
           counterCondition++;
+          break;
+        }
+      }
+    }
+
+    function findMissingDigitInMiniMatrix(a, b, missingDigit) {
+      console.log("checkMiniMatrixForMissingDigit");
+      conIsAvaiable = true;
+      for (j = 0; j < 6; j++) {
+        if ((miniMatrixs[a].some(item => item == missingDigit)) || (miniMatrixs[b].some(item => item == missingDigit))) {
+          console.log("WESZLIŚMY ???" + missingDigit)
+          conIsAvaiable = false;
           break;
         }
       }
@@ -1192,286 +1205,285 @@ export default {
       }
     }
 
+
+
+
+
     function checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate) {
       console.log("checkMissingDigitInNearbyMatrix")
       conIsAvaiable = true;
       switch (xCorrdinate) {
         case 0:
           if (yCorrdinate == 0) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(6, 12, missingDigit);
           } else if (yCorrdinate == 1) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
-          }
-          else if (yCorrdinate == 2) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(6, 13, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(6, 14, missingDigit);
           } else if (yCorrdinate == 3) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(7, 12, missingDigit);
           } else if (yCorrdinate == 4) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(7, 13, missingDigit);
           } else if (yCorrdinate == 5) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(7, 14, missingDigit);
           }
           break;
         case 1:
           if (yCorrdinate == 0) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(6, 15, missingDigit);
           } else if (yCorrdinate == 1) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(6, 16, missingDigit);
           } else if (yCorrdinate == 2) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[6][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(6, 17, missingDigit);
           } else if (yCorrdinate == 3) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(7, 15, missingDigit);
           } else if (yCorrdinate == 4) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(7, 16, missingDigit);
           } else if (yCorrdinate == 5) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[7][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(7, 17, missingDigit);
           }
           break;
         case 2:
           if (yCorrdinate == 0) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(8, 12, missingDigit);
           } else if (yCorrdinate == 1) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(8, 13, missingDigit);
           } else if (yCorrdinate == 2) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(8, 14, missingDigit);
           } else if (yCorrdinate == 3) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(9, 12, missingDigit);
           } else if (yCorrdinate == 4) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(9, 13, missingDigit);
           } else if (yCorrdinate == 5) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(9, 14, missingDigit);
           }
           break;
         case 3:
           if (yCorrdinate == 0) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(8, 15, missingDigit);
           } else if (yCorrdinate == 1) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(8, 16, missingDigit);
           } else if (yCorrdinate == 2) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[8][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(8, 17, missingDigit);
           } else if (yCorrdinate == 3) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(9, 15, missingDigit);
           } else if (yCorrdinate == 4) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(9, 16, missingDigit);
           } else if (yCorrdinate == 5) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[9][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(9, 17, missingDigit);
           }
           break;
         case 4:
           if (yCorrdinate == 0) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 12, missingDigit);
           } else if (yCorrdinate == 1) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 13, missingDigit);
           } else if (yCorrdinate == 2) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 14, missingDigit);
           } else if (yCorrdinate == 3) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(11, 12, missingDigit);
           } else if (yCorrdinate == 4) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(11, 13, missingDigit);
           } else if (yCorrdinate == 5) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(11, 14, missingDigit);
           }
           break;
         case 5:
           if (yCorrdinate == 0) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 15, missingDigit);
           } else if (yCorrdinate == 1) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 16, missingDigit);
           } else if (yCorrdinate == 2) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 17, missingDigit);
           } else if (yCorrdinate == 3) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(11, 15, missingDigit);
           } else if (yCorrdinate == 4) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(11, 16, missingDigit);
           } else if (yCorrdinate == 5) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[11][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(11, 17, missingDigit);
+          }
+          break;
+        case 6:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(6, 12, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(6, 13, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(6, 14, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(6, 15, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(6, 16, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(6, 17, missingDigit);
+          }
+          break;
+        case 7:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(7, 12, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(7, 13, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(7, 14, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(7, 15, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(7, 16, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(7, 17, missingDigit);
+          }
+          break;
+        case 8:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(8, 12, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(8, 13, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(8, 14, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(8, 15, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(8, 16, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(8, 17, missingDigit);
+          }
+          break;
+        case 9:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(9, 12, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(9, 13, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(9, 14, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(9, 15, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(9, 16, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(9, 17, missingDigit);
           }
           break;
         case 10:
           if (yCorrdinate == 0) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[12][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 12, missingDigit);
           } else if (yCorrdinate == 1) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[13][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 13, missingDigit);
           } else if (yCorrdinate == 2) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[14][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 14, missingDigit);
           } else if (yCorrdinate == 3) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[15][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 15, missingDigit);
           } else if (yCorrdinate == 4) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[16][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 16, missingDigit);
           } else if (yCorrdinate == 5) {
-            for (i = 0; i < 6; i++) {
-              if (miniMatrixs[10][i] == missingDigit || miniMatrixs[17][i] == missingDigit) {
-                conIsAvaiable = false;
-              }
-            }
+            findMissingDigitInMiniMatrix(10, 17, missingDigit);
+          }
+          break;
+        case 11:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(11, 12, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(11, 13, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(11, 14, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(11, 15, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(11, 16, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(11, 17, missingDigit);
+          }
+          break;
+        case 12:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(6, 12, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(7, 12, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(8, 12, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(9, 12, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(10, 12, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(11, 12, missingDigit);
+          }
+          break;
+        case 13:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(6, 13, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(7, 13, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(8, 13, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(9, 13, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(10, 13, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(11, 13, missingDigit);
+          }
+          break;
+        case 14:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(6, 14, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(7, 14, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(8, 14, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(9, 14, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(10, 14, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(11, 14, missingDigit);
+          }
+          break;
+        case 15:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(6, 15, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(7, 15, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(8, 15, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(9, 15, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(10, 15, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(11, 15, missingDigit);
+          }
+          break;
+        case 16:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(6, 16, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(7, 16, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(8, 16, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(9, 16, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(10, 16, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(11, 16, missingDigit);
+          }
+          break;
+        case 17:
+          if (yCorrdinate == 0) {
+            findMissingDigitInMiniMatrix(6, 17, missingDigit);
+          } else if (yCorrdinate == 1) {
+            findMissingDigitInMiniMatrix(7, 17, missingDigit);
+          } else if (yCorrdinate == 2) {
+            findMissingDigitInMiniMatrix(8, 17, missingDigit);
+          } else if (yCorrdinate == 3) {
+            findMissingDigitInMiniMatrix(9, 17, missingDigit);
+          } else if (yCorrdinate == 4) {
+            findMissingDigitInMiniMatrix(10, 17, missingDigit);
+          } else if (yCorrdinate == 5) {
+            findMissingDigitInMiniMatrix(11, 17, missingDigit);
           }
           break;
       }
-
       return conIsAvaiable;
     }
 
