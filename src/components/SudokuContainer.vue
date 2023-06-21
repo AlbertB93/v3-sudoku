@@ -353,9 +353,7 @@ export default {
     }
 
 
-
     // FUNCTIONS FOR THE FIRST STEP
-
     // function, which find miniMatrix, which has one empty field and return ID.
     function findEmptyFieldsInMatrix() {
       console.log("findEmptyFieldsInMatrix");
@@ -389,7 +387,6 @@ export default {
       yCorrdinate = miniMatrixs[xCorrdinate].indexOf('0');
       console.log("Współrzędna: " + yCorrdinate)
     }
-
     // function, which find corrdinates in miniMatrix for the empty field
     function findCorsToFillDigit() {
       console.log("findCorsToFillDigit");
@@ -433,6 +430,8 @@ export default {
           xCor = 5;
         }
       }
+
+
       // ustalamy poprawną współrzędną Y do wpisania w square o ID
       if (xCorrdinate == 12 || xCorrdinate == 15) {
         switch (yCorrdinate) {
@@ -512,7 +511,6 @@ export default {
       }
       console.log(" Nowe współrzędne punktu: " + xCor + " i " + yCor);
     }
-
     // function, which find one missing number in miniMatrix, which has one empty field.
     function findMissingDigit() {
       console.log("FindMissingDigit");
@@ -533,10 +531,6 @@ export default {
 
 
     // FUNCTIONS FOR THE SECOND STEP
-
-    // function for the buttons on the left, help buttons second 
-
-
     // function, which find one number , which occurs in Sudoku n-1 times
     function secondStepFindOneMissingDigit() {
       console.log("secondStepFindOneMissingDigit");
@@ -607,8 +601,9 @@ export default {
       xCor = missingID;
       helpForCorrectCorrdinates(missingID)
       console.log("Szukane współrzędne: " + xCor + " - " + yCor)
-
     }
+
+
 
     function helpForCorrectCorrdinates(missingID) {
       console.log("helpForCorrectCorrdinates")
@@ -1177,13 +1172,45 @@ export default {
       }
     }
 
+    function fillDigitInRightPlace(numberOfMissingDigits, numberOfZeroPlaces) {
+      console.log("TESTUJEMY fillDigitInRightPlace")
+      let helpCounter = 0;
+      let digit = arrayOfMissingDigits[helpCounter];
+      counterCondition = 0;
+      while (numberOfMissingDigits > 0) {
+        findRightPlaceToFill(digit, numberOfZeroPlaces);
+        console.log(" ***** WEWNETRZNY Digit: " + digit)
+        if (localCounterCondition == 1) {
+          counterCondition = 1;
+          findTrueCondition(arrayOfConditions)
+          break;
+        } else {
+          if (helpCounter < arrayOfMissingDigits.length) {
+            helpCounter++;
+            digit = arrayOfMissingDigits[helpCounter];
+          }
+          numberOfMissingDigits--;
+        }
+      }
+      xCor = xCorrdinate;
+      yCorrdinate = yCor;
+      console.log(" **** localCounterCondition po pętli: " + localCounterCondition)
+      console.log(" **** counterCondition po pętli: " + localCounterCondition)
+      console.log("Musimy wpisać cyfrę: " + arrayOfMissingDigits[helpCounter] + " , we współrzędne: " + xCor + " i " + yCor)
+      missingDigit = arrayOfMissingDigits[helpCounter];
+    }
+
 
     function findRightPlaceToFill(missingDigit, numberOfZeros) {
       localCounterCondition = 0;
       console.log("TUTAJ")
       if (numberOfZeros == 2) {
+        console.log("Opcje dla  warunek 1: missingDigit" + missingDigit + " yCorrdinate:  " + yCorrdinate)
         arrayOfConditions[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
+        console.log("Jaki warunek 1: " + arrayOfConditions[0])
+        console.log("Opcje dla  warunek 1: missingDigit" + missingDigit + " yCorrdinate:  " + ySecondCor)
         arrayOfConditions[1] = checkMissingDigitInNearbyMatrix(missingDigit, ySecondCor);
+        console.log("Jaki warunek 2: " + arrayOfConditions[1])
       } else if (numberOfZeros == 3) {
         arrayOfConditions[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
         arrayOfConditions[1] = checkMissingDigitInNearbyMatrix(missingDigit, ySecondCor);
@@ -1196,7 +1223,6 @@ export default {
       } else {
         console.log("Something wrong in findRightPlaceToFill")
       }
-
       for (i = 0; i < numberOfZeros; i++) {
         if (arrayOfConditions[i]) {
           counterCondition++;
@@ -1205,8 +1231,18 @@ export default {
       }
     }
 
-
-
+    function findTrueCondition(arrayOfConditions) {
+      console.log(" arrayOfConditions ")
+      if (arrayOfConditions[0]) {
+        yCor = yCorrdinate;
+      } else if (arrayOfConditions[1]) {
+        yCor = ySecondCor
+      } else if (arrayOfConditions[2]) {
+        yCor = yThirdCor
+      } else {
+        yCor = yFourthCor;
+      }
+    }
 
 
     function checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate) {
@@ -1487,45 +1523,12 @@ export default {
       return conIsAvaiable;
     }
 
-    function findTrueCondition(arrayOfConditions) {
-      if (arrayOfConditions[0]) {
-        yCor = yCorrdinate;
-      } else if (arrayOfConditions[1]) {
-        yCor = ySecondCor
-      } else if (arrayOfConditions[2]) {
-        yCor = yThirdCor
-      } else {
-        yCor = yFourthCor;
-      }
-    }
 
 
     // FUNCTIONS FOR THE THIRD STEP
 
 
-    function fillDigitInRightPlace(numberOfMissingDigits, numberOfZeroPlaces) {
-      console.log("TESTUJEMY fillDigitInRightPlace")
-      let helpCounter = 0;
-      let digit = arrayOfMissingDigits[helpCounter];
-      counterCondition = 0;
-      while (numberOfMissingDigits > 0) {
-        findRightPlaceToFill(digit, numberOfZeroPlaces);
-        if (localCounterCondition == 1) {
-          counterCondition = 1;
-          findTrueCondition(arrayOfConditions)
-          break;
-        } else {
-          if (helpCounter < arrayOfMissingDigits.length) {
-            helpCounter++;
-            digit = arrayOfMissingDigits[helpCounter];
-          }
-          numberOfMissingDigits--;
-        }
-      }
-      xCor = xCorrdinate;
-      console.log("Musimy wpisać cyfrę: " + arrayOfMissingDigits[helpCounter] + " , we współrzędne: " + xCor + " i " + yCor)
-      missingDigit = arrayOfMissingDigits[helpCounter];
-    }
+
 
 
     // FINALLY STEPS
@@ -1629,7 +1632,6 @@ export default {
         }
         conOfLoop = true;
       }
-      /*       counterArrayOfZero = 0; */
     }
 
     return {
