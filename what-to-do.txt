@@ -1,21 +1,14 @@
-1. 
-Może żeby wrócić do gry o id tej, która była ostatnio.
-Coś w stylu od nowa
-4. Przycisk zatwierdź ruch wtedy zatwierdza się coś co wpisał użytkownik, zmienia się kolor ?
 
-
+* przycisk, który wraca do planszy, która została wylosowana
+* przycisk zatwierdź ruch wtedy zatwierdza się coś co wpisał użytkownik, zmienia się kolor ?
 * Zrobić coś takiego dla podkroków jak:
 Np. dla pierwszego podkroku, znajdź macierz, która ma jedno zero to ją obramować np. na zółto.
 
-
-- Podzielić kroki na komponenty? Spróbować na razie zrobić to z pierwszym krokiem. 
+* Podzielić kroki na komponenty? Spróbować na razie zrobić to z pierwszym krokiem. 
 - w głównym komponencie zostawić główne funckję jak losowanie , nowa gra, fillBoard itp.
+
+
 
 * PRZYCISKI Z NUMERAMI GRY, ZAZNACZONE ŻE SIĘ ROZWIĄZAŁO ?
 * przycisk do tłumaczenia z ang na pol
-
-HARD 5
-
-Dla 5 przykładu zrobić Step2 wtedy jak są cyfrny n-2.
-
-
+* zrobić coś z wyświetlanie przycisków dotyczących kroków żeby po rozwinięciu jakoś nie skakały tak.

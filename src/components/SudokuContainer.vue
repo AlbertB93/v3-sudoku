@@ -71,6 +71,7 @@ export default {
     let endCondition = true;
     let conIsAvaiable = true;
     let conOfLoop = true;
+    let conMatrixsToCheck = true;
 
     // other
     let missingDigit = 99;
@@ -109,44 +110,11 @@ export default {
     }
 
     //function, which draw game. One of three levels and one of ten examples. // ALREADY CHECK
-    /*     function drawGame(levelOfGame) {
-          console.log("drawGame");
-          arrayOfInputs = document.getElementsByClassName('inputField');
-          numberOfGame = Math.floor(Math.random() * 10 + 1);
-          switch (levelOfGame) {
-            case 'easy':
-              {
-                for (let i = 0; i < arrayOfInputs.length; i++) {
-                  arrayOfInputs[i].value = gamesLevelEasy[numberOfGame][i];
-                }
-              }
-              break;
-            case 'medium':
-              {
-                for (let i = 0; i < arrayOfInputs.length; i++) {
-                  arrayOfInputs[i].value = gamesLevelMedium[numberOfGame][i];
-                }
-              }
-    
-              break;
-            case 'hard':
-              {
-                for (let i = 0; i < arrayOfInputs.length; i++) {
-                  arrayOfInputs[i].value = gamesLevelHard[numberOfGame][i];
-                }
-              }
-              break;
-            default:
-              alert("Error during drawing Game")
-              break;
-          }
-          fillBoard();
-        }
-     */
-    function drawGame(levelOfGame, numberGame) {
+    function drawGame(levelOfGame) {
       console.log("drawGame");
       arrayOfInputs = document.getElementsByClassName('inputField');
       numberOfGame = Math.floor(Math.random() * 10 + 1);
+      newGame();
       switch (levelOfGame) {
         case 'easy':
           {
@@ -158,7 +126,7 @@ export default {
         case 'medium':
           {
             for (let i = 0; i < arrayOfInputs.length; i++) {
-              arrayOfInputs[i].value = gamesLevelMedium[numberGame][i];
+              arrayOfInputs[i].value = gamesLevelMedium[numberOfGame][i];
             }
           }
 
@@ -166,7 +134,7 @@ export default {
         case 'hard':
           {
             for (let i = 0; i < arrayOfInputs.length; i++) {
-              arrayOfInputs[i].value = gamesLevelHard[numberGame][i];
+              arrayOfInputs[i].value = gamesLevelHard[numberOfGame][i];
             }
           }
           break;
@@ -176,6 +144,8 @@ export default {
       }
       fillBoard();
     }
+
+
 
     // function, which sholud finish game for one click     // CHECK ONCE AGAIN
     function finishGame() {
@@ -1173,15 +1143,15 @@ export default {
     }
 
     function fillDigitInRightPlace(numberOfMissingDigits, numberOfZeroPlaces) {
-      console.log("TESTUJEMY fillDigitInRightPlace")
       let helpCounter = 0;
       let digit = arrayOfMissingDigits[helpCounter];
       counterCondition = 0;
+      conMatrixsToCheck = true;
       while (numberOfMissingDigits > 0) {
         findRightPlaceToFill(digit, numberOfZeroPlaces);
-        console.log(" ***** WEWNETRZNY Digit: " + digit)
         if (localCounterCondition == 1) {
           counterCondition = 1;
+          conMatrixsToCheck = false;
           findTrueCondition(arrayOfConditions)
           break;
         } else {
@@ -1194,8 +1164,6 @@ export default {
       }
       xCor = xCorrdinate;
       yCorrdinate = yCor;
-      console.log(" **** localCounterCondition po pętli: " + localCounterCondition)
-      console.log(" **** counterCondition po pętli: " + localCounterCondition)
       console.log("Musimy wpisać cyfrę: " + arrayOfMissingDigits[helpCounter] + " , we współrzędne: " + xCor + " i " + yCor)
       missingDigit = arrayOfMissingDigits[helpCounter];
     }
@@ -1204,6 +1172,7 @@ export default {
     function findRightPlaceToFill(missingDigit, numberOfZeros) {
       localCounterCondition = 0;
       console.log("TUTAJ")
+      console.log(" **** counterCondition po pętli: " + counterCondition)
       if (numberOfZeros == 2) {
         console.log("Opcje dla  warunek 1: missingDigit" + missingDigit + " yCorrdinate:  " + yCorrdinate)
         arrayOfConditions[0] = checkMissingDigitInNearbyMatrix(missingDigit, yCorrdinate);
@@ -1583,10 +1552,14 @@ export default {
             findMissingDigits(numberStepDecrease);
             findCorsToFillDigitExtend(numberStepDecrease);
             fillDigitInRightPlace(numberStepDecrease, numberStepDecrease);
-            while (counterCondition == 4 && counterExecutedTimes < arrayOfZero.length - 1) {
+            while (conMatrixsToCheck) {
               console.log("*******JESTEŚMY TUTAJ counterCondition == 4 **********")
               counterExecutedTimes++;
               xCorrdinate = arrayOfZero[counterExecutedTimes];
+              if (counterExecutedTimes > arrayOfZero.length - 1 && counterCondition != 1) {
+                conMatrixsToCheck = false;
+                break;
+              }
               findMissingDigits(numberStepDecrease);
               findCorsToFillDigitExtend(numberStepDecrease);
               fillDigitInRightPlace(numberStepDecrease, numberStepDecrease);
@@ -1646,6 +1619,31 @@ export default {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Semi+Condensed:wght@600;700&family=Lobster&family=Open+Sans:ital,wght@1,300&family=Oswald&family=Pangolin&display=swap');
 
+
+.containerApp__screen::-webkit-scrollbar {
+  margin-left: 8px;
+  width: 12px;
+  /* width of the entire scrollbar */
+}
+
+.containerApp__screen::-webkit-scrollbar-track {
+  background: whitesmoke;
+  /*   border-radius: 20px; */
+  margin-left: 8px;
+  /* color of the tracking area */
+}
+
+.containerApp__screen::-webkit-scrollbar-thumb {
+  background-color: whitesmoke;
+  /* color of the scroll thumb */
+  /*   border-radius: 20px; 
+  /* roundness of the scroll thumb */
+  border: 3px solid #004337;
+  margin-left: 8px;
+  /* creates padding around scroll thumb */
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -1654,7 +1652,6 @@ export default {
 .containerApp {
   align-items: center;
   background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
-  /*   background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -1691,7 +1688,7 @@ export default {
  */
     &--container {
 
-      align-items: flex-start;
+      align-items: center;
       /* border: dotted 2px green; */
       display: flex;
       flex-direction: row;
@@ -1713,7 +1710,7 @@ export default {
         justify-content: center;
         margin: 4vh 0;
         width: auto;
-        /*   border: dotted 2px red; */
+        /*         border: dotted 2px red; */
       }
 
 
@@ -1735,10 +1732,11 @@ export default {
         display: flex;
         flex-direction: column;
         height: 50%;
-        justify-content: center;
+        justify-content: flex-start;
         width: 45%;
-        /*      border: dotted 3px yellow; */
 
+        /*         border: dotted 3px yellow;
+ */
         .containerApp__game--board {
           align-content: space-around;
           box-shadow: 6px 6px 10px #aad5c5;
@@ -1766,10 +1764,11 @@ export default {
       background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
       /*       background-image: linear-gradient(to left, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
       border-radius: 12px;
-      box-shadow: 6px 6px 10px whitesmoke;
+      box-shadow: -6px -6px 10px whitesmoke;
       color: whitesmoke;
-      height: auto;
+      height: 80vh;
       margin: 4vh auto;
+      overflow-y: scroll;
       width: 30%;
       /*     border: dotted 2px green; */
 
