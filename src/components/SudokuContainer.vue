@@ -144,9 +144,6 @@ export default {
       }
       fillBoard();
     }
-
-
-
     // function, which sholud finish game for one click     // CHECK ONCE AGAIN
     function finishGame() {
       console.log("finishGame");
@@ -1680,7 +1677,7 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 90%;
+    height: 90vh;
     justify-content: space-around;
     width: 95vw;
 
@@ -1688,14 +1685,14 @@ export default {
  */
     &--container {
 
-      align-items: center;
-      /* border: dotted 2px green; */
+      align-items: space-around;
+/*        border: dotted 2px green;  */
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      height: 100%;
-      justify-content: center;
-      width: 65%;
+      height: 80vh;
+      justify-content: space-around;
+      width: 65vw;
 
       .containerApp__buttons {
         align-items: center;
@@ -1722,7 +1719,7 @@ export default {
         justify-content: space-around;
         height: auto;
         width: 52%;
-        /*       border: solid 4px white; */
+/*                border: solid 4px white; */
       }
 
       .containerApp__game {
@@ -1731,12 +1728,12 @@ export default {
         color: aqua;
         display: flex;
         flex-direction: column;
-        height: 50%;
+        height: 35vh;
         justify-content: flex-start;
-        width: 45%;
+        width: 30vw;
 
-        /*         border: dotted 3px yellow;
- */
+/*   */
+
         .containerApp__game--board {
           align-content: space-around;
           box-shadow: 6px 6px 10px #aad5c5;
@@ -1747,8 +1744,8 @@ export default {
           flex-wrap: wrap;
           justify-content: center;
           padding: 8px;
-          height: 60%;
-          width: 80%;
+          height: 30vh;
+          width: 24vw;
           /*       border: dotted 2px red; */
         }
 
@@ -1757,8 +1754,6 @@ export default {
       }
     }
 
-
-
     .containerApp__screen {
       align-self: flex-start;
       background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
@@ -1766,16 +1761,14 @@ export default {
       border-radius: 12px;
       box-shadow: -6px -6px 10px whitesmoke;
       color: whitesmoke;
-      height: 80vh;
-      margin: 4vh auto;
+      height: 70vh;
+      margin: 8vh auto;
       overflow-y: scroll;
-      width: 30%;
+      width: 30vw;
       /*     border: dotted 2px green; */
 
     }
 
   }
-
-
 }
 </style>

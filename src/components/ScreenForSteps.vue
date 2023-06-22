@@ -93,7 +93,7 @@ export default {
     .rowOfStep {
         /*         border: solid 1px orange;*/
         font-family: 'Raleway', sans-serif;
-
+        font-family:Arial, Helvetica, sans-serif;
         margin: 10px auto;
         padding: 2px;
 
