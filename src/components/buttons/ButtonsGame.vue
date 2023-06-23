@@ -66,10 +66,10 @@ export default {
         color: whitesmoke;
         cursor: pointer;
         font-size: 0.8rem;
-        height: 70px;
+        height: 12vh;
         margin: 12px;
         padding: 8px;
-        width: 70px;
+        width: 12vh;
     }
 
     .button__draw:hover {

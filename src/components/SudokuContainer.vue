@@ -144,6 +144,9 @@ export default {
       }
       fillBoard();
     }
+
+
+
     // function, which sholud finish game for one click     // CHECK ONCE AGAIN
     function finishGame() {
       console.log("finishGame");
@@ -1677,7 +1680,7 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 90vh;
+    height: 90%;
     justify-content: space-around;
     width: 95vw;
 
@@ -1685,14 +1688,14 @@ export default {
  */
     &--container {
 
-      align-items: space-around;
-/*        border: dotted 2px green;  */
+      align-items: center;
+      /* border: dotted 2px green; */
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      height: 80vh;
-      justify-content: space-around;
-      width: 65vw;
+      height: 100%;
+      justify-content: center;
+      width: 65%;
 
       .containerApp__buttons {
         align-items: center;
@@ -1703,11 +1706,11 @@ export default {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        height: 16%;
+        height: 16vh;
         justify-content: center;
         margin: 4vh 0;
         width: auto;
-        /*         border: dotted 2px red; */
+        /*      border: dotted 2px red; */
       }
 
 
@@ -1719,7 +1722,7 @@ export default {
         justify-content: space-around;
         height: auto;
         width: 52%;
-/*                border: solid 4px white; */
+        /*       border: solid 4px white; */
       }
 
       .containerApp__game {
@@ -1728,12 +1731,12 @@ export default {
         color: aqua;
         display: flex;
         flex-direction: column;
-        height: 35vh;
+        height: 50vh;
         justify-content: flex-start;
-        width: 30vw;
+        width: 60vh;
 
-/*   */
-
+        /*         border: dotted 3px yellow;
+ */
         .containerApp__game--board {
           align-content: space-around;
           box-shadow: 6px 6px 10px #aad5c5;
@@ -1744,15 +1747,14 @@ export default {
           flex-wrap: wrap;
           justify-content: center;
           padding: 8px;
-          height: 30vh;
-          width: 24vw;
+          height: 60%;
+          width: 80%;
           /*       border: dotted 2px red; */
         }
-
-
-
       }
     }
+
+
 
     .containerApp__screen {
       align-self: flex-start;
@@ -1761,14 +1763,15 @@ export default {
       border-radius: 12px;
       box-shadow: -6px -6px 10px whitesmoke;
       color: whitesmoke;
-      height: 70vh;
-      margin: 8vh auto;
+      height: 80vh;
+      margin: 4vh auto;
       overflow-y: scroll;
-      width: 30vw;
+      width: 30%;
       /*     border: dotted 2px green; */
-
     }
 
   }
+
+
 }
 </style>
