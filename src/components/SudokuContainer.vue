@@ -319,7 +319,6 @@ export default {
       counterStepstoFinish++;
     }
 
-
     // FUNCTIONS FOR THE FIRST STEP
     // function, which find miniMatrix, which has one empty field and return ID.
     function findEmptyFieldsInMatrix() {
@@ -495,8 +494,6 @@ export default {
       }
     }
 
-
-
     // FUNCTIONS FOR THE SECOND STEP
     // function, which find one number , which occurs in Sudoku n-1 times
     function secondStepFindOneMissingDigit() {
@@ -569,8 +566,6 @@ export default {
       helpForCorrectCorrdinates(missingID)
       console.log("Szukane współrzędne: " + xCor + " - " + yCor)
     }
-
-
 
     function helpForCorrectCorrdinates(missingID) {
       console.log("helpForCorrectCorrdinates")
@@ -1010,7 +1005,6 @@ export default {
 
     /*******************************************************************************************************************************/
 
-
     // FUNCTIONS FOR THE THREE & FOUR STEP & FIFTH STEP
     function findMiniMatrixWithZeros(numberOfZeros) {
       console.log("findMiniMatrixWithZeros");
@@ -1164,7 +1158,6 @@ export default {
       console.log("Musimy wpisać cyfrę: " + arrayOfMissingDigits[helpCounter] + " , we współrzędne: " + xCor + " i " + yCor)
       missingDigit = arrayOfMissingDigits[helpCounter];
     }
-
 
     function findRightPlaceToFill(missingDigit, numberOfZeros) {
       localCounterCondition = 0;
@@ -1489,14 +1482,6 @@ export default {
       return conIsAvaiable;
     }
 
-
-
-    // FUNCTIONS FOR THE THIRD STEP
-
-
-
-
-
     // FINALLY STEPS
 
     function firstStep() {
@@ -1620,32 +1605,20 @@ export default {
 .containerApp__screen::-webkit-scrollbar {
   margin-left: 8px;
   width: 12px;
-  /* width of the entire scrollbar */
 }
-
 .containerApp__screen::-webkit-scrollbar-track {
   background: whitesmoke;
-  /*   border-radius: 20px; */
   margin-left: 8px;
-  /* color of the tracking area */
 }
-
 .containerApp__screen::-webkit-scrollbar-thumb {
   background-color: whitesmoke;
-  /* color of the scroll thumb */
-  /*   border-radius: 20px; 
-  /* roundness of the scroll thumb */
   border: 3px solid #004337;
   margin-left: 8px;
-  /* creates padding around scroll thumb */
 }
-
-
 * {
   margin: 0;
   padding: 0;
 }
-
 .containerApp {
   align-items: center;
   background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
@@ -1656,11 +1629,8 @@ export default {
   overflow-y: scroll;
   text-align: center;
   width: 100vw;
-
-
   &__title {
     height: 6vh;
-
     h1 {
       color: #004d46;
       font-size: 2rem;
@@ -1671,7 +1641,6 @@ export default {
       text-shadow: -6px 6px 6px #f4fffb;
     }
   }
-
   &__box {
     align-items: center;
     display: flex;
@@ -1680,37 +1649,26 @@ export default {
     height: 90vh;
     justify-content: space-around;
     width: 95vw;
-
-    /*   border: solid 1px red;
- */
     &--container {
-
       align-items: space-around;
-/*        border: dotted 2px green;  */
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       height: 80vh;
       justify-content: space-around;
       width: 65vw;
-
       .containerApp__buttons {
         align-items: center;
         background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
-        /*       background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
         border-radius: 12px;
-        /*       box-shadow: -6px -6px 10px #aad5c5; */
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        height: 16%;
+        height: 16vh;
         justify-content: center;
         margin: 4vh 0;
         width: auto;
-        /*         border: dotted 2px red; */
       }
-
-
       .containerApp__game--steps {
         align-self: flex-start;
         align-items: center;
@@ -1719,9 +1677,7 @@ export default {
         justify-content: space-around;
         height: auto;
         width: 52%;
-/*                border: solid 4px white; */
       }
-
       .containerApp__game {
         align-items: center;
         border-radius: 8px;
@@ -1731,14 +1687,10 @@ export default {
         height: 35vh;
         justify-content: flex-start;
         width: 30vw;
-
-/*   */
-
         .containerApp__game--board {
           align-content: space-around;
           box-shadow: 6px 6px 10px #aad5c5;
           background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
-          /*         background-image: linear-gradient(to left top, #ca00d1, #b13bd8, #9851db, #815fd9, #6d69d3, #6166cb, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
           border-radius: 12px;
           display: flex;
           flex-wrap: wrap;
@@ -1746,18 +1698,12 @@ export default {
           padding: 8px;
           height: 30vh;
           width: 24vw;
-          /*       border: dotted 2px red; */
         }
-
-
-
       }
     }
-
     .containerApp__screen {
       align-self: flex-start;
       background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
-      /*       background-image: linear-gradient(to left, #5563c2, #4a5fb9, #3e50af, #3242a5, #27339b, #1b2490); */
       border-radius: 12px;
       box-shadow: -6px -6px 10px whitesmoke;
       color: whitesmoke;
@@ -1765,10 +1711,7 @@ export default {
       margin: 8vh auto;
       overflow-y: scroll;
       width: 30vw;
-      /*     border: dotted 2px green; */
-
     }
-
   }
 }
 </style>
