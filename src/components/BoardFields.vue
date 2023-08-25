@@ -64,6 +64,8 @@ export default {
 <style lang="scss" scoped>
 .containerApp__game--board {
 
+
+
   &__field {
     align-content: space-around;
     display: flex;
@@ -72,7 +74,7 @@ export default {
     height: 35%;
     text-align: center;
     width: 48%;
-/*          border: solid 1px red;  */
+    /*     border: solid 1px red; */
 
     &__single {
       border: solid 1px white;
@@ -83,7 +85,6 @@ export default {
   }
 
   .inputField {
-
     background-color: transparent;
     color: whitesmoke;
     font-size: 1rem;

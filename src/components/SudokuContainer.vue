@@ -144,6 +144,9 @@ export default {
       }
       fillBoard();
     }
+
+
+
     // function, which sholud finish game for one click     // CHECK ONCE AGAIN
     function finishGame() {
       console.log("finishGame");
@@ -1646,17 +1649,20 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 90vh;
+    height: 90%;
     justify-content: space-around;
     width: 95vw;
     &--container {
-      align-items: space-around;
+
+      align-items: center;
+      /* border: dotted 2px green; */
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      height: 80vh;
-      justify-content: space-around;
-      width: 65vw;
+      height: 100%;
+      justify-content: center;
+      width: 65%;
+
       .containerApp__buttons {
         align-items: center;
         background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
@@ -1668,6 +1674,10 @@ export default {
         justify-content: center;
         margin: 4vh 0;
         width: auto;
+<<<<<<< HEAD
+=======
+        /*      border: dotted 2px red; */
+>>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
       }
       .containerApp__game--steps {
         align-self: flex-start;
@@ -1677,6 +1687,10 @@ export default {
         justify-content: space-around;
         height: auto;
         width: 52%;
+<<<<<<< HEAD
+=======
+        /*       border: solid 4px white; */
+>>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
       }
       .containerApp__game {
         align-items: center;
@@ -1684,9 +1698,16 @@ export default {
         color: aqua;
         display: flex;
         flex-direction: column;
-        height: 35vh;
+        height: 50vh;
         justify-content: flex-start;
+<<<<<<< HEAD
         width: 30vw;
+=======
+        width: 60vh;
+
+        /*         border: dotted 3px yellow;
+ */
+>>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
         .containerApp__game--board {
           align-content: space-around;
           box-shadow: 6px 6px 10px #aad5c5;
@@ -1696,22 +1717,41 @@ export default {
           flex-wrap: wrap;
           justify-content: center;
           padding: 8px;
+<<<<<<< HEAD
           height: 30vh;
           width: 24vw;
         }
       }
     }
+=======
+          height: 60%;
+          width: 80%;
+          /*       border: dotted 2px red; */
+        }
+      }
+    }
+
+
+
+>>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
     .containerApp__screen {
       align-self: flex-start;
       background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
       border-radius: 12px;
       box-shadow: -6px -6px 10px whitesmoke;
       color: whitesmoke;
-      height: 70vh;
-      margin: 8vh auto;
+      height: 80vh;
+      margin: 4vh auto;
       overflow-y: scroll;
+<<<<<<< HEAD
       width: 30vw;
+=======
+      width: 30%;
+      /*     border: dotted 2px green; */
+>>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
     }
   }
+
+
 }
 </style>
