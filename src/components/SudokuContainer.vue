@@ -6,7 +6,7 @@
     </div>
     <div class="containerApp__box">
       <div class="containerApp__box--container">
-        <div class="containerApp__buttons">
+        <div>
           <ButtonsGame :drawGame="drawGame" :newGame="newGame" :finishGame="finishGame" :fillBoard="fillBoard" />
         </div>
         <div class="containerApp__game--steps">
@@ -1652,15 +1652,14 @@ export default {
     height: 90%;
     justify-content: space-around;
     width: 95vw;
-    &--container {
 
+    &--container {
       align-items: center;
-      /* border: dotted 2px green; */
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       height: 100%;
-      justify-content: center;
+      justify-content: space-around;
       width: 65%;
 
       .containerApp__buttons {
@@ -1674,10 +1673,6 @@ export default {
         justify-content: center;
         margin: 4vh 0;
         width: auto;
-<<<<<<< HEAD
-=======
-        /*      border: dotted 2px red; */
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
       }
       .containerApp__game--steps {
         align-self: flex-start;
@@ -1686,11 +1681,7 @@ export default {
         flex-direction: column;
         justify-content: space-around;
         height: auto;
-        width: 52%;
-<<<<<<< HEAD
-=======
-        /*       border: solid 4px white; */
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
+        width: 44%;
       }
       .containerApp__game {
         align-items: center;
@@ -1700,14 +1691,8 @@ export default {
         flex-direction: column;
         height: 50vh;
         justify-content: flex-start;
-<<<<<<< HEAD
-        width: 30vw;
-=======
-        width: 60vh;
+        width: 44%;
 
-        /*         border: dotted 3px yellow;
- */
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
         .containerApp__game--board {
           align-content: space-around;
           box-shadow: 6px 6px 10px #aad5c5;
@@ -1717,23 +1702,12 @@ export default {
           flex-wrap: wrap;
           justify-content: center;
           padding: 8px;
-<<<<<<< HEAD
           height: 30vh;
-          width: 24vw;
-        }
-      }
-    }
-=======
-          height: 60%;
-          width: 80%;
-          /*       border: dotted 2px red; */
+          width: 98%vw;
         }
       }
     }
 
-
-
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
     .containerApp__screen {
       align-self: flex-start;
       background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
@@ -1743,12 +1717,7 @@ export default {
       height: 80vh;
       margin: 4vh auto;
       overflow-y: scroll;
-<<<<<<< HEAD
       width: 30vw;
-=======
-      width: 30%;
-      /*     border: dotted 2px green; */
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
     }
   }
 
