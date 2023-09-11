@@ -6,7 +6,7 @@
     </div>
     <div class="containerApp__box">
       <div class="containerApp__box--container">
-        <div>
+        <div class="containerApp__buttons">
           <ButtonsGame :drawGame="drawGame" :newGame="newGame" :finishGame="finishGame" :fillBoard="fillBoard" />
         </div>
         <div class="containerApp__game--steps">
@@ -148,7 +148,7 @@ export default {
 
 
     // function, which sholud finish game for one click     // CHECK ONCE AGAIN
-    function finishGame() {
+     function finishGame() {
       console.log("finishGame");
       fillBoard();
       ety: while (!conFinishGame) {
@@ -202,9 +202,8 @@ export default {
             anotherStep(4);
           }
         }
-
       }
-    }
+    } 
 
     // function, which check is there any "O" in fields     // ALREADY CHECK
     function isZero() {
@@ -318,8 +317,16 @@ export default {
 
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
 
-      document.getElementById('rowOfStep' + counterStepstoFinish).innerHTML = (counterStepstoFinish + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
+      let textElemet = (counterStepstoFinish + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
       counterStepstoFinish++;
+
+      const rootElement = document.querySelector('#containerApp__game--screen');
+      let listElement = document.createElement("ul");
+
+      listElement.innerText = textElemet;
+      listElement.classList.add("rowOfScreenListElemet");
+      rootElement.appendChild(listElement);
+
     }
 
     // FUNCTIONS FOR THE FIRST STEP
@@ -1593,8 +1600,8 @@ export default {
     }
 
     return {
-      drawGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
-      secondStepFindOneMissingID, secondStepFindCoor, fillDigitInRightPlace, firstStep, secondStep, anotherStep, isZero,
+      drawGame, /* finishGame, */ fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
+      secondStepFindOneMissingID, secondStepFindCoor, fillDigitInRightPlace, firstStep, secondStep, anotherStep, isZero, finishGame,
       gamesLevelEasy, gamesLevelMedium, gamesLevelHard, findMiniMatrixWithZeros, checkMiniMatrixForMissingDigit, findMissingDigits, findCorsToFillDigitExtend, newGame, firstStepFindEmptyField,
     }
   }
@@ -1609,19 +1616,23 @@ export default {
   margin-left: 8px;
   width: 12px;
 }
+
 .containerApp__screen::-webkit-scrollbar-track {
   background: whitesmoke;
   margin-left: 8px;
 }
+
 .containerApp__screen::-webkit-scrollbar-thumb {
   background-color: whitesmoke;
   border: 3px solid #004337;
   margin-left: 8px;
 }
+
 * {
   margin: 0;
   padding: 0;
 }
+
 .containerApp {
   align-items: center;
   background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
@@ -1632,8 +1643,10 @@ export default {
   overflow-y: scroll;
   text-align: center;
   width: 100vw;
+
   &__title {
     height: 6vh;
+
     h1 {
       color: #004d46;
       font-size: 2rem;
@@ -1644,6 +1657,7 @@ export default {
       text-shadow: -6px 6px 6px #f4fffb;
     }
   }
+
   &__box {
     align-items: center;
     display: flex;
@@ -1662,6 +1676,9 @@ export default {
       justify-content: space-around;
       width: 65%;
 
+
+
+
       .containerApp__buttons {
         align-items: center;
         background-image: linear-gradient(to left top, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72, #0c707c, #137786, #1b7e90);
@@ -1673,7 +1690,9 @@ export default {
         justify-content: center;
         margin: 4vh 0;
         width: auto;
+
       }
+
       .containerApp__game--steps {
         align-self: flex-start;
         align-items: center;
@@ -1683,6 +1702,7 @@ export default {
         height: auto;
         width: 44%;
       }
+
       .containerApp__game {
         align-items: center;
         border-radius: 8px;
@@ -1714,13 +1734,21 @@ export default {
       border-radius: 12px;
       box-shadow: -6px -6px 10px whitesmoke;
       color: whitesmoke;
-      height: 80vh;
+      min-height: 10vh;
       margin: 4vh auto;
       overflow-y: scroll;
+      padding: 20px 0;
       width: 30vw;
+
+      #containerApp__game--screen {
+
+        ul.rowOfScreenListElemet {
+          font-size: 1.2rem;
+          margin: 20px 0;
+        }
+      }
     }
   }
 
 
-}
-</style>
+}</style>
