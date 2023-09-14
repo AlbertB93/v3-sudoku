@@ -13,7 +13,7 @@
             HARD
         </button>
         <button class="button__game" @click="finishGame()">
-            FINISH GAME
+            FINISH GAME TEST
         </button>
     </div>
 </template>
@@ -22,6 +22,7 @@
 export default {
     name: 'ButtonsGame',
     props: ['drawGame', 'newGame', 'fillBoard', 'finishGame', ],
+    
 
 /*         setup(props) {
 
