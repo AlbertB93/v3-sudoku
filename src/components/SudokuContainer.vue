@@ -1,7 +1,7 @@
 <template>
   <div class="containerApp">
     <div class="containerApp__title">
-      <h1>Sudoku - how to resolve game...
+      <h1>Sudoku - how to solve game...
       </h1>
     </div>
     <div class="containerApp__box">

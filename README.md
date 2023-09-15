@@ -1,4 +1,4 @@
-# The page shows you how to resolve Sudoku game! <br>
+# How to solve Sudoku game? <br>
 
 ![a screenshot presenting the front page of the project website](./images/home--small.PNG)
 
