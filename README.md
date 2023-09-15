@@ -49,7 +49,6 @@ The button "finish game" can solve sudoku immediately and display every step on 
 Installtion VUE 3 </br>
 https://vuejs.org/guide/quick-start.html
 
-TUTAJ MUSIMY TEŻ DODAĆ JAK URUCHOMIĆ APLIKACJĘ
 
 ## Application view
 
