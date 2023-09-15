@@ -1,6 +1,6 @@
 # The page shows you how to resolve Sudoku game! <br>
 
-![a screenshot presenting the front page of the project website](./images/home.PNG)
+![a screenshot presenting the front page of the project website](./images/home--small.PNG)
 
 # Content of project
 
@@ -37,24 +37,47 @@ The button "finish game" can solve sudoku immediately and display every step on 
 ## Technologies
 
 <ul>
-<li>PHP</li>
-<li>HTML</li>
+<li>VUE 3</li>
 <li>JAVASCRIPT</li>
+<li>HTML</li>
 <li>CSS</li>
 <li>SCSS</li>
 </ul>
 
 ## Installation
 
+Installtion VUE 3 </br>
+https://vuejs.org/guide/quick-start.html
+
+TUTAJ MUSIMY TEŻ DODAĆ JAK URUCHOMIĆ APLIKACJĘ
+
 ## Application view
 
 <details>
-<summary> <b>home</b> </summary>
-</br> This image shows home page. This page contains header, menu and five articles, which are newest on this page. </br>
-<img src="./images/README/index.PNG">
+<summary> <b>Home</b> </summary>
+</br> This image shows home page. </br>
+<img src="./images/home.PNG">
+</details>
+
+<details>
+<summary> <b>Step description</b> </summary>
+</br> This image shows decrption for step "1" and step "3" </br>
+<img src="./images/steps-decriptions.PNG">
+</details>
+
+<details>
+<summary> <b>Game after a few steps executed</b> </summary>
+</br> This image shows game, when a few digits have already been filled in the empty fields. </br>
+<img src="./images/during-game.PNG">
 </details>
 
 ## To update
+
+<ul>
+<li>Code review to optymize a few functions to keeping less space in a whole project </li>
+<li>Extend game board to size 9x9</li>
+<li>Split project to more components</li>
+</ul>
 
 ## Tutorials
 
