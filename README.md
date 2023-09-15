@@ -15,6 +15,14 @@
 
 ## General info
 
+This project is showing how to resolve Sudoku game. In this game we have to fill missing digit in empty fields.
+The classic Sudoku has gameboard 9x9. My project contains board which size is 6x6. You have to fill digit in empty field but this field must meet two conditions in below:
+
+1. Digit can't be in "minimatrix", which contains this empty field. ( minimatrix has yellow border):
+   ![a screenshot presenting the front page of the project website](./images/matrix.png)
+2. Digit can't be in single row or column, which contains this empty field.
+   ![a screenshot presenting the front page of the project website](./images/matrix-row-column.PNG)
+
 ## Technologies
 
 <ul>
