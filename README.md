@@ -94,6 +94,13 @@ To create this page I used a dozen tutorials. A few from of them are below:
 
 ## Summary of the project
 
+The prototype this project was created a 2-3 years ago in Java. A few months ago I want to create some graphic module for it.
+At the beginning I started from HTML and CSS + JS. I don't have a lot of time so I change this project step by step at different time intervals.
+I started with one game level - easy and developed this project with each next example - adding more steps to solve every board in my project (3 x 10 examples with three level of difficult)
+I want to modify project to VUE.
+
+prościej jest pisać w czymś od poczatku niż modyfikować istniejący projekt dlatego nie jest to zrobione w 100% tak jakbym chciał. ( CHodzi tutaj konkretnie o VUE)
+
 ## Contact
 
 <ul>
