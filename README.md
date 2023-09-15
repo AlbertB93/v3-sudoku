@@ -1,8 +1,6 @@
 # The page shows you how to resolve Sudoku game! <br>
 
-
-
-![a screenshot presenting the front page of the project website](./images/README/home.png)
+![a screenshot presenting the front page of the project website](./images/home.PNG)
 
 # Content of project
 
@@ -17,8 +15,6 @@
 
 ## General info
 
-
-
 ## Technologies
 
 <ul>
@@ -31,8 +27,6 @@
 
 ## Installation
 
-
-
 ## Application view
 
 <details>
@@ -41,10 +35,7 @@
 <img src="./images/README/index.PNG">
 </details>
 
-
 ## To update
-
-
 
 ## Tutorials
 
@@ -60,8 +51,6 @@ To create this page I used a dozen tutorials. A few from of them are below:
 </ul>
 
 ## Summary of the project
-
-
 
 ## Contact
 

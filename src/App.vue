@@ -1,5 +1,4 @@
 <template>
-
   <SudokuContainer />
 </template>
 

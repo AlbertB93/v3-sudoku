@@ -7,7 +7,10 @@
     <div class="containerApp__box">
       <div class="containerApp__box--container">
         <div class="containerApp__buttons">
+          <!--           <p style="min-height: 20px; min-width: 50px; border: solid 2px red;"> {{ zmienna }} </p> -->
           <ButtonsGame :drawGame="drawGame" :newGame="newGame" :finishGame="finishGame" :fillBoard="fillBoard" />
+          <!--             <ButtonsGame :drawGame="drawGame" :newGame="newGame" :finishGame="finishGame" :fillBoard="fillBoard"
+            @example-text="showText" /> -->
         </div>
         <div class="containerApp__game--steps">
           <ButtonsSteps :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix"
@@ -49,6 +52,13 @@ export default {
   },
 
   setup() {
+
+    /*     let zmienna = ref(' ');
+        const showText = val => {
+          zmienna.value = val;
+        }
+     */
+
     //counters
     let i = 0;
     let j = 0;
@@ -129,7 +139,6 @@ export default {
               arrayOfInputs[i].value = gamesLevelMedium[numberOfGame][i];
             }
           }
-
           break;
         case 'hard':
           {
@@ -202,7 +211,6 @@ export default {
             anotherStep(4);
           }
         }
-
       }
     }
 
@@ -318,8 +326,18 @@ export default {
 
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
 
-      document.getElementById('rowOfStep' + counterStepstoFinish).innerHTML = (counterStepstoFinish + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
+      xCor++;
+      /*    let textElemet = (counterStepstoFinish + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCor + "] [" + yCor + "]"; */
+      let textElemet = (counterStepstoFinish + 1) + " . Cyfra " + missingDigit + " do mini-macierzy [" + xCor + "] w pole o indeksie [" + yCor + "]";
       counterStepstoFinish++;
+
+      const rootElement = document.querySelector('#containerApp__game--screen');
+      let listElement = document.createElement("ul");
+
+      listElement.innerText = textElemet;
+      listElement.classList.add("rowOfScreenListElemet");
+      rootElement.appendChild(listElement);
+
     }
 
     // FUNCTIONS FOR THE FIRST STEP
@@ -1593,9 +1611,10 @@ export default {
     }
 
     return {
-      drawGame, finishGame, fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
-      secondStepFindOneMissingID, secondStepFindCoor, fillDigitInRightPlace, firstStep, secondStep, anotherStep, isZero,
+      drawGame, /* finishGame, */ fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
+      secondStepFindOneMissingID, secondStepFindCoor, fillDigitInRightPlace, firstStep, secondStep, anotherStep, isZero, finishGame,
       gamesLevelEasy, gamesLevelMedium, gamesLevelHard, findMiniMatrixWithZeros, checkMiniMatrixForMissingDigit, findMissingDigits, findCorsToFillDigitExtend, newGame, firstStepFindEmptyField,
+
     }
   }
 }
@@ -1609,19 +1628,23 @@ export default {
   margin-left: 8px;
   width: 12px;
 }
+
 .containerApp__screen::-webkit-scrollbar-track {
   background: whitesmoke;
   margin-left: 8px;
 }
+
 .containerApp__screen::-webkit-scrollbar-thumb {
   background-color: whitesmoke;
   border: 3px solid #004337;
   margin-left: 8px;
 }
+
 * {
   margin: 0;
   padding: 0;
 }
+
 .containerApp {
   align-items: center;
   background-image: linear-gradient(to top, #032709, #003019, #003a28, #004337, #004d46, #005a56, #006768, #00757a, #008993, #049eae, #0fb4cb, #1ec9e8);
@@ -1632,8 +1655,10 @@ export default {
   overflow-y: scroll;
   text-align: center;
   width: 100vw;
+
   &__title {
     height: 6vh;
+
     h1 {
       color: #004d46;
       font-size: 2rem;
@@ -1644,6 +1669,7 @@ export default {
       text-shadow: -6px 6px 6px #f4fffb;
     }
   }
+
   &__box {
     align-items: center;
     display: flex;
@@ -1652,16 +1678,18 @@ export default {
     height: 90%;
     justify-content: space-around;
     width: 95vw;
-    &--container {
 
+    &--container {
       align-items: center;
-      /* border: dotted 2px green; */
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       height: 100%;
-      justify-content: center;
+      justify-content: space-around;
       width: 65%;
+
+
+
 
       .containerApp__buttons {
         align-items: center;
@@ -1674,11 +1702,9 @@ export default {
         justify-content: center;
         margin: 4vh 0;
         width: auto;
-<<<<<<< HEAD
-=======
-        /*      border: dotted 2px red; */
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
+
       }
+
       .containerApp__game--steps {
         align-self: flex-start;
         align-items: center;
@@ -1686,12 +1712,9 @@ export default {
         flex-direction: column;
         justify-content: space-around;
         height: auto;
-        width: 52%;
-<<<<<<< HEAD
-=======
-        /*       border: solid 4px white; */
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
+        width: 44%;
       }
+
       .containerApp__game {
         align-items: center;
         border-radius: 8px;
@@ -1700,14 +1723,8 @@ export default {
         flex-direction: column;
         height: 50vh;
         justify-content: flex-start;
-<<<<<<< HEAD
-        width: 30vw;
-=======
-        width: 60vh;
+        width: 44%;
 
-        /*         border: dotted 3px yellow;
- */
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
         .containerApp__game--board {
           align-content: space-around;
           box-shadow: 6px 6px 10px #aad5c5;
@@ -1717,38 +1734,31 @@ export default {
           flex-wrap: wrap;
           justify-content: center;
           padding: 8px;
-<<<<<<< HEAD
           height: 30vh;
-          width: 24vw;
-        }
-      }
-    }
-=======
-          height: 60%;
-          width: 80%;
-          /*       border: dotted 2px red; */
+          width: 98%vw;
         }
       }
     }
 
-
-
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
     .containerApp__screen {
       align-self: flex-start;
       background: linear-gradient(to left bottom, #032709, #003019, #003a28, #004337, #004d46, #005451, #005c5c, #026368, #066a72);
       border-radius: 12px;
       box-shadow: -6px -6px 10px whitesmoke;
       color: whitesmoke;
-      height: 80vh;
+      min-height: 10vh;
       margin: 4vh auto;
       overflow-y: scroll;
-<<<<<<< HEAD
+      padding: 20px 0;
       width: 30vw;
-=======
-      width: 30%;
-      /*     border: dotted 2px green; */
->>>>>>> 5d7fc0a32d9b86fdc4f8653c3cc955213b017e92
+
+      #containerApp__game--screen {
+
+        ul.rowOfScreenListElemet {
+          font-size: 1.2rem;
+          margin: 20px 0;
+        }
+      }
     }
   }
 
