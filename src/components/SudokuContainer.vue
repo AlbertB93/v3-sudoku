@@ -7,7 +7,10 @@
     <div class="containerApp__box">
       <div class="containerApp__box--container">
         <div class="containerApp__buttons">
+          <!--           <p style="min-height: 20px; min-width: 50px; border: solid 2px red;"> {{ zmienna }} </p> -->
           <ButtonsGame :drawGame="drawGame" :newGame="newGame" :finishGame="finishGame" :fillBoard="fillBoard" />
+          <!--             <ButtonsGame :drawGame="drawGame" :newGame="newGame" :finishGame="finishGame" :fillBoard="fillBoard"
+            @example-text="showText" /> -->
         </div>
         <div class="containerApp__game--steps">
           <ButtonsSteps :findEmptyFieldsInMatrix="findEmptyFieldsInMatrix"
@@ -49,6 +52,13 @@ export default {
   },
 
   setup() {
+
+    /*     let zmienna = ref(' ');
+        const showText = val => {
+          zmienna.value = val;
+        }
+     */
+
     //counters
     let i = 0;
     let j = 0;
@@ -129,7 +139,6 @@ export default {
               arrayOfInputs[i].value = gamesLevelMedium[numberOfGame][i];
             }
           }
-
           break;
         case 'hard':
           {
@@ -148,7 +157,7 @@ export default {
 
 
     // function, which sholud finish game for one click     // CHECK ONCE AGAIN
-     function finishGame() {
+    function finishGame() {
       console.log("finishGame");
       fillBoard();
       ety: while (!conFinishGame) {
@@ -203,7 +212,7 @@ export default {
           }
         }
       }
-    } 
+    }
 
     // function, which check is there any "O" in fields     // ALREADY CHECK
     function isZero() {
@@ -317,7 +326,9 @@ export default {
 
       document.getElementById('square' + xCor).getElementsByClassName('inputField')[yCor].classList.add("inputConfirmed");
 
-      let textElemet = (counterStepstoFinish + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCorrdinate + "] [" + yCorrdinate + "]";
+      xCor++;
+      /*    let textElemet = (counterStepstoFinish + 1) + " . Cyfra [" + missingDigit + "] w pole o współrzędnych [" + xCor + "] [" + yCor + "]"; */
+      let textElemet = (counterStepstoFinish + 1) + " . Cyfra " + missingDigit + " do mini-macierzy [" + xCor + "] w pole o indeksie [" + yCor + "]";
       counterStepstoFinish++;
 
       const rootElement = document.querySelector('#containerApp__game--screen');
@@ -1603,6 +1614,7 @@ export default {
       drawGame, /* finishGame, */ fillBoard, findEmptyFieldsInMatrix, findCorsToFillDigit, findMissingDigit, fillMissingDigit, secondStepFindOneMissingDigit,
       secondStepFindOneMissingID, secondStepFindCoor, fillDigitInRightPlace, firstStep, secondStep, anotherStep, isZero, finishGame,
       gamesLevelEasy, gamesLevelMedium, gamesLevelHard, findMiniMatrixWithZeros, checkMiniMatrixForMissingDigit, findMissingDigits, findCorsToFillDigitExtend, newGame, firstStepFindEmptyField,
+
     }
   }
 }
@@ -1751,4 +1763,5 @@ export default {
   }
 
 
-}</style>
+}
+</style>

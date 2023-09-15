@@ -2,7 +2,8 @@
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
             <label class="buttonLabel"> Step 1</label>
-            <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[0]" :executeFunctionStep="firstStep"/>
+            <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[0]"
+                :executeFunctionStep="firstStep" />
         </div>
         <div class="stepDescription"> <button @click="findEmptyFieldsInMatrix">1</button> Find miniMatrix ( 2 x 3 ) or
             single row or single column, which has one "zero" <br>
@@ -16,7 +17,8 @@
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
             <label class="buttonLabel"> Step 2</label>
-                <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[1]" :executeFunctionStep="secondStep"/>
+            <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[1]"
+                :executeFunctionStep="secondStep" />
         </div>
         <div class="stepDescription">
             <button @click="secondStepFindOneMissingDigit">1</button> Find digit, which occurs in the game n-1 times. <br>
@@ -28,7 +30,8 @@
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
             <label class="buttonLabel"> Step 3</label>
-                        <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[2]" :executeFunctionStep="anotherStep"/>
+            <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[2]"
+                :executeFunctionStep="anotherStep" />
         </div>
         <div class="stepDescription">
             <button @click="findMiniMatrixWithZeros(2)">1</button> Find one miniMatrix / row / column, which has two zero
@@ -47,7 +50,8 @@
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
             <label class="buttonLabel"> Step 4</label>
-                        <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[3]" :executeFunctionStep="anotherStep"/>
+            <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[3]"
+                :executeFunctionStep="anotherStep" />
         </div>
         <div class="stepDescription"> 1. Find one miniMatrix / row / column, which has three zero places.<br>
             2. Find three missing digits in it. <br>
@@ -61,7 +65,8 @@
     <div class="containerApp__game--steps--singleStep">
         <div class="singleStep--box">
             <label class="buttonLabel"> Step 5</label>
-                        <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[4]" :executeFunctionStep="anotherStep"/>
+            <SingleButtonStep :displayDescription="displayDescription" :numberOfDescription="arrNumberOfDescriptions[4]"
+                :executeFunctionStep="anotherStep" />
         </div>
         <div class="stepDescription"> 1. Find one miniMatrix / row / column, which has four zero places.<br>
             2. Find four missing digits in it. <br>
@@ -89,7 +94,7 @@ export default {
     ],
     setup() {
 
-        const arrNumberOfDescriptions = [0,1,2,3,4];
+        const arrNumberOfDescriptions = [0, 1, 2, 3, 4];
         let numberOfDescription;
 
         function displayDescription(descriptionNumber) {
@@ -116,6 +121,7 @@ export default {
     height: auto;
     margin: 6px 0px;
     width: 90%;
+
     .singleStep--box {
         display: flex;
         flex-direction: row;
@@ -133,6 +139,7 @@ export default {
             width: auto;
         }
     }
+
     .stepDescription {
         border-top: solid 1px whitesmoke;
         color: whitesmoke;
@@ -141,6 +148,7 @@ export default {
         font-family: 'Raleway', sans-serif;
         text-align: left;
         padding: 12px;
+
         &__image {
             margin: 4px 30%;
             max-height: 100px;
@@ -148,8 +156,8 @@ export default {
 
         }
     }
+
     .hidden {
         display: block;
     }
-}
-</style>
+}</style>
