@@ -1,17 +1,425 @@
 
-* przycisk, który wraca do planszy, która została wylosowana
-* przycisk zatwierdź ruch wtedy zatwierdza się coś co wpisał użytkownik, zmienia się kolor ?
-* Zrobić coś takiego dla podkroków jak:
-Np. dla pierwszego podkroku, znajdź macierz, która ma jedno zero to ją obramować np. na zółto.
-* zmodyfikować screen tak aby jego wielkość automatycznie się rozszerzała w dół. Dodawanie dynamiczne wierszy jako divów do klasy.
-* PRZYCISKI Z NUMERAMI GRY, ZAZNACZONE ŻE SIĘ ROZWIĄZAŁO ?
-* przycisk do tłumaczenia z ang na pol
-* zrobić coś z wyświetlanie przycisków dotyczących kroków żeby po rozwinięciu jakoś nie skakały tak.
 
-
+* podzielić na komponenty: na podstawie:
+https://www.youtube.com/watch?v=e9OTiKoEH_g
 
 
 
 
 
 * porównać funkcję checkMissingDigitInNearbyMatrix oraz helpForCorrectCorrdinates
+
+    function secondStepFindCoor() {
+      console.log("secondStepFindCoor")
+      xCor = missingID;
+      helpForCorrectCorrdinates(missingID)
+      console.log("Szukane współrzędne: " + xCor + " - " + yCor)
+    }
+
+    /*     function helpForCorrectCorrdinates(missingID) {
+      console.log("helpForCorrectCorrdinates")
+      for (i = 0; i < 6; i++) {
+        switch (missingID) {
+          case 0:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(6, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(6, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(7, 12, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(7, 13, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(7, 14, i);
+              }
+            } break;
+          case 1:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 15, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(6, 16, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(6, 17, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(7, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(7, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(7, 17, i);
+              }
+            } break;
+          case 2:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(8, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(8, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 12, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(9, 13, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(9, 14, i);
+              }
+            } break;
+          case 3:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(8, 15, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(8, 16, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 17, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(9, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(9, 17, i);
+              }
+            } break;
+          case 4:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(10, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(10, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(10, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(11, 12, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(11, 13, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 14, i);
+              }
+            } break;
+          case 5:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(10, 15, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(10, 16, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(10, 17, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(11, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(11, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 17, i);
+              }
+            } break;
+          case 6:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(6, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(6, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(6, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(6, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(6, 17, i);
+              }
+            } break;
+          case 7:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(7, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(7, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(7, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(7, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(7, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(7, 17, i);
+              }
+            } break;
+          case 8:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(8, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(8, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 13, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(8, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(8, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(8, 17, i);
+              }
+            } break;
+          case 9:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(9, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(9, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(9, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(9, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(9, 17, i);
+              }
+            } break;
+          case 10:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(10, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(10, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(10, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(10, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(10, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(10, 17, i);
+              }
+            } break;
+          case 11:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(11, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(11, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(11, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(11, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(11, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 17, i);
+              }
+            } break;
+          case 12:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 12, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(7, 12, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 12, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 12, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(10, 12, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(10, 12, i);
+              }
+            } break;
+          case 13:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 13, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(7, 13, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 13, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 13, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(10, 13, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 13, i);
+              }
+            } break;
+          case 14:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 14, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(7, 14, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 14, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 14, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(10, 14, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 14, i);
+              }
+            } break;
+          case 15:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 15, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(7, 15, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 15, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 15, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(10, 15, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 15, i);
+              }
+            } break;
+          case 16:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 16, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(7, 16, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 16, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 16, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(10, 16, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 16, i);
+              }
+            } break;
+          case 17:
+            if (miniMatrixs[missingID][i] == 0) {
+              switch (i) {
+                case 0:
+                  checkMiniMatrixForMissingDigit(6, 17, i);
+                  break;
+                case 1:
+                  checkMiniMatrixForMissingDigit(7, 17, i);
+                  break;
+                case 2:
+                  checkMiniMatrixForMissingDigit(8, 17, i);
+                  break;
+                case 3:
+                  checkMiniMatrixForMissingDigit(9, 17, i);
+                  break;
+                case 4:
+                  checkMiniMatrixForMissingDigit(10, 17, i);
+                  break;
+                case 5:
+                  checkMiniMatrixForMissingDigit(11, 17, i);
+              }
+            } break;
+          default: {
+            console.log("Błąd w pętli  z ID")
+            break;
+          }
+        }
+      }
+    } */
