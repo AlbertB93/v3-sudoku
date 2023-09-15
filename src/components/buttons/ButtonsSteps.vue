@@ -7,7 +7,7 @@
         </div>
         <div class="stepDescription"> <button @click="findEmptyFieldsInMatrix">1</button> Find miniMatrix ( 2 x 3 ) or
             single row or single column, which has one "zero" <br>
-            <img src="../../../miniMatrix.png" alt="matrix" class="stepDescription__image">
+            <img src="../../../images/miniMatrix.png" alt="matrix" class="stepDescription__image">
             <br>
             <button @click="firstStepFindEmptyField">2</button> Find correct coordinates ( which has "0 in field") <br>
             <button @click="findMissingDigit">3</button> Find missing digit<br>
@@ -160,4 +160,5 @@ export default {
     .hidden {
         display: block;
     }
-}</style>
+}
+</style>
